@@ -1,0 +1,7 @@
+# IMPORTANT: DO NOT commit this file to version control
+# Copy this to 'key.properties' and fill in your actual values
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=quran-app-key
+storeFile=../upload-keystore.jks

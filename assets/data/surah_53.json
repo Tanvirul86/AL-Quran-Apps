@@ -1,0 +1,498 @@
+[
+  {
+    "surahNumber": 53,
+    "ayahNumber": 1,
+    "globalAyahNumber": 4785,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ وَٱلنَّجۡمِ إِذَا هَوَىٰ",
+    "englishTranslation": "By the star when it descends,",
+    "banglaTranslation": "নক্ষত্রের কসম, যখন অস্তমিত হয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 2,
+    "globalAyahNumber": 4786,
+    "arabicText": "مَا ضَلَّ صَاحِبُكُمۡ وَمَا غَوَىٰ",
+    "englishTranslation": "Your companion [Muhammad] has not strayed, nor has he erred,",
+    "banglaTranslation": "তোমাদের সংগী পথভ্রষ্ট হননি এবং বিপথগামীও হননি।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 3,
+    "globalAyahNumber": 4787,
+    "arabicText": "وَمَا یَنطِقُ عَنِ ٱلۡهَوَىٰۤ",
+    "englishTranslation": "Nor does he speak from [his own] inclination.",
+    "banglaTranslation": "এবং প্রবৃত্তির তাড়নায় কথা বলেন না।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 4,
+    "globalAyahNumber": 4788,
+    "arabicText": "إِنۡ هُوَ إِلَّا وَحۡیࣱ یُوحَىٰ",
+    "englishTranslation": "It is not but a revelation revealed,",
+    "banglaTranslation": "কোরআন ওহী, যা প্রত্যাদেশ হয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 5,
+    "globalAyahNumber": 4789,
+    "arabicText": "عَلَّمَهُۥ شَدِیدُ ٱلۡقُوَىٰ",
+    "englishTranslation": "Taught to him by one intense in strength -",
+    "banglaTranslation": "তাঁকে শিক্ষা দান করে এক শক্তিশালী ফেরেশতা,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 6,
+    "globalAyahNumber": 4790,
+    "arabicText": "ذُو مِرَّةࣲ فَٱسۡتَوَىٰ",
+    "englishTranslation": "One of soundness. And he rose to [his] true form",
+    "banglaTranslation": "সহজাত শক্তিসম্পন্ন, সে নিজ আকৃতিতে প্রকাশ পেল।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 7,
+    "globalAyahNumber": 4791,
+    "arabicText": "وَهُوَ بِٱلۡأُفُقِ ٱلۡأَعۡلَىٰ",
+    "englishTranslation": "While he was in the higher [part of the] horizon.",
+    "banglaTranslation": "উর্ধ্ব দিগন্তে,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 8,
+    "globalAyahNumber": 4792,
+    "arabicText": "ثُمَّ دَنَا فَتَدَلَّىٰ",
+    "englishTranslation": "Then he approached and descended",
+    "banglaTranslation": "অতঃপর নিকটবর্তী হল ও ঝুলে গেল।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 9,
+    "globalAyahNumber": 4793,
+    "arabicText": "فَكَانَ قَابَ قَوۡسَیۡنِ أَوۡ أَدۡنَىٰ",
+    "englishTranslation": "And was at a distance of two bow lengths or nearer.",
+    "banglaTranslation": "তখন দুই ধনুকের ব্যবধান ছিল অথবা আরও কম।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 10,
+    "globalAyahNumber": 4794,
+    "arabicText": "فَأَوۡحَىٰۤ إِلَىٰ عَبۡدِهِۦ مَاۤ أَوۡحَىٰ",
+    "englishTranslation": "And he revealed to His Servant what he revealed.",
+    "banglaTranslation": "তখন আল্লাহ তাঁর দাসের প্রতি যা প্রত্যাদেশ করবার, তা প্রত্যাদেশ করলেন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 11,
+    "globalAyahNumber": 4795,
+    "arabicText": "مَا كَذَبَ ٱلۡفُؤَادُ مَا رَأَىٰۤ",
+    "englishTranslation": "The heart did not lie [about] what it saw.",
+    "banglaTranslation": "রসূলের অন্তর মিথ্যা বলেনি যা সে দেখেছে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 12,
+    "globalAyahNumber": 4796,
+    "arabicText": "أَفَتُمَـٰرُونَهُۥ عَلَىٰ مَا یَرَىٰ",
+    "englishTranslation": "So will you dispute with him over what he saw?",
+    "banglaTranslation": "তোমরা কি বিষয়ে বিতর্ক করবে যা সে দেখেছে?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 13,
+    "globalAyahNumber": 4797,
+    "arabicText": "وَلَقَدۡ رَءَاهُ نَزۡلَةً أُخۡرَىٰ",
+    "englishTranslation": "And he certainly saw him in another descent",
+    "banglaTranslation": "নিশ্চয় সে তাকে আরেকবার দেখেছিল,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 14,
+    "globalAyahNumber": 4798,
+    "arabicText": "عِندَ سِدۡرَةِ ٱلۡمُنتَهَىٰ",
+    "englishTranslation": "At the Lote Tree of the Utmost Boundary -",
+    "banglaTranslation": "সিদরাতুলমুন্তাহার নিকটে,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 15,
+    "globalAyahNumber": 4799,
+    "arabicText": "عِندَهَا جَنَّةُ ٱلۡمَأۡوَىٰۤ",
+    "englishTranslation": "Near it is the Garden of Refuge -",
+    "banglaTranslation": "যার কাছে অবস্থিত বসবাসের জান্নাত।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 16,
+    "globalAyahNumber": 4800,
+    "arabicText": "إِذۡ یَغۡشَى ٱلسِّدۡرَةَ مَا یَغۡشَىٰ",
+    "englishTranslation": "When there covered the Lote Tree that which covered [it].",
+    "banglaTranslation": "যখন বৃক্ষটি দ্বারা আচ্ছন্ন হওয়ার, তদ্দ্বারা আচ্ছন্ন ছিল।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 17,
+    "globalAyahNumber": 4801,
+    "arabicText": "مَا زَاغَ ٱلۡبَصَرُ وَمَا طَغَىٰ",
+    "englishTranslation": "The sight [of the Prophet] did not swerve, nor did it transgress [its limit].",
+    "banglaTranslation": "তাঁর দৃষ্টিবিভ্রম হয় নি এবং সীমালংঘনও করেনি।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 18,
+    "globalAyahNumber": 4802,
+    "arabicText": "لَقَدۡ رَأَىٰ مِنۡ ءَایَـٰتِ رَبِّهِ ٱلۡكُبۡرَىٰۤ",
+    "englishTranslation": "He certainly saw of the greatest signs of his Lord.",
+    "banglaTranslation": "নিশ্চয় সে তার পালনকর্তার মহান নিদর্শনাবলী অবলোকন করেছে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 19,
+    "globalAyahNumber": 4803,
+    "arabicText": "أَفَرَءَیۡتُمُ ٱللَّـٰتَ وَٱلۡعُزَّىٰ",
+    "englishTranslation": "So have you considered al-Lat and al-'Uzza?",
+    "banglaTranslation": "তোমরা কি ভেবে দেখেছ লাত ও ওযযা সম্পর্কে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 20,
+    "globalAyahNumber": 4804,
+    "arabicText": "وَمَنَوٰةَ ٱلثَّالِثَةَ ٱلۡأُخۡرَىٰۤ",
+    "englishTranslation": "And Manat, the third - the other one?",
+    "banglaTranslation": "এবং তৃতীয় আরেকটি মানাত সম্পর্কে?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 21,
+    "globalAyahNumber": 4805,
+    "arabicText": "أَلَكُمُ ٱلذَّكَرُ وَلَهُ ٱلۡأُنثَىٰ",
+    "englishTranslation": "Is the male for you and for Him the female?",
+    "banglaTranslation": "পুত্র-সন্তান কি তোমাদের জন্যে এবং কন্যা-সন্তান আল্লাহর জন্য?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 22,
+    "globalAyahNumber": 4806,
+    "arabicText": "تِلۡكَ إِذࣰا قِسۡمَةࣱ ضِیزَىٰۤ",
+    "englishTranslation": "That, then, is an unjust division.",
+    "banglaTranslation": "এমতাবস্থায় এটা তো হবে খুবই অসংগত বন্টন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 23,
+    "globalAyahNumber": 4807,
+    "arabicText": "إِنۡ هِیَ إِلَّاۤ أَسۡمَاۤءࣱ سَمَّیۡتُمُوهَاۤ أَنتُمۡ وَءَابَاۤؤُكُم مَّاۤ أَنزَلَ ٱللَّهُ بِهَا مِن سُلۡطَـٰنٍۚ إِن یَتَّبِعُونَ إِلَّا ٱلظَّنَّ وَمَا تَهۡوَى ٱلۡأَنفُسُۖ وَلَقَدۡ جَاۤءَهُم مِّن رَّبِّهِمُ ٱلۡهُدَىٰۤ",
+    "englishTranslation": "They are not but [mere] names you have named them - you and your forefathers - for which Allah has sent down no authority. They follow not except assumption and what [their] souls desire, and there has already come to them from their Lord guidance.",
+    "banglaTranslation": "এগুলো কতগুলো নাম বৈ নয়, যা তোমরা এবং তোমাদের পূর্ব-পুরুষদের রেখেছ। এর সমর্থনে আল্লাহ কোন দলীল নাযিল করেননি। তারা অনুমান এবং প্রবৃত্তিরই অনুসরণ করে। অথচ তাদের কাছে তাদের পালনকর্তার পক্ষ থেকে পথ নির্দেশ এসেছে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 24,
+    "globalAyahNumber": 4808,
+    "arabicText": "أَمۡ لِلۡإِنسَـٰنِ مَا تَمَنَّىٰ",
+    "englishTranslation": "Or is there for man whatever he wishes?",
+    "banglaTranslation": "মানুষ যা চায়, তাই কি পায়?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 25,
+    "globalAyahNumber": 4809,
+    "arabicText": "فَلِلَّهِ ٱلۡـَٔاخِرَةُ وَٱلۡأُولَىٰ",
+    "englishTranslation": "Rather, to Allah belongs the Hereafter and the first [life].",
+    "banglaTranslation": "অতএব, পরবর্তী ও পূর্ববর্তী সব মঙ্গলই আল্লাহর হাতে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 26,
+    "globalAyahNumber": 4810,
+    "arabicText": "۞ وَكَم مِّن مَّلَكࣲ فِی ٱلسَّمَـٰوَ ٰ⁠تِ لَا تُغۡنِی شَفَـٰعَتُهُمۡ شَیۡـًٔا إِلَّا مِنۢ بَعۡدِ أَن یَأۡذَنَ ٱللَّهُ لِمَن یَشَاۤءُ وَیَرۡضَىٰۤ",
+    "englishTranslation": "And how many angels there are in the heavens whose intercession will not avail at all except [only] after Allah has permitted [it] to whom He wills and approves.",
+    "banglaTranslation": "আকাশে অনেক ফেরেশতা রয়েছে। তাদের কোন সুপারিশ ফলপ্রসূ হয় না যতক্ষণ আল্লাহ যার জন্যে ইচ্ছা ও যাকে পছন্দ করেন, অনুমতি না দেন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 27,
+    "globalAyahNumber": 4811,
+    "arabicText": "إِنَّ ٱلَّذِینَ لَا یُؤۡمِنُونَ بِٱلۡـَٔاخِرَةِ لَیُسَمُّونَ ٱلۡمَلَـٰۤىِٕكَةَ تَسۡمِیَةَ ٱلۡأُنثَىٰ",
+    "englishTranslation": "Indeed, those who do not believe in the Hereafter name the angels female names,",
+    "banglaTranslation": "যারা পরকালে বিশ্বাস করে না, তারাই ফেরেশতাকে নারীবাচক নাম দিয়ে থাকে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 28,
+    "globalAyahNumber": 4812,
+    "arabicText": "وَمَا لَهُم بِهِۦ مِنۡ عِلۡمٍۖ إِن یَتَّبِعُونَ إِلَّا ٱلظَّنَّۖ وَإِنَّ ٱلظَّنَّ لَا یُغۡنِی مِنَ ٱلۡحَقِّ شَیۡـࣰٔا",
+    "englishTranslation": "And they have thereof no knowledge. They follow not except assumption, and indeed, assumption avails not against the truth at all.",
+    "banglaTranslation": "অথচ এ বিষয়ে তাদের কোন জ্ঞান নেই। তারা কেবল অনুমানের উপর চলে। অথচ সত্যের ব্যাপারে অনুমান মোটেই ফলপ্রসূ নয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 29,
+    "globalAyahNumber": 4813,
+    "arabicText": "فَأَعۡرِضۡ عَن مَّن تَوَلَّىٰ عَن ذِكۡرِنَا وَلَمۡ یُرِدۡ إِلَّا ٱلۡحَیَوٰةَ ٱلدُّنۡیَا",
+    "englishTranslation": "So turn away from whoever turns his back on Our message and desires not except the worldly life.",
+    "banglaTranslation": "অতএব যে আমার স্মরণে বিমুখ এবং কেবল পার্থিব জীবনই কামনা করে তার তরফ থেকে আপনি মুখ ফিরিয়ে নিন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 30,
+    "globalAyahNumber": 4814,
+    "arabicText": "ذَ ٰ⁠لِكَ مَبۡلَغُهُم مِّنَ ٱلۡعِلۡمِۚ إِنَّ رَبَّكَ هُوَ أَعۡلَمُ بِمَن ضَلَّ عَن سَبِیلِهِۦ وَهُوَ أَعۡلَمُ بِمَنِ ٱهۡتَدَىٰ",
+    "englishTranslation": "That is their sum of knowledge. Indeed, your Lord is most knowing of who strays from His way, and He is most knowing of who is guided.",
+    "banglaTranslation": "তাদের জ্ঞানের পরিধি এ পর্যন্তই। নিশ্চয় আপনার পালনকর্তা ভাল জানেন, কে তাঁর পথ থেকে বিচ্যুত হয়েছে এবং তিনিই ভাল জানেন কে সুপথপ্রাপ্ত হয়েছে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 31,
+    "globalAyahNumber": 4815,
+    "arabicText": "وَلِلَّهِ مَا فِی ٱلسَّمَـٰوَ ٰ⁠تِ وَمَا فِی ٱلۡأَرۡضِ لِیَجۡزِیَ ٱلَّذِینَ أَسَـٰۤـُٔوا۟ بِمَا عَمِلُوا۟ وَیَجۡزِیَ ٱلَّذِینَ أَحۡسَنُوا۟ بِٱلۡحُسۡنَى",
+    "englishTranslation": "And to Allah belongs whatever is in the heavens and whatever is in the earth - that He may recompense those who do evil with [the penalty of] what they have done and recompense those who do good with the best [reward] -",
+    "banglaTranslation": "নভোমন্ডল ও ভূমন্ডলে যা কিছু আছে, সবই আল্লাহর, যাতে তিনি মন্দকর্মীদেরকে তাদের কর্মের প্রতিফল দেন এবং সৎকর্মীদেরকে দেন ভাল ফল।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 32,
+    "globalAyahNumber": 4816,
+    "arabicText": "ٱلَّذِینَ یَجۡتَنِبُونَ كَبَـٰۤىِٕرَ ٱلۡإِثۡمِ وَٱلۡفَوَ ٰ⁠حِشَ إِلَّا ٱللَّمَمَۚ إِنَّ رَبَّكَ وَ ٰ⁠سِعُ ٱلۡمَغۡفِرَةِۚ هُوَ أَعۡلَمُ بِكُمۡ إِذۡ أَنشَأَكُم مِّنَ ٱلۡأَرۡضِ وَإِذۡ أَنتُمۡ أَجِنَّةࣱ فِی بُطُونِ أُمَّهَـٰتِكُمۡۖ فَلَا تُزَكُّوۤا۟ أَنفُسَكُمۡۖ هُوَ أَعۡلَمُ بِمَنِ ٱتَّقَىٰۤ",
+    "englishTranslation": "Those who avoid the major sins and immoralities, only [committing] slight ones. Indeed, your Lord is vast in forgiveness. He was most knowing of you when He produced you from the earth and when you were fetuses in the wombs of your mothers. So do not claim yourselves to be pure; He is most knowing of who fears Him.",
+    "banglaTranslation": "যারা বড় বড় গোনাহ ও অশ্লীলকার্য থেকে বেঁচে থাকে ছোটখাট অপরাধ করলেও নিশ্চয় আপনার পালনকর্তার ক্ষমা সুদূর বিস্তৃত। তিনি তোমাদের সম্পর্কে ভাল জানেন, যখন তিনি তোমাদেরকে সৃষ্টি করেছেন মৃত্তিকা থেকে এবং যখন তোমরা মাতৃগর্ভে কচি শিশু ছিলে। অতএব তোমরা আত্নপ্রশংসা করো না। তিনি ভাল জানেন কে সংযমী।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 33,
+    "globalAyahNumber": 4817,
+    "arabicText": "أَفَرَءَیۡتَ ٱلَّذِی تَوَلَّىٰ",
+    "englishTranslation": "Have you seen the one who turned away",
+    "banglaTranslation": "আপনি কি তাকে দেখেছেন, যে মুখ ফিরিয়ে নেয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 34,
+    "globalAyahNumber": 4818,
+    "arabicText": "وَأَعۡطَىٰ قَلِیلࣰا وَأَكۡدَىٰۤ",
+    "englishTranslation": "And gave a little and [then] refrained?",
+    "banglaTranslation": "এবং দেয় সামান্যই ও পাষাণ হয়ে যায়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 35,
+    "globalAyahNumber": 4819,
+    "arabicText": "أَعِندَهُۥ عِلۡمُ ٱلۡغَیۡبِ فَهُوَ یَرَىٰۤ",
+    "englishTranslation": "Does he have knowledge of the unseen, so he sees?",
+    "banglaTranslation": "তার কাছে কি অদৃশ্যের জ্ঞান আছে যে, সে দেখে?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 36,
+    "globalAyahNumber": 4820,
+    "arabicText": "أَمۡ لَمۡ یُنَبَّأۡ بِمَا فِی صُحُفِ مُوسَىٰ",
+    "englishTranslation": "Or has he not been informed of what was in the scriptures of Moses",
+    "banglaTranslation": "তাকে কি জানানো হয়নি যা আছে মূসার কিতাবে,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 37,
+    "globalAyahNumber": 4821,
+    "arabicText": "وَإِبۡرَ ٰ⁠هِیمَ ٱلَّذِی وَفَّىٰۤ",
+    "englishTranslation": "And [of] Abraham, who fulfilled [his obligations] -",
+    "banglaTranslation": "এবং ইব্রাহীমের কিতাবে, যে তার দায়িত্ব পালন করেছিল?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 38,
+    "globalAyahNumber": 4822,
+    "arabicText": "أَلَّا تَزِرُ وَازِرَةࣱ وِزۡرَ أُخۡرَىٰ",
+    "englishTranslation": "That no bearer of burdens will bear the burden of another",
+    "banglaTranslation": "কিতাবে এই আছে যে, কোন ব্যক্তি কারও গোনাহ নিজে বহন করবে না।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 39,
+    "globalAyahNumber": 4823,
+    "arabicText": "وَأَن لَّیۡسَ لِلۡإِنسَـٰنِ إِلَّا مَا سَعَىٰ",
+    "englishTranslation": "And that there is not for man except that [good] for which he strives",
+    "banglaTranslation": "এবং মানুষ তাই পায়, যা সে করে,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 40,
+    "globalAyahNumber": 4824,
+    "arabicText": "وَأَنَّ سَعۡیَهُۥ سَوۡفَ یُرَىٰ",
+    "englishTranslation": "And that his effort is going to be seen -",
+    "banglaTranslation": "তার কর্ম শীঘ্রই দেখা হবে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 41,
+    "globalAyahNumber": 4825,
+    "arabicText": "ثُمَّ یُجۡزَىٰهُ ٱلۡجَزَاۤءَ ٱلۡأَوۡفَىٰ",
+    "englishTranslation": "Then he will be recompensed for it with the fullest recompense",
+    "banglaTranslation": "অতঃপর তাকে পূর্ণ প্রতিদান দেয়া হবে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 42,
+    "globalAyahNumber": 4826,
+    "arabicText": "وَأَنَّ إِلَىٰ رَبِّكَ ٱلۡمُنتَهَىٰ",
+    "englishTranslation": "And that to your Lord is the finality",
+    "banglaTranslation": "তোমার পালনকর্তার কাছে সবকিছুর সমাপ্তি,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 43,
+    "globalAyahNumber": 4827,
+    "arabicText": "وَأَنَّهُۥ هُوَ أَضۡحَكَ وَأَبۡكَىٰ",
+    "englishTranslation": "And that it is He who makes [one] laugh and weep",
+    "banglaTranslation": "এবং তিনিই হাসান ও কাঁদান"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 44,
+    "globalAyahNumber": 4828,
+    "arabicText": "وَأَنَّهُۥ هُوَ أَمَاتَ وَأَحۡیَا",
+    "englishTranslation": "And that it is He who causes death and gives life",
+    "banglaTranslation": "এবং তিনিই মারেন ও বাঁচান,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 45,
+    "globalAyahNumber": 4829,
+    "arabicText": "وَأَنَّهُۥ خَلَقَ ٱلزَّوۡجَیۡنِ ٱلذَّكَرَ وَٱلۡأُنثَىٰ",
+    "englishTranslation": "And that He creates the two mates - the male and female -",
+    "banglaTranslation": "এবং তিনিই সৃষ্টি করেন যুগল-পুরুষ ও নারী।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 46,
+    "globalAyahNumber": 4830,
+    "arabicText": "مِن نُّطۡفَةٍ إِذَا تُمۡنَىٰ",
+    "englishTranslation": "From a sperm-drop when it is emitted",
+    "banglaTranslation": "একবিন্দু বীর্য থেকে যখন স্খলিত করা হয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 47,
+    "globalAyahNumber": 4831,
+    "arabicText": "وَأَنَّ عَلَیۡهِ ٱلنَّشۡأَةَ ٱلۡأُخۡرَىٰ",
+    "englishTranslation": "And that [incumbent] upon Him is the next creation",
+    "banglaTranslation": "পুনরুত্থানের দায়িত্ব তাঁরই,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 48,
+    "globalAyahNumber": 4832,
+    "arabicText": "وَأَنَّهُۥ هُوَ أَغۡنَىٰ وَأَقۡنَىٰ",
+    "englishTranslation": "And that it is He who enriches and suffices",
+    "banglaTranslation": "এবং তিনিই ধনবান করেন ও সম্পদ দান করেন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 49,
+    "globalAyahNumber": 4833,
+    "arabicText": "وَأَنَّهُۥ هُوَ رَبُّ ٱلشِّعۡرَىٰ",
+    "englishTranslation": "And that it is He who is the Lord of Sirius",
+    "banglaTranslation": "তিনি শিরা নক্ষত্রের মালিক।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 50,
+    "globalAyahNumber": 4834,
+    "arabicText": "وَأَنَّهُۥۤ أَهۡلَكَ عَادًا ٱلۡأُولَىٰ",
+    "englishTranslation": "And that He destroyed the first [people of] 'Aad",
+    "banglaTranslation": "তিনিই প্রথম আদ সম্প্রদায়কে ধ্বংস করেছেন,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 51,
+    "globalAyahNumber": 4835,
+    "arabicText": "وَثَمُودَا۟ فَمَاۤ أَبۡقَىٰ",
+    "englishTranslation": "And Thamud - and He did not spare [them] -",
+    "banglaTranslation": "এবং সামুদকেও; অতঃপর কাউকে অব্যহতি দেননি।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 52,
+    "globalAyahNumber": 4836,
+    "arabicText": "وَقَوۡمَ نُوحࣲ مِّن قَبۡلُۖ إِنَّهُمۡ كَانُوا۟ هُمۡ أَظۡلَمَ وَأَطۡغَىٰ",
+    "englishTranslation": "And the people of Noah before. Indeed, it was they who were [even] more unjust and oppressing.",
+    "banglaTranslation": "এবং তাদের পূর্বে নূহের সম্প্রদায়কে, তারা ছিল আরও জালেম ও অবাধ্য।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 53,
+    "globalAyahNumber": 4837,
+    "arabicText": "وَٱلۡمُؤۡتَفِكَةَ أَهۡوَىٰ",
+    "englishTranslation": "And the overturned towns He hurled down",
+    "banglaTranslation": "তিনিই জনপদকে শুন্যে উত্তোলন করে নিক্ষেপ করেছেন।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 54,
+    "globalAyahNumber": 4838,
+    "arabicText": "فَغَشَّىٰهَا مَا غَشَّىٰ",
+    "englishTranslation": "And covered them by that which He covered.",
+    "banglaTranslation": "অতঃপর তাকে আচ্ছন্ন করে নেয় যা আচ্ছন্ন করার।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 55,
+    "globalAyahNumber": 4839,
+    "arabicText": "فَبِأَیِّ ءَالَاۤءِ رَبِّكَ تَتَمَارَىٰ",
+    "englishTranslation": "Then which of the favors of your Lord do you doubt?",
+    "banglaTranslation": "অতঃপর তুমি তোমার পালনকর্তার কোন অনুগ্রহকে মিথ্যা বলবে?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 56,
+    "globalAyahNumber": 4840,
+    "arabicText": "هَـٰذَا نَذِیرࣱ مِّنَ ٱلنُّذُرِ ٱلۡأُولَىٰۤ",
+    "englishTranslation": "This [Prophet] is a warner like the former warners.",
+    "banglaTranslation": "অতীতের সতর্ককারীদের মধ্যে সে-ও একজন সতর্ককারী।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 57,
+    "globalAyahNumber": 4841,
+    "arabicText": "أَزِفَتِ ٱلۡـَٔازِفَةُ",
+    "englishTranslation": "The Approaching Day has approached.",
+    "banglaTranslation": "কেয়ামত নিকটে এসে গেছে।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 58,
+    "globalAyahNumber": 4842,
+    "arabicText": "لَیۡسَ لَهَا مِن دُونِ ٱللَّهِ كَاشِفَةٌ",
+    "englishTranslation": "Of it, [from those] besides Allah, there is no remover.",
+    "banglaTranslation": "আল্লাহ ব্যতীত কেউ একে প্রকাশ করতে সক্ষম নয়।"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 59,
+    "globalAyahNumber": 4843,
+    "arabicText": "أَفَمِنۡ هَـٰذَا ٱلۡحَدِیثِ تَعۡجَبُونَ",
+    "englishTranslation": "Then at this statement do you wonder?",
+    "banglaTranslation": "তোমরা কি এই বিষয়ে আশ্চর্যবোধ করছ?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 60,
+    "globalAyahNumber": 4844,
+    "arabicText": "وَتَضۡحَكُونَ وَلَا تَبۡكُونَ",
+    "englishTranslation": "And you laugh and do not weep",
+    "banglaTranslation": "এবং হাসছ-ক্রন্দন করছ না?"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 61,
+    "globalAyahNumber": 4845,
+    "arabicText": "وَأَنتُمۡ سَـٰمِدُونَ",
+    "englishTranslation": "While you are proudly sporting?",
+    "banglaTranslation": "তোমরা ক্রীড়া-কৌতুক করছ,"
+  },
+  {
+    "surahNumber": 53,
+    "ayahNumber": 62,
+    "globalAyahNumber": 4846,
+    "arabicText": "فَٱسۡجُدُوا۟ لِلَّهِ وَٱعۡبُدُوا۟ ۩",
+    "englishTranslation": "So prostrate to Allah and worship [Him].",
+    "banglaTranslation": "অতএব আল্লাহকে সেজদা কর এবং তাঁর এবাদত কর।"
+  }
+]

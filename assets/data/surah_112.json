@@ -1,0 +1,34 @@
+[
+  {
+    "surahNumber": 112,
+    "ayahNumber": 1,
+    "globalAyahNumber": 6222,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+    "englishTranslation": "Say, \"He is Allah, [who is] One,",
+    "banglaTranslation": "বলুন, তিনি আল্লাহ, এক,"
+  },
+  {
+    "surahNumber": 112,
+    "ayahNumber": 2,
+    "globalAyahNumber": 6223,
+    "arabicText": "ٱللَّهُ ٱلصَّمَدُ",
+    "englishTranslation": "Allah, the Eternal Refuge.",
+    "banglaTranslation": "আল্লাহ অমুখাপেক্ষী,"
+  },
+  {
+    "surahNumber": 112,
+    "ayahNumber": 3,
+    "globalAyahNumber": 6224,
+    "arabicText": "لَمۡ یَلِدۡ وَلَمۡ یُولَدۡ",
+    "englishTranslation": "He neither begets nor is born,",
+    "banglaTranslation": "তিনি কাউকে জন্ম দেননি এবং কেউ তাকে জন্ম দেয়নি"
+  },
+  {
+    "surahNumber": 112,
+    "ayahNumber": 4,
+    "globalAyahNumber": 6225,
+    "arabicText": "وَلَمۡ یَكُن لَّهُۥ كُفُوًا أَحَدُۢ",
+    "englishTranslation": "Nor is there to Him any equivalent.\"",
+    "banglaTranslation": "এবং তার সমতুল্য কেউ নেই।"
+  }
+]

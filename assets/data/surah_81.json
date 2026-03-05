@@ -1,0 +1,234 @@
+[
+  {
+    "surahNumber": 81,
+    "ayahNumber": 1,
+    "globalAyahNumber": 5801,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ إِذَا ٱلشَّمۡسُ كُوِّرَتۡ",
+    "englishTranslation": "When the sun is wrapped up [in darkness]",
+    "banglaTranslation": "যখন সূর্য আলোহীন হয়ে যাবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 2,
+    "globalAyahNumber": 5802,
+    "arabicText": "وَإِذَا ٱلنُّجُومُ ٱنكَدَرَتۡ",
+    "englishTranslation": "And when the stars fall, dispersing,",
+    "banglaTranslation": "যখন নক্ষত্র মলিন হয়ে যাবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 3,
+    "globalAyahNumber": 5803,
+    "arabicText": "وَإِذَا ٱلۡجِبَالُ سُیِّرَتۡ",
+    "englishTranslation": "And when the mountains are removed",
+    "banglaTranslation": "যখন পর্বতমালা অপসারিত হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 4,
+    "globalAyahNumber": 5804,
+    "arabicText": "وَإِذَا ٱلۡعِشَارُ عُطِّلَتۡ",
+    "englishTranslation": "And when full-term she-camels are neglected",
+    "banglaTranslation": "যখন দশ মাসের গর্ভবতী উষ্ট্রীসমূহ উপেক্ষিত হবে;"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 5,
+    "globalAyahNumber": 5805,
+    "arabicText": "وَإِذَا ٱلۡوُحُوشُ حُشِرَتۡ",
+    "englishTranslation": "And when the wild beasts are gathered",
+    "banglaTranslation": "যখন বন্য পশুরা একত্রিত হয়ে যাবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 6,
+    "globalAyahNumber": 5806,
+    "arabicText": "وَإِذَا ٱلۡبِحَارُ سُجِّرَتۡ",
+    "englishTranslation": "And when the seas are filled with flame",
+    "banglaTranslation": "যখন সমুদ্রকে উত্তাল করে তোলা হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 7,
+    "globalAyahNumber": 5807,
+    "arabicText": "وَإِذَا ٱلنُّفُوسُ زُوِّجَتۡ",
+    "englishTranslation": "And when the souls are paired",
+    "banglaTranslation": "যখন আত্মাসমূহকে যুগল করা হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 8,
+    "globalAyahNumber": 5808,
+    "arabicText": "وَإِذَا ٱلۡمَوۡءُۥدَةُ سُىِٕلَتۡ",
+    "englishTranslation": "And when the girl [who was] buried alive is asked",
+    "banglaTranslation": "যখন জীবন্ত প্রোথিত কন্যাকে জিজ্ঞেস করা হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 9,
+    "globalAyahNumber": 5809,
+    "arabicText": "بِأَیِّ ذَنۢبࣲ قُتِلَتۡ",
+    "englishTranslation": "For what sin she was killed",
+    "banglaTranslation": "কি অপরাধে তাকে হত্য করা হল?"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 10,
+    "globalAyahNumber": 5810,
+    "arabicText": "وَإِذَا ٱلصُّحُفُ نُشِرَتۡ",
+    "englishTranslation": "And when the pages are made public",
+    "banglaTranslation": "যখন আমলনামা খোলা হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 11,
+    "globalAyahNumber": 5811,
+    "arabicText": "وَإِذَا ٱلسَّمَاۤءُ كُشِطَتۡ",
+    "englishTranslation": "And when the sky is stripped away",
+    "banglaTranslation": "যখন আকাশের আবরণ অপসারিত হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 12,
+    "globalAyahNumber": 5812,
+    "arabicText": "وَإِذَا ٱلۡجَحِیمُ سُعِّرَتۡ",
+    "englishTranslation": "And when Hellfire is set ablaze",
+    "banglaTranslation": "যখন জাহান্নামের অগ্নি প্রজ্বলিত করা হবে"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 13,
+    "globalAyahNumber": 5813,
+    "arabicText": "وَإِذَا ٱلۡجَنَّةُ أُزۡلِفَتۡ",
+    "englishTranslation": "And when Paradise is brought near,",
+    "banglaTranslation": "এবং যখন জান্নাত সন্নিকটবর্তী হবে,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 14,
+    "globalAyahNumber": 5814,
+    "arabicText": "عَلِمَتۡ نَفۡسࣱ مَّاۤ أَحۡضَرَتۡ",
+    "englishTranslation": "A soul will [then] know what it has brought [with it].",
+    "banglaTranslation": "তখন প্রত্যেকেই জেনে নিবে সে কি উপস্থিত করেছে।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 15,
+    "globalAyahNumber": 5815,
+    "arabicText": "فَلَاۤ أُقۡسِمُ بِٱلۡخُنَّسِ",
+    "englishTranslation": "So I swear by the retreating stars -",
+    "banglaTranslation": "আমি শপথ করি যেসব নক্ষত্রগুলো পশ্চাতে সরে যায়।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 16,
+    "globalAyahNumber": 5816,
+    "arabicText": "ٱلۡجَوَارِ ٱلۡكُنَّسِ",
+    "englishTranslation": "Those that run [their courses] and disappear -",
+    "banglaTranslation": "চলমান হয় ও অদৃশ্য হয়,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 17,
+    "globalAyahNumber": 5817,
+    "arabicText": "وَٱلَّیۡلِ إِذَا عَسۡعَسَ",
+    "englishTranslation": "And by the night as it closes in",
+    "banglaTranslation": "শপথ নিশাবসান ও"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 18,
+    "globalAyahNumber": 5818,
+    "arabicText": "وَٱلصُّبۡحِ إِذَا تَنَفَّسَ",
+    "englishTranslation": "And by the dawn when it breathes",
+    "banglaTranslation": "প্রভাত আগমন কালের,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 19,
+    "globalAyahNumber": 5819,
+    "arabicText": "إِنَّهُۥ لَقَوۡلُ رَسُولࣲ كَرِیمࣲ",
+    "englishTranslation": "[That] indeed, the Qur'an is a word [conveyed by] a noble messenger",
+    "banglaTranslation": "নিশ্চয় কোরআন সম্মানিত রসূলের আনীত বাণী,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 20,
+    "globalAyahNumber": 5820,
+    "arabicText": "ذِی قُوَّةٍ عِندَ ذِی ٱلۡعَرۡشِ مَكِینࣲ",
+    "englishTranslation": "[Who is] possessed of power and with the Owner of the Throne, secure [in position],",
+    "banglaTranslation": "যিনি শক্তিশালী, আরশের মালিকের নিকট মর্যাদাশালী,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 21,
+    "globalAyahNumber": 5821,
+    "arabicText": "مُّطَاعࣲ ثَمَّ أَمِینࣲ",
+    "englishTranslation": "Obeyed there [in the heavens] and trustworthy.",
+    "banglaTranslation": "সবার মান্যবর, সেখানকার বিশ্বাসভাজন।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 22,
+    "globalAyahNumber": 5822,
+    "arabicText": "وَمَا صَاحِبُكُم بِمَجۡنُونࣲ",
+    "englishTranslation": "And your companion is not [at all] mad.",
+    "banglaTranslation": "এবং তোমাদের সাথী পাগল নন।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 23,
+    "globalAyahNumber": 5823,
+    "arabicText": "وَلَقَدۡ رَءَاهُ بِٱلۡأُفُقِ ٱلۡمُبِینِ",
+    "englishTranslation": "And he has already seen Gabriel in the clear horizon.",
+    "banglaTranslation": "তিনি সেই ফেরেশতাকে প্রকাশ্য দিগন্তে দেখেছেন।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 24,
+    "globalAyahNumber": 5824,
+    "arabicText": "وَمَا هُوَ عَلَى ٱلۡغَیۡبِ بِضَنِینࣲ",
+    "englishTranslation": "And Muhammad is not a withholder of [knowledge of] the unseen.",
+    "banglaTranslation": "তিনি অদৃশ্য বিষয় বলতে কৃপনতা করেন না।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 25,
+    "globalAyahNumber": 5825,
+    "arabicText": "وَمَا هُوَ بِقَوۡلِ شَیۡطَـٰنࣲ رَّجِیمࣲ",
+    "englishTranslation": "And the Qur'an is not the word of a devil, expelled [from the heavens].",
+    "banglaTranslation": "এটা বিতাড়িত শয়তানের উক্তি নয়।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 26,
+    "globalAyahNumber": 5826,
+    "arabicText": "فَأَیۡنَ تَذۡهَبُونَ",
+    "englishTranslation": "So where are you going?",
+    "banglaTranslation": "অতএব, তোমরা কোথায় যাচ্ছ?"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 27,
+    "globalAyahNumber": 5827,
+    "arabicText": "إِنۡ هُوَ إِلَّا ذِكۡرࣱ لِّلۡعَـٰلَمِینَ",
+    "englishTranslation": "It is not except a reminder to the worlds",
+    "banglaTranslation": "এটা তো কেবল বিশ্বাবাসীদের জন্যে উপদেশ,"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 28,
+    "globalAyahNumber": 5828,
+    "arabicText": "لِمَن شَاۤءَ مِنكُمۡ أَن یَسۡتَقِیمَ",
+    "englishTranslation": "For whoever wills among you to take a right course.",
+    "banglaTranslation": "তার জন্যে, যে তোমাদের মধ্যে সোজা চলতে চায়।"
+  },
+  {
+    "surahNumber": 81,
+    "ayahNumber": 29,
+    "globalAyahNumber": 5829,
+    "arabicText": "وَمَا تَشَاۤءُونَ إِلَّاۤ أَن یَشَاۤءَ ٱللَّهُ رَبُّ ٱلۡعَـٰلَمِینَ",
+    "englishTranslation": "And you do not will except that Allah wills - Lord of the worlds.",
+    "banglaTranslation": "তোমরা আল্লাহ রাব্বুল আলামীনের অভিপ্রায়ের বাইরে অন্য কিছুই ইচ্ছা করতে পার না।"
+  }
+]

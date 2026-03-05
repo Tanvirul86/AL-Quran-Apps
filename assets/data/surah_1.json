@@ -1,0 +1,58 @@
+[
+  {
+    "surahNumber": 1,
+    "ayahNumber": 1,
+    "globalAyahNumber": 1,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ",
+    "englishTranslation": "In the name of Allah, the Entirely Merciful, the Especially Merciful.",
+    "banglaTranslation": "শুরু করছি আল্লাহর নামে যিনি পরম করুণাময়, অতি দয়ালু।"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 2,
+    "globalAyahNumber": 2,
+    "arabicText": "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَـٰلَمِینَ",
+    "englishTranslation": "[All] praise is [due] to Allah, Lord of the worlds -",
+    "banglaTranslation": "যাবতীয় প্রশংসা আল্লাহ তাআলার যিনি সকল সৃষ্টি জগতের পালনকর্তা।"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 3,
+    "globalAyahNumber": 3,
+    "arabicText": "ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ",
+    "englishTranslation": "The Entirely Merciful, the Especially Merciful,",
+    "banglaTranslation": "যিনি নিতান্ত মেহেরবান ও দয়ালু।"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 4,
+    "globalAyahNumber": 4,
+    "arabicText": "مَـٰلِكِ یَوۡمِ ٱلدِّینِ",
+    "englishTranslation": "Sovereign of the Day of Recompense.",
+    "banglaTranslation": "যিনি বিচার দিনের মালিক।"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 5,
+    "globalAyahNumber": 5,
+    "arabicText": "إِیَّاكَ نَعۡبُدُ وَإِیَّاكَ نَسۡتَعِینُ",
+    "englishTranslation": "It is You we worship and You we ask for help.",
+    "banglaTranslation": "আমরা একমাত্র তোমারই ইবাদত করি এবং শুধুমাত্র তোমারই সাহায্য প্রার্থনা করি।"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 6,
+    "globalAyahNumber": 6,
+    "arabicText": "ٱهۡدِنَا ٱلصِّرَ ٰ⁠طَ ٱلۡمُسۡتَقِیمَ",
+    "englishTranslation": "Guide us to the straight path -",
+    "banglaTranslation": "আমাদেরকে সরল পথ দেখাও,"
+  },
+  {
+    "surahNumber": 1,
+    "ayahNumber": 7,
+    "globalAyahNumber": 7,
+    "arabicText": "صِرَ ٰ⁠طَ ٱلَّذِینَ أَنۡعَمۡتَ عَلَیۡهِمۡ غَیۡرِ ٱلۡمَغۡضُوبِ عَلَیۡهِمۡ وَلَا ٱلضَّاۤلِّینَ",
+    "englishTranslation": "The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.",
+    "banglaTranslation": "সে সমস্ত লোকের পথ, যাদেরকে তুমি নেয়ামত দান করেছ। তাদের পথ নয়, যাদের প্রতি তোমার গজব নাযিল হয়েছে এবং যারা পথভ্রষ্ট হয়েছে।"
+  }
+]

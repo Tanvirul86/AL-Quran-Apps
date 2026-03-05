@@ -1,0 +1,322 @@
+[
+  {
+    "surahNumber": 78,
+    "ayahNumber": 1,
+    "globalAyahNumber": 5673,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ عَمَّ یَتَسَاۤءَلُونَ",
+    "englishTranslation": "About what are they asking one another?",
+    "banglaTranslation": "তারা পরস্পরে কি বিষয়ে জিজ্ঞাসাবাদ করছে?"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 2,
+    "globalAyahNumber": 5674,
+    "arabicText": "عَنِ ٱلنَّبَإِ ٱلۡعَظِیمِ",
+    "englishTranslation": "About the great news -",
+    "banglaTranslation": "মহা সংবাদ সম্পর্কে,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 3,
+    "globalAyahNumber": 5675,
+    "arabicText": "ٱلَّذِی هُمۡ فِیهِ مُخۡتَلِفُونَ",
+    "englishTranslation": "That over which they are in disagreement.",
+    "banglaTranslation": "যে সম্পর্কে তারা মতানৈক্য করে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 4,
+    "globalAyahNumber": 5676,
+    "arabicText": "كَلَّا سَیَعۡلَمُونَ",
+    "englishTranslation": "No! They are going to know.",
+    "banglaTranslation": "না, সত্ত্বরই তারা জানতে পারবে,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 5,
+    "globalAyahNumber": 5677,
+    "arabicText": "ثُمَّ كَلَّا سَیَعۡلَمُونَ",
+    "englishTranslation": "Then, no! They are going to know.",
+    "banglaTranslation": "অতঃপর না, সত্বর তারা জানতে পারবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 6,
+    "globalAyahNumber": 5678,
+    "arabicText": "أَلَمۡ نَجۡعَلِ ٱلۡأَرۡضَ مِهَـٰدࣰا",
+    "englishTranslation": "Have We not made the earth a resting place?",
+    "banglaTranslation": "আমি কি করিনি ভূমিকে বিছানা"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 7,
+    "globalAyahNumber": 5679,
+    "arabicText": "وَٱلۡجِبَالَ أَوۡتَادࣰا",
+    "englishTranslation": "And the mountains as stakes?",
+    "banglaTranslation": "এবং পর্বতমালাকে পেরেক?"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 8,
+    "globalAyahNumber": 5680,
+    "arabicText": "وَخَلَقۡنَـٰكُمۡ أَزۡوَ ٰ⁠جࣰا",
+    "englishTranslation": "And We created you in pairs",
+    "banglaTranslation": "আমি তোমাদেরকে জোড়া জোড়া সৃষ্টি করেছি,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 9,
+    "globalAyahNumber": 5681,
+    "arabicText": "وَجَعَلۡنَا نَوۡمَكُمۡ سُبَاتࣰا",
+    "englishTranslation": "And made your sleep [a means for] rest",
+    "banglaTranslation": "তোমাদের নিদ্রাকে করেছি ক্লান্তি দূরকারী,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 10,
+    "globalAyahNumber": 5682,
+    "arabicText": "وَجَعَلۡنَا ٱلَّیۡلَ لِبَاسࣰا",
+    "englishTranslation": "And made the night as clothing",
+    "banglaTranslation": "রাত্রিকে করেছি আবরণ।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 11,
+    "globalAyahNumber": 5683,
+    "arabicText": "وَجَعَلۡنَا ٱلنَّهَارَ مَعَاشࣰا",
+    "englishTranslation": "And made the day for livelihood",
+    "banglaTranslation": "দিনকে করেছি জীবিকা অর্জনের সময়,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 12,
+    "globalAyahNumber": 5684,
+    "arabicText": "وَبَنَیۡنَا فَوۡقَكُمۡ سَبۡعࣰا شِدَادࣰا",
+    "englishTranslation": "And constructed above you seven strong [heavens]",
+    "banglaTranslation": "নির্মান করেছি তোমাদের মাথার উপর মজবুত সপ্ত-আকাশ।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 13,
+    "globalAyahNumber": 5685,
+    "arabicText": "وَجَعَلۡنَا سِرَاجࣰا وَهَّاجࣰا",
+    "englishTranslation": "And made [therein] a burning lamp",
+    "banglaTranslation": "এবং একটি উজ্জ্বল প্রদীপ সৃষ্টি করেছি।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 14,
+    "globalAyahNumber": 5686,
+    "arabicText": "وَأَنزَلۡنَا مِنَ ٱلۡمُعۡصِرَ ٰ⁠تِ مَاۤءࣰ ثَجَّاجࣰا",
+    "englishTranslation": "And sent down, from the rain clouds, pouring water",
+    "banglaTranslation": "আমি জলধর মেঘমালা থেকে প্রচুর বৃষ্টিপাত করি,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 15,
+    "globalAyahNumber": 5687,
+    "arabicText": "لِّنُخۡرِجَ بِهِۦ حَبࣰّا وَنَبَاتࣰا",
+    "englishTranslation": "That We may bring forth thereby grain and vegetation",
+    "banglaTranslation": "যাতে তদ্দ্বারা উৎপন্ন করি শস্য, উদ্ভিদ।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 16,
+    "globalAyahNumber": 5688,
+    "arabicText": "وَجَنَّـٰتٍ أَلۡفَافًا",
+    "englishTranslation": "And gardens of entwined growth.",
+    "banglaTranslation": "ও পাতাঘন উদ্যান।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 17,
+    "globalAyahNumber": 5689,
+    "arabicText": "إِنَّ یَوۡمَ ٱلۡفَصۡلِ كَانَ مِیقَـٰتࣰا",
+    "englishTranslation": "Indeed, the Day of Judgement is an appointed time -",
+    "banglaTranslation": "নিশ্চয় বিচার দিবস নির্ধারিত রয়েছে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 18,
+    "globalAyahNumber": 5690,
+    "arabicText": "یَوۡمَ یُنفَخُ فِی ٱلصُّورِ فَتَأۡتُونَ أَفۡوَاجࣰا",
+    "englishTranslation": "The Day the Horn is blown and you will come forth in multitudes",
+    "banglaTranslation": "যেদিন শিংগায় ফুঁক দেয়া হবে, তখন তোমরা দলে দলে সমাগত হবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 19,
+    "globalAyahNumber": 5691,
+    "arabicText": "وَفُتِحَتِ ٱلسَّمَاۤءُ فَكَانَتۡ أَبۡوَ ٰ⁠بࣰا",
+    "englishTranslation": "And the heaven is opened and will become gateways",
+    "banglaTranslation": "আকাশ বিদীর্ণ হয়ে; তাতে বহু দরজা সৃষ্টি হবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 20,
+    "globalAyahNumber": 5692,
+    "arabicText": "وَسُیِّرَتِ ٱلۡجِبَالُ فَكَانَتۡ سَرَابًا",
+    "englishTranslation": "And the mountains are removed and will be [but] a mirage.",
+    "banglaTranslation": "এবং পর্বতমালা চালিত হয়ে মরীচিকা হয়ে যাবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 21,
+    "globalAyahNumber": 5693,
+    "arabicText": "إِنَّ جَهَنَّمَ كَانَتۡ مِرۡصَادࣰا",
+    "englishTranslation": "Indeed, Hell has been lying in wait",
+    "banglaTranslation": "নিশ্চয় জাহান্নাম প্রতীক্ষায় থাকবে,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 22,
+    "globalAyahNumber": 5694,
+    "arabicText": "لِّلطَّـٰغِینَ مَـَٔابࣰا",
+    "englishTranslation": "For the transgressors, a place of return,",
+    "banglaTranslation": "সীমালংঘনকারীদের আশ্রয়স্থলরূপে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 23,
+    "globalAyahNumber": 5695,
+    "arabicText": "لَّـٰبِثِینَ فِیهَاۤ أَحۡقَابࣰا",
+    "englishTranslation": "In which they will remain for ages [unending].",
+    "banglaTranslation": "তারা তথায় শতাব্দীর পর শতাব্দী অবস্থান করবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 24,
+    "globalAyahNumber": 5696,
+    "arabicText": "لَّا یَذُوقُونَ فِیهَا بَرۡدࣰا وَلَا شَرَابًا",
+    "englishTranslation": "They will not taste therein [any] coolness or drink",
+    "banglaTranslation": "তথায় তারা কোন শীতল এবং পানীয় আস্বাদন করবে না;"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 25,
+    "globalAyahNumber": 5697,
+    "arabicText": "إِلَّا حَمِیمࣰا وَغَسَّاقࣰا",
+    "englishTranslation": "Except scalding water and [foul] purulence -",
+    "banglaTranslation": "কিন্তু ফুটন্ত পানি ও পূঁজ পাবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 26,
+    "globalAyahNumber": 5698,
+    "arabicText": "جَزَاۤءࣰ وِفَاقًا",
+    "englishTranslation": "An appropriate recompense.",
+    "banglaTranslation": "পরিপূর্ণ প্রতিফল হিসেবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 27,
+    "globalAyahNumber": 5699,
+    "arabicText": "إِنَّهُمۡ كَانُوا۟ لَا یَرۡجُونَ حِسَابࣰا",
+    "englishTranslation": "Indeed, they were not expecting an account",
+    "banglaTranslation": "নিশ্চয় তারা হিসাব-নিকাশ আশা করত না।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 28,
+    "globalAyahNumber": 5700,
+    "arabicText": "وَكَذَّبُوا۟ بِـَٔایَـٰتِنَا كِذَّابࣰا",
+    "englishTranslation": "And denied Our verses with [emphatic] denial.",
+    "banglaTranslation": "এবং আমার আয়াতসমূহে পুরোপুরি মিথ্যারোপ করত।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 29,
+    "globalAyahNumber": 5701,
+    "arabicText": "وَكُلَّ شَیۡءٍ أَحۡصَیۡنَـٰهُ كِتَـٰبࣰا",
+    "englishTranslation": "But all things We have enumerated in writing.",
+    "banglaTranslation": "আমি সবকিছুই লিপিবদ্ধ করে সংরক্ষিত করেছি।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 30,
+    "globalAyahNumber": 5702,
+    "arabicText": "فَذُوقُوا۟ فَلَن نَّزِیدَكُمۡ إِلَّا عَذَابًا",
+    "englishTranslation": "\"So taste [the penalty], and never will We increase you except in torment.\"",
+    "banglaTranslation": "অতএব, তোমরা আস্বাদন কর, আমি কেবল তোমাদের শাস্তিই বৃদ্ধি করব।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 31,
+    "globalAyahNumber": 5703,
+    "arabicText": "إِنَّ لِلۡمُتَّقِینَ مَفَازًا",
+    "englishTranslation": "Indeed, for the righteous is attainment -",
+    "banglaTranslation": "পরহেযগারদের জন্যে রয়েছে সাফল্য।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 32,
+    "globalAyahNumber": 5704,
+    "arabicText": "حَدَاۤىِٕقَ وَأَعۡنَـٰبࣰا",
+    "englishTranslation": "Gardens and grapevines",
+    "banglaTranslation": "উদ্যান, আঙ্গুর,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 33,
+    "globalAyahNumber": 5705,
+    "arabicText": "وَكَوَاعِبَ أَتۡرَابࣰا",
+    "englishTranslation": "And full-breasted [companions] of equal age",
+    "banglaTranslation": "সমবয়স্কা, পূর্ণযৌবনা তরুণী।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 34,
+    "globalAyahNumber": 5706,
+    "arabicText": "وَكَأۡسࣰا دِهَاقࣰا",
+    "englishTranslation": "And a full cup.",
+    "banglaTranslation": "এবং পূর্ণ পানপাত্র।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 35,
+    "globalAyahNumber": 5707,
+    "arabicText": "لَّا یَسۡمَعُونَ فِیهَا لَغۡوࣰا وَلَا كِذَّ ٰ⁠بࣰا",
+    "englishTranslation": "No ill speech will they hear therein or any falsehood -",
+    "banglaTranslation": "তারা তথায় অসার ও মিথ্যা বাক্য শুনবে না।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 36,
+    "globalAyahNumber": 5708,
+    "arabicText": "جَزَاۤءࣰ مِّن رَّبِّكَ عَطَاۤءً حِسَابࣰا",
+    "englishTranslation": "[As] reward from your Lord, [a generous] gift [made due by] account,",
+    "banglaTranslation": "এটা আপনার পালনকর্তার তরফ থেকে যথোচিত দান,"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 37,
+    "globalAyahNumber": 5709,
+    "arabicText": "رَّبِّ ٱلسَّمَـٰوَ ٰ⁠تِ وَٱلۡأَرۡضِ وَمَا بَیۡنَهُمَا ٱلرَّحۡمَـٰنِۖ لَا یَمۡلِكُونَ مِنۡهُ خِطَابࣰا",
+    "englishTranslation": "[From] the Lord of the heavens and the earth and whatever is between them, the Most Merciful. They possess not from Him [authority for] speech.",
+    "banglaTranslation": "যিনি নভোমন্ডল, ভূমন্ডল ও এতদুভয়ের মধ্যবর্তী সবকিছুর পালনকর্তা, দয়াময়, কেউ তাঁর সাথে কথার অধিকারী হবে না।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 38,
+    "globalAyahNumber": 5710,
+    "arabicText": "یَوۡمَ یَقُومُ ٱلرُّوحُ وَٱلۡمَلَـٰۤىِٕكَةُ صَفࣰّاۖ لَّا یَتَكَلَّمُونَ إِلَّا مَنۡ أَذِنَ لَهُ ٱلرَّحۡمَـٰنُ وَقَالَ صَوَابࣰا",
+    "englishTranslation": "The Day that the Spirit and the angels will stand in rows, they will not speak except for one whom the Most Merciful permits, and he will say what is correct.",
+    "banglaTranslation": "যেদিন রূহ ও ফেরেশতাগণ সারিবদ্ধভাবে দাঁড়াবে। দয়াময় আল্লাহ যাকে অনুমতি দিবেন, সে ব্যতিত কেউ কথা বলতে পারবে না এবং সে সত্যকথা বলবে।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 39,
+    "globalAyahNumber": 5711,
+    "arabicText": "ذَ ٰ⁠لِكَ ٱلۡیَوۡمُ ٱلۡحَقُّۖ فَمَن شَاۤءَ ٱتَّخَذَ إِلَىٰ رَبِّهِۦ مَـَٔابًا",
+    "englishTranslation": "That is the True Day; so he who wills may take to his Lord a [way of] return.",
+    "banglaTranslation": "এই দিবস সত্য। অতঃপর যার ইচ্ছা, সে তার পালনকর্তার কাছে ঠিকানা তৈরী করুক।"
+  },
+  {
+    "surahNumber": 78,
+    "ayahNumber": 40,
+    "globalAyahNumber": 5712,
+    "arabicText": "إِنَّاۤ أَنذَرۡنَـٰكُمۡ عَذَابࣰا قَرِیبࣰا یَوۡمَ یَنظُرُ ٱلۡمَرۡءُ مَا قَدَّمَتۡ یَدَاهُ وَیَقُولُ ٱلۡكَافِرُ یَـٰلَیۡتَنِی كُنتُ تُرَ ٰ⁠بَۢا",
+    "englishTranslation": "Indeed, We have warned you of a near punishment on the Day when a man will observe what his hands have put forth and the disbeliever will say, \"Oh, I wish that I were dust!\"",
+    "banglaTranslation": "আমি তোমাদেরকে আসন্ন শাস্তি সম্পর্কে সতর্ক করলাম, যেদিন মানুষ প্রত্যেক্ষ করবে যা সে সামনে প্রেরণ করেছে এবং কাফের বলবেঃ হায়, আফসোস-আমি যদি মাটি হয়ে যেতাম।"
+  }
+]

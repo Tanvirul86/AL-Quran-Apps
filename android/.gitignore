@@ -1,0 +1,16 @@
+gradle-wrapper.jar
+/.gradle
+/captures/
+/gradlew
+/gradlew.bat
+/local.properties
+GeneratedPluginRegistrant.java
+
+# Keystore files - NEVER commit these!
+*.jks
+*.keystore
+key.properties
+upload-keystore.jks
+
+# Firebase config - add your own
+google-services.json

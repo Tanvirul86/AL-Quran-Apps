@@ -1,0 +1,946 @@
+[
+  {
+    "surahNumber": 23,
+    "ayahNumber": 1,
+    "globalAyahNumber": 2674,
+    "arabicText": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ قَدۡ أَفۡلَحَ ٱلۡمُؤۡمِنُونَ",
+    "englishTranslation": "Certainly will the believers have succeeded:",
+    "banglaTranslation": "মুমিনগণ সফলকাম হয়ে গেছে,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 2,
+    "globalAyahNumber": 2675,
+    "arabicText": "ٱلَّذِینَ هُمۡ فِی صَلَاتِهِمۡ خَـٰشِعُونَ",
+    "englishTranslation": "They who are during their prayer humbly submissive",
+    "banglaTranslation": "যারা নিজেদের নামাযে বিনয়-নম্র;"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 3,
+    "globalAyahNumber": 2676,
+    "arabicText": "وَٱلَّذِینَ هُمۡ عَنِ ٱللَّغۡوِ مُعۡرِضُونَ",
+    "englishTranslation": "And they who turn away from ill speech",
+    "banglaTranslation": "যারা অনর্থক কথা-বার্তায় নির্লিপ্ত,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 4,
+    "globalAyahNumber": 2677,
+    "arabicText": "وَٱلَّذِینَ هُمۡ لِلزَّكَوٰةِ فَـٰعِلُونَ",
+    "englishTranslation": "And they who are observant of zakah",
+    "banglaTranslation": "যারা যাকাত দান করে থাকে"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 5,
+    "globalAyahNumber": 2678,
+    "arabicText": "وَٱلَّذِینَ هُمۡ لِفُرُوجِهِمۡ حَـٰفِظُونَ",
+    "englishTranslation": "And they who guard their private parts",
+    "banglaTranslation": "এবং যারা নিজেদের যৌনাঙ্গকে সংযত রাখে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 6,
+    "globalAyahNumber": 2679,
+    "arabicText": "إِلَّا عَلَىٰۤ أَزۡوَ ٰ⁠جِهِمۡ أَوۡ مَا مَلَكَتۡ أَیۡمَـٰنُهُمۡ فَإِنَّهُمۡ غَیۡرُ مَلُومِینَ",
+    "englishTranslation": "Except from their wives or those their right hands possess, for indeed, they will not be blamed -",
+    "banglaTranslation": "তবে তাদের স্ত্রী ও মালিকানাভুক্ত দাসীদের ক্ষেত্রে সংযত না রাখলে তারা তিরস্কৃত হবে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 7,
+    "globalAyahNumber": 2680,
+    "arabicText": "فَمَنِ ٱبۡتَغَىٰ وَرَاۤءَ ذَ ٰ⁠لِكَ فَأُو۟لَـٰۤىِٕكَ هُمُ ٱلۡعَادُونَ",
+    "englishTranslation": "But whoever seeks beyond that, then those are the transgressors -",
+    "banglaTranslation": "অতঃপর কেউ এদেরকে ছাড়া অন্যকে কামনা করলে তারা সীমালংঘনকারী হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 8,
+    "globalAyahNumber": 2681,
+    "arabicText": "وَٱلَّذِینَ هُمۡ لِأَمَـٰنَـٰتِهِمۡ وَعَهۡدِهِمۡ رَ ٰ⁠عُونَ",
+    "englishTranslation": "And they who are to their trusts and their promises attentive",
+    "banglaTranslation": "এবং যারা আমানত ও অঙ্গীকার সম্পর্কে হুশিয়ার থাকে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 9,
+    "globalAyahNumber": 2682,
+    "arabicText": "وَٱلَّذِینَ هُمۡ عَلَىٰ صَلَوَ ٰ⁠تِهِمۡ یُحَافِظُونَ",
+    "englishTranslation": "And they who carefully maintain their prayers -",
+    "banglaTranslation": "এবং যারা তাদের নামাযসমূহের খবর রাখে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 10,
+    "globalAyahNumber": 2683,
+    "arabicText": "أُو۟لَـٰۤىِٕكَ هُمُ ٱلۡوَ ٰ⁠رِثُونَ",
+    "englishTranslation": "Those are the inheritors",
+    "banglaTranslation": "তারাই উত্তরাধিকার লাভ করবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 11,
+    "globalAyahNumber": 2684,
+    "arabicText": "ٱلَّذِینَ یَرِثُونَ ٱلۡفِرۡدَوۡسَ هُمۡ فِیهَا خَـٰلِدُونَ",
+    "englishTranslation": "Who will inherit al-Firdaus. They will abide therein eternally.",
+    "banglaTranslation": "তারা শীতল ছায়াময় উদ্যানের উত্তরাধিকার লাভ করবে। তারা তাতে চিরকাল থাকবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 12,
+    "globalAyahNumber": 2685,
+    "arabicText": "وَلَقَدۡ خَلَقۡنَا ٱلۡإِنسَـٰنَ مِن سُلَـٰلَةࣲ مِّن طِینࣲ",
+    "englishTranslation": "And certainly did We create man from an extract of clay.",
+    "banglaTranslation": "আমি মানুষকে মাটির সারাংশ থেকে সৃষ্টি করেছি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 13,
+    "globalAyahNumber": 2686,
+    "arabicText": "ثُمَّ جَعَلۡنَـٰهُ نُطۡفَةࣰ فِی قَرَارࣲ مَّكِینࣲ",
+    "englishTranslation": "Then We placed him as a sperm-drop in a firm lodging.",
+    "banglaTranslation": "অতঃপর আমি তাকে শুক্রবিন্দু রূপে এক সংরক্ষিত আধারে স্থাপন করেছি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 14,
+    "globalAyahNumber": 2687,
+    "arabicText": "ثُمَّ خَلَقۡنَا ٱلنُّطۡفَةَ عَلَقَةࣰ فَخَلَقۡنَا ٱلۡعَلَقَةَ مُضۡغَةࣰ فَخَلَقۡنَا ٱلۡمُضۡغَةَ عِظَـٰمࣰا فَكَسَوۡنَا ٱلۡعِظَـٰمَ لَحۡمࣰا ثُمَّ أَنشَأۡنَـٰهُ خَلۡقًا ءَاخَرَۚ فَتَبَارَكَ ٱللَّهُ أَحۡسَنُ ٱلۡخَـٰلِقِینَ",
+    "englishTranslation": "Then We made the sperm-drop into a clinging clot, and We made the clot into a lump [of flesh], and We made [from] the lump, bones, and We covered the bones with flesh; then We developed him into another creation. So blessed is Allah, the best of creators.",
+    "banglaTranslation": "এরপর আমি শুক্রবিন্দুকে জমাট রক্তরূপে সৃষ্টি করেছি, অতঃপর জমাট রক্তকে মাংসপিন্ডে পরিণত করেছি, এরপর সেই মাংসপিন্ড থেকে অস্থি সৃষ্টি করেছি, অতঃপর অস্থিকে মাংস দ্বারা আবৃত করেছি, অবশেষে তাকে নতুন রূপে দাঁড় করিয়েছি। নিপুণতম সৃষ্টিকর্তা আল্লাহ কত কল্যাণময়।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 15,
+    "globalAyahNumber": 2688,
+    "arabicText": "ثُمَّ إِنَّكُم بَعۡدَ ذَ ٰ⁠لِكَ لَمَیِّتُونَ",
+    "englishTranslation": "Then indeed, after that you are to die.",
+    "banglaTranslation": "এরপর তোমরা মৃত্যুবরণ করবে"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 16,
+    "globalAyahNumber": 2689,
+    "arabicText": "ثُمَّ إِنَّكُمۡ یَوۡمَ ٱلۡقِیَـٰمَةِ تُبۡعَثُونَ",
+    "englishTranslation": "Then indeed you, on the Day of Resurrection, will be resurrected.",
+    "banglaTranslation": "অতঃপর কেয়ামতের দিন তোমরা পুনরুত্থিত হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 17,
+    "globalAyahNumber": 2690,
+    "arabicText": "وَلَقَدۡ خَلَقۡنَا فَوۡقَكُمۡ سَبۡعَ طَرَاۤىِٕقَ وَمَا كُنَّا عَنِ ٱلۡخَلۡقِ غَـٰفِلِینَ",
+    "englishTranslation": "And We have created above you seven layered heavens, and never have We been of [Our] creation unaware.",
+    "banglaTranslation": "আমি তোমাদের উপর সুপ্তপথ সৃষ্টি করেছি এবং আমি সৃষ্টি সম্বন্ধে অনবধান নই।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 18,
+    "globalAyahNumber": 2691,
+    "arabicText": "وَأَنزَلۡنَا مِنَ ٱلسَّمَاۤءِ مَاۤءَۢ بِقَدَرࣲ فَأَسۡكَنَّـٰهُ فِی ٱلۡأَرۡضِۖ وَإِنَّا عَلَىٰ ذَهَابِۭ بِهِۦ لَقَـٰدِرُونَ",
+    "englishTranslation": "And We have sent down rain from the sky in a measured amount and settled it in the earth. And indeed, We are Able to take it away.",
+    "banglaTranslation": "আমি আকাশ থেকে পানি বর্ষণ করে থাকি পরিমাণ মত অতঃপর আমি জমিনে সংরক্ষণ করি এবং আমি তা অপসারণও করতে সক্ষম।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 19,
+    "globalAyahNumber": 2692,
+    "arabicText": "فَأَنشَأۡنَا لَكُم بِهِۦ جَنَّـٰتࣲ مِّن نَّخِیلࣲ وَأَعۡنَـٰبࣲ لَّكُمۡ فِیهَا فَوَ ٰ⁠كِهُ كَثِیرَةࣱ وَمِنۡهَا تَأۡكُلُونَ",
+    "englishTranslation": "And We brought forth for you thereby gardens of palm trees and grapevines in which for you are abundant fruits and from which you eat.",
+    "banglaTranslation": "অতঃপর আমি তা দ্বারা তোমাদের জন্যে খেজুর ও আঙ্গুরের বাগান সৃষ্টি করেছি। তোমাদের জন্যে এতে প্রচুর ফল আছে এবং তোমরা তা থেকে আহার করে থাক।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 20,
+    "globalAyahNumber": 2693,
+    "arabicText": "وَشَجَرَةࣰ تَخۡرُجُ مِن طُورِ سَیۡنَاۤءَ تَنۢبُتُ بِٱلدُّهۡنِ وَصِبۡغࣲ لِّلۡـَٔاكِلِینَ",
+    "englishTranslation": "And [We brought forth] a tree issuing from Mount Sinai which produces oil and food for those who eat.",
+    "banglaTranslation": "এবং ঐ বৃক্ষ সৃষ্টি করেছি, যা সিনাই পর্বতে জন্মায় এবং আহারকারীদের জন্যে তৈল ও ব্যঞ্জন উৎপন্ন করে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 21,
+    "globalAyahNumber": 2694,
+    "arabicText": "وَإِنَّ لَكُمۡ فِی ٱلۡأَنۡعَـٰمِ لَعِبۡرَةࣰۖ نُّسۡقِیكُم مِّمَّا فِی بُطُونِهَا وَلَكُمۡ فِیهَا مَنَـٰفِعُ كَثِیرَةࣱ وَمِنۡهَا تَأۡكُلُونَ",
+    "englishTranslation": "And indeed, for you in livestock is a lesson. We give you drink from that which is in their bellies, and for you in them are numerous benefits, and from them you eat.",
+    "banglaTranslation": "এবং তোমাদের জন্যে চতুস্পদ জন্তু সমূহের মধ্যে চিন্তা করার বিষয় রয়েছে। আমি তোমাদেরকে তাদের উদরস্থিত বস্তু থেকে পান করাই এবং তোমাদের জন্যে তাদের মধ্যে প্রচুর উপকারিতা আছে। তোমরা তাদের কতককে ভক্ষণ কর।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 22,
+    "globalAyahNumber": 2695,
+    "arabicText": "وَعَلَیۡهَا وَعَلَى ٱلۡفُلۡكِ تُحۡمَلُونَ",
+    "englishTranslation": "And upon them and on ships you are carried.",
+    "banglaTranslation": "তাদের পিঠে ও জলযানে তোমরা আরোহণ করে চলাফেরা করে থাক।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 23,
+    "globalAyahNumber": 2696,
+    "arabicText": "وَلَقَدۡ أَرۡسَلۡنَا نُوحًا إِلَىٰ قَوۡمِهِۦ فَقَالَ یَـٰقَوۡمِ ٱعۡبُدُوا۟ ٱللَّهَ مَا لَكُم مِّنۡ إِلَـٰهٍ غَیۡرُهُۥۤۚ أَفَلَا تَتَّقُونَ",
+    "englishTranslation": "And We had certainly sent Noah to his people, and he said, \"O my people, worship Allah; you have no deity other than Him; then will you not fear Him?\"",
+    "banglaTranslation": "আমি নূহকে তার সম্প্রদায়ের কাছে প্রেরণ করেছিলাম। সে বলেছিলঃ হে আমার সম্প্রদায়, তোমরা আল্লাহর বন্দেগী কর। তিনি ব্যতীত তোমাদের কোন মাবুদ নেই। তোমরা কি ভয় কর না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 24,
+    "globalAyahNumber": 2697,
+    "arabicText": "فَقَالَ ٱلۡمَلَؤُا۟ ٱلَّذِینَ كَفَرُوا۟ مِن قَوۡمِهِۦ مَا هَـٰذَاۤ إِلَّا بَشَرࣱ مِّثۡلُكُمۡ یُرِیدُ أَن یَتَفَضَّلَ عَلَیۡكُمۡ وَلَوۡ شَاۤءَ ٱللَّهُ لَأَنزَلَ مَلَـٰۤىِٕكَةࣰ مَّا سَمِعۡنَا بِهَـٰذَا فِیۤ ءَابَاۤىِٕنَا ٱلۡأَوَّلِینَ",
+    "englishTranslation": "But the eminent among those who disbelieved from his people said, \"This is not but a man like yourselves who wishes to take precedence over you; and if Allah had willed [to send a messenger], He would have sent down angels. We have not heard of this among our forefathers.",
+    "banglaTranslation": "তখন তার সম্প্রদায়ের কাফের-প্রধানরা বলেছিলঃ এ তো তোমাদের মতই একজন মানুষ বৈ নয়। সে তোমাদের উপর নেতৃত্ব করতে চায়। আল্লাহ ইচ্ছা করলে ফেরেশতাই নাযিল করতেন। আমরা আমাদের পূর্বপুরুষদের মধ্যে এরূপ কথা শুনিনি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 25,
+    "globalAyahNumber": 2698,
+    "arabicText": "إِنۡ هُوَ إِلَّا رَجُلُۢ بِهِۦ جِنَّةࣱ فَتَرَبَّصُوا۟ بِهِۦ حَتَّىٰ حِینࣲ",
+    "englishTranslation": "He is not but a man possessed with madness, so wait concerning him for a time.\"",
+    "banglaTranslation": "সে তো এক উম্মাদ ব্যক্তি বৈ নয়। সুতরাং কিছুকাল তার ব্যাপারে অপেক্ষা কর।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 26,
+    "globalAyahNumber": 2699,
+    "arabicText": "قَالَ رَبِّ ٱنصُرۡنِی بِمَا كَذَّبُونِ",
+    "englishTranslation": "[Noah] said, \"My Lord, support me because they have denied me.\"",
+    "banglaTranslation": "নূহ বলেছিলঃ হে আমার পালনকর্তা, আমাকে সাহায্য কর; কেননা, তারা আমাকে মিথ্যাবাদী বলছে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 27,
+    "globalAyahNumber": 2700,
+    "arabicText": "فَأَوۡحَیۡنَاۤ إِلَیۡهِ أَنِ ٱصۡنَعِ ٱلۡفُلۡكَ بِأَعۡیُنِنَا وَوَحۡیِنَا فَإِذَا جَاۤءَ أَمۡرُنَا وَفَارَ ٱلتَّنُّورُ فَٱسۡلُكۡ فِیهَا مِن كُلࣲّ زَوۡجَیۡنِ ٱثۡنَیۡنِ وَأَهۡلَكَ إِلَّا مَن سَبَقَ عَلَیۡهِ ٱلۡقَوۡلُ مِنۡهُمۡۖ وَلَا تُخَـٰطِبۡنِی فِی ٱلَّذِینَ ظَلَمُوۤا۟ إِنَّهُم مُّغۡرَقُونَ",
+    "englishTranslation": "So We inspired to him, \"Construct the ship under Our observation, and Our inspiration, and when Our command comes and the oven overflows, put into the ship from each [creature] two mates and your family, except those for whom the decree [of destruction] has proceeded. And do not address Me concerning those who have wronged; indeed, they are to be drowned.",
+    "banglaTranslation": "অতঃপর আমি তার কাছে আদেশ প্রেরণ করলাম যে, তুমি আমার দৃষ্টির সামনে এবং আমার নির্দেশে নৌকা তৈরী কর। এরপর যখন আমার আদেশ আসে এবং চুল্লী প্লাবিত হয়, তখন নৌকায় তুলে নাও, প্রত্যেক জীবের এক এক জোড়া এবং তোমার পরিবারবর্গকে, তাদের মধ্যে যাদের বিপক্ষে পূর্বে সিদ্ধান্ত নেয়া হয়েছে তাদের ছাড়া। এবং তুমি জালেমদের সম্পর্কে আমাকে কিছু বলো না। নিশ্চয় তারা নিমজ্জত হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 28,
+    "globalAyahNumber": 2701,
+    "arabicText": "فَإِذَا ٱسۡتَوَیۡتَ أَنتَ وَمَن مَّعَكَ عَلَى ٱلۡفُلۡكِ فَقُلِ ٱلۡحَمۡدُ لِلَّهِ ٱلَّذِی نَجَّىٰنَا مِنَ ٱلۡقَوۡمِ ٱلظَّـٰلِمِینَ",
+    "englishTranslation": "And when you have boarded the ship, you and those with you, then say, 'Praise to Allah who has saved us from the wrongdoing people.'",
+    "banglaTranslation": "যখন তুমি ও তোমার সঙ্গীরা নৌকায় আরোহণ করবে, তখন বলঃ আল্লাহর শোকর, যিনি আমাদেরকে জালেম সম্প্রদায়ের কবল থেকে উদ্ধার করেছেন।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 29,
+    "globalAyahNumber": 2702,
+    "arabicText": "وَقُل رَّبِّ أَنزِلۡنِی مُنزَلࣰا مُّبَارَكࣰا وَأَنتَ خَیۡرُ ٱلۡمُنزِلِینَ",
+    "englishTranslation": "And say, 'My Lord, let me land at a blessed landing place, and You are the best to accommodate [us].' \"",
+    "banglaTranslation": "আরও বলঃ পালনকর্তা, আমাকে কল্যাণকর ভাবে নামিয়ে দাও, তুমি শ্রেষ্ঠ অবতারণকারী।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 30,
+    "globalAyahNumber": 2703,
+    "arabicText": "إِنَّ فِی ذَ ٰ⁠لِكَ لَـَٔایَـٰتࣲ وَإِن كُنَّا لَمُبۡتَلِینَ",
+    "englishTranslation": "Indeed in that are signs, and indeed, We are ever testing [Our servants].",
+    "banglaTranslation": "এতে নিদর্শনাবলী রয়েছে এবং আমি পরীক্ষাকারী।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 31,
+    "globalAyahNumber": 2704,
+    "arabicText": "ثُمَّ أَنشَأۡنَا مِنۢ بَعۡدِهِمۡ قَرۡنًا ءَاخَرِینَ",
+    "englishTranslation": "Then We produced after them a generation of others.",
+    "banglaTranslation": "অতঃপর অন্য এক সম্প্রদায় আমি তার স্থলাভিষিক্ত করেছিলাম।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 32,
+    "globalAyahNumber": 2705,
+    "arabicText": "فَأَرۡسَلۡنَا فِیهِمۡ رَسُولࣰا مِّنۡهُمۡ أَنِ ٱعۡبُدُوا۟ ٱللَّهَ مَا لَكُم مِّنۡ إِلَـٰهٍ غَیۡرُهُۥۤۚ أَفَلَا تَتَّقُونَ",
+    "englishTranslation": "And We sent among them a messenger from themselves, [saying], \"Worship Allah; you have no deity other than Him; then will you not fear Him?\"",
+    "banglaTranslation": "এবং তাদেরই একজনকে তাদের মধ্যে রসূলরূপে প্রেরণ করেছিলাম এই বলে যে, তোমরা আল্লাহর বন্দেগী কর। তিনি ব্যতীত তোমাদের অন্য কোন মাবুদ নেই। তবুও কি তোমরা ভয় করবে না?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 33,
+    "globalAyahNumber": 2706,
+    "arabicText": "وَقَالَ ٱلۡمَلَأُ مِن قَوۡمِهِ ٱلَّذِینَ كَفَرُوا۟ وَكَذَّبُوا۟ بِلِقَاۤءِ ٱلۡـَٔاخِرَةِ وَأَتۡرَفۡنَـٰهُمۡ فِی ٱلۡحَیَوٰةِ ٱلدُّنۡیَا مَا هَـٰذَاۤ إِلَّا بَشَرࣱ مِّثۡلُكُمۡ یَأۡكُلُ مِمَّا تَأۡكُلُونَ مِنۡهُ وَیَشۡرَبُ مِمَّا تَشۡرَبُونَ",
+    "englishTranslation": "And the eminent among his people who disbelieved and denied the meeting of the Hereafter while We had given them luxury in the worldly life said, \"This is not but a man like yourselves. He eats of that from which you eat and drinks of what you drink.",
+    "banglaTranslation": "তাঁর সম্প্রদায়ের প্রধানরা যারা কাফের ছিল, পরকালের সাক্ষাতকে মিথ্যা বলত এবং যাদেরকে আমি পার্থিব জীবনে সুখ-স্বাচ্ছন্দ্য দিয়েছিলাম, তারা বললঃ এতো আমাদের মতই একজন মানুষ বৈ নয়। তোমরা যা খাও, সেও তাই খায় এবং তোমরা যা পান কর, সেও তাই পান করে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 34,
+    "globalAyahNumber": 2707,
+    "arabicText": "وَلَىِٕنۡ أَطَعۡتُم بَشَرࣰا مِّثۡلَكُمۡ إِنَّكُمۡ إِذࣰا لَّخَـٰسِرُونَ",
+    "englishTranslation": "And if you should obey a man like yourselves, indeed, you would then be losers.",
+    "banglaTranslation": "যদি তোমরা তোমাদের মতই একজন মানুষের আনুগত্য কর, তবে তোমরা নিশ্চিতরূপেই ক্ষতিগ্রস্ত হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 35,
+    "globalAyahNumber": 2708,
+    "arabicText": "أَیَعِدُكُمۡ أَنَّكُمۡ إِذَا مِتُّمۡ وَكُنتُمۡ تُرَابࣰا وَعِظَـٰمًا أَنَّكُم مُّخۡرَجُونَ",
+    "englishTranslation": "Does he promise you that when you have died and become dust and bones that you will be brought forth [once more]?",
+    "banglaTranslation": "সে কি তোমাদেরকে এই ওয়াদা দেয় যে, তোমরা মারা গেলে এবং মৃত্তিকা ও অস্থিতে পরিণত হলে তোমাদেরকে পুনরুজ্জীবিত করা হবে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 36,
+    "globalAyahNumber": 2709,
+    "arabicText": "۞ هَیۡهَاتَ هَیۡهَاتَ لِمَا تُوعَدُونَ",
+    "englishTranslation": "How far, how far, is that which you are promised.",
+    "banglaTranslation": "তোমাদেরকে যে ওয়াদা দেয়া হচ্ছে, তা কোথায় হতে পারে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 37,
+    "globalAyahNumber": 2710,
+    "arabicText": "إِنۡ هِیَ إِلَّا حَیَاتُنَا ٱلدُّنۡیَا نَمُوتُ وَنَحۡیَا وَمَا نَحۡنُ بِمَبۡعُوثِینَ",
+    "englishTranslation": "Life is not but our worldly life - we die and live, but we will not be resurrected.",
+    "banglaTranslation": "আমাদের পার্থিবজীবনই একমাত্র জীবন। আমরা মরি ও বাঁচি এখানেই এবং আমারা পুনরুত্থিত হবো না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 38,
+    "globalAyahNumber": 2711,
+    "arabicText": "إِنۡ هُوَ إِلَّا رَجُلٌ ٱفۡتَرَىٰ عَلَى ٱللَّهِ كَذِبࣰا وَمَا نَحۡنُ لَهُۥ بِمُؤۡمِنِینَ",
+    "englishTranslation": "He is not but a man who has invented a lie about Allah, and we will not believe him.\"",
+    "banglaTranslation": "সে তো এমন ব্যক্তি বৈ নয়, যে আল্লাহ সম্বন্ধে মিথ্যা উদ্ভাবন করেছে এবং আমরা তাকে বিশ্বাস করি না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 39,
+    "globalAyahNumber": 2712,
+    "arabicText": "قَالَ رَبِّ ٱنصُرۡنِی بِمَا كَذَّبُونِ",
+    "englishTranslation": "He said, \"My Lord, support me because they have denied me.\"",
+    "banglaTranslation": "তিনি বললেনঃ হে আমার পালনকর্তা, আমাকে সাহায্য কর, কারণ তারা আমাকে মিথ্যাবাদী বলছে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 40,
+    "globalAyahNumber": 2713,
+    "arabicText": "قَالَ عَمَّا قَلِیلࣲ لَّیُصۡبِحُنَّ نَـٰدِمِینَ",
+    "englishTranslation": "[Allah] said, \"After a little, they will surely become regretful.\"",
+    "banglaTranslation": "আল্লাহ বললেনঃ কিছু দিনের মধ্যে তারা সকাল বেলা অনুতপ্ত হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 41,
+    "globalAyahNumber": 2714,
+    "arabicText": "فَأَخَذَتۡهُمُ ٱلصَّیۡحَةُ بِٱلۡحَقِّ فَجَعَلۡنَـٰهُمۡ غُثَاۤءࣰۚ فَبُعۡدࣰا لِّلۡقَوۡمِ ٱلظَّـٰلِمِینَ",
+    "englishTranslation": "So the shriek seized them in truth, and We made them as [plant] stubble. Then away with the wrongdoing people.",
+    "banglaTranslation": "অতঃপর সত্য সত্যই এক ভয়ংকর শব্দ তাদেরকে হতচকিত করল এবং আমি তাদেরকে বাত্যা-তাড়িত আবর্জনা সদৃশ করে দিলাম। অতঃপর ধ্বংস হোক পাপী সম্প্রদায়।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 42,
+    "globalAyahNumber": 2715,
+    "arabicText": "ثُمَّ أَنشَأۡنَا مِنۢ بَعۡدِهِمۡ قُرُونًا ءَاخَرِینَ",
+    "englishTranslation": "Then We produced after them other generations.",
+    "banglaTranslation": "এরপর তাদের পরে আমি বহু সম্প্রদায় সৃষ্টি করেছি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 43,
+    "globalAyahNumber": 2716,
+    "arabicText": "مَا تَسۡبِقُ مِنۡ أُمَّةٍ أَجَلَهَا وَمَا یَسۡتَـٔۡخِرُونَ",
+    "englishTranslation": "No nation will precede its time [of termination], nor will they remain [thereafter].",
+    "banglaTranslation": "কোন সম্প্রদায় তার নির্দিষ্ট কালের অগ্রে যেতে পারে না। এবং পশ্চাতেও থকাতে পারে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 44,
+    "globalAyahNumber": 2717,
+    "arabicText": "ثُمَّ أَرۡسَلۡنَا رُسُلَنَا تَتۡرَاۖ كُلَّ مَا جَاۤءَ أُمَّةࣰ رَّسُولُهَا كَذَّبُوهُۖ فَأَتۡبَعۡنَا بَعۡضَهُم بَعۡضࣰا وَجَعَلۡنَـٰهُمۡ أَحَادِیثَۚ فَبُعۡدࣰا لِّقَوۡمࣲ لَّا یُؤۡمِنُونَ",
+    "englishTranslation": "Then We sent Our messengers in succession. Every time there came to a nation its messenger, they denied him, so We made them follow one another [to destruction], and We made them narrations. So away with a people who do not believe.",
+    "banglaTranslation": "এরপর আমি একাদিক্রমে আমার রসূল প্রেরণ করেছি। যখনই কোন উম্মতের কাছে তাঁর রসূল আগমন করেছেন, তখনই তারা তাঁকে মিথ্যাবাদী বলেছে। অতঃপর আমি তাদের একের পর এক ধ্বংস করেছি এবং তাদেরকে কাহিনীর বিষয়ে পরিণত করেছি। সুতরাং ধ্বংস হোক অবিশ্বাসীরা।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 45,
+    "globalAyahNumber": 2718,
+    "arabicText": "ثُمَّ أَرۡسَلۡنَا مُوسَىٰ وَأَخَاهُ هَـٰرُونَ بِـَٔایَـٰتِنَا وَسُلۡطَـٰنࣲ مُّبِینٍ",
+    "englishTranslation": "Then We sent Moses and his brother Aaron with Our signs and a clear authority",
+    "banglaTranslation": "অতঃপর আমি মূসা ও হারুণকে প্রেরণ করেছিলাম আমার নিদর্শনাবলী ও সুস্পষ্ট সনদসহ,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 46,
+    "globalAyahNumber": 2719,
+    "arabicText": "إِلَىٰ فِرۡعَوۡنَ وَمَلَإِی۟هِۦ فَٱسۡتَكۡبَرُوا۟ وَكَانُوا۟ قَوۡمًا عَالِینَ",
+    "englishTranslation": "To Pharaoh and his establishment, but they were arrogant and were a haughty people.",
+    "banglaTranslation": "ফেরআউন ও তার অমাত্যদের কাছে। অতঃপর তারা অহংকার করল এবং তারা উদ্ধত সম্প্রদায় ছিল।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 47,
+    "globalAyahNumber": 2720,
+    "arabicText": "فَقَالُوۤا۟ أَنُؤۡمِنُ لِبَشَرَیۡنِ مِثۡلِنَا وَقَوۡمُهُمَا لَنَا عَـٰبِدُونَ",
+    "englishTranslation": "They said, \"Should we believe two men like ourselves while their people are for us in servitude?\"",
+    "banglaTranslation": "তারা বললঃ আমরা কি আমাদের মতই এ দুই ব্যক্তিতে বিশ্বাস স্থাপন করব; অথচ তাদের সম্প্রদায় আমাদের দাস?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 48,
+    "globalAyahNumber": 2721,
+    "arabicText": "فَكَذَّبُوهُمَا فَكَانُوا۟ مِنَ ٱلۡمُهۡلَكِینَ",
+    "englishTranslation": "So they denied them and were of those destroyed.",
+    "banglaTranslation": "অতঃপর তারা উভয়কে মিথ্যাবাদী বলল। ফলে তারা ধ্বংস প্রাপ্ত হল।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 49,
+    "globalAyahNumber": 2722,
+    "arabicText": "وَلَقَدۡ ءَاتَیۡنَا مُوسَى ٱلۡكِتَـٰبَ لَعَلَّهُمۡ یَهۡتَدُونَ",
+    "englishTranslation": "And We certainly gave Moses the Scripture that perhaps they would be guided.",
+    "banglaTranslation": "আমি মূসাকে কিতাব দিয়েছিলাম যাতে তারা সৎপথ পায়।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 50,
+    "globalAyahNumber": 2723,
+    "arabicText": "وَجَعَلۡنَا ٱبۡنَ مَرۡیَمَ وَأُمَّهُۥۤ ءَایَةࣰ وَءَاوَیۡنَـٰهُمَاۤ إِلَىٰ رَبۡوَةࣲ ذَاتِ قَرَارࣲ وَمَعِینࣲ",
+    "englishTranslation": "And We made the son of Mary and his mother a sign and sheltered them within a high ground having level [areas] and flowing water.",
+    "banglaTranslation": "এবং আমি মরিয়ম তনয় ও তাঁর মাতাকে এক নিদর্শন দান করেছিলাম। এবং তাদেরকে এক অবস্থানযোগ্য স্বচ্ছ পানি বিশিষ্ট টিলায় আশ্রয় দিয়েছিলাম।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 51,
+    "globalAyahNumber": 2724,
+    "arabicText": "یَـٰۤأَیُّهَا ٱلرُّسُلُ كُلُوا۟ مِنَ ٱلطَّیِّبَـٰتِ وَٱعۡمَلُوا۟ صَـٰلِحًاۖ إِنِّی بِمَا تَعۡمَلُونَ عَلِیمࣱ",
+    "englishTranslation": "[Allah said], \"O messengers, eat from the good foods and work righteousness. Indeed, I, of what you do, am Knowing.",
+    "banglaTranslation": "হে রসূলগণ, পবিত্র বস্তু আহার করুন এবং সৎকাজ করুন। আপনারা যা করেন সে বিষয়ে আমি পরিজ্ঞাত।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 52,
+    "globalAyahNumber": 2725,
+    "arabicText": "وَإِنَّ هَـٰذِهِۦۤ أُمَّتُكُمۡ أُمَّةࣰ وَ ٰ⁠حِدَةࣰ وَأَنَا۠ رَبُّكُمۡ فَٱتَّقُونِ",
+    "englishTranslation": "And indeed this, your religion, is one religion, and I am your Lord, so fear Me.\"",
+    "banglaTranslation": "আপনাদের এই উম্মত সব তো একই ধর্মের অনুসারী এবং আমি আপনাদের পালনকর্তা; অতএব আমাকে ভয় করুন।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 53,
+    "globalAyahNumber": 2726,
+    "arabicText": "فَتَقَطَّعُوۤا۟ أَمۡرَهُم بَیۡنَهُمۡ زُبُرࣰاۖ كُلُّ حِزۡبِۭ بِمَا لَدَیۡهِمۡ فَرِحُونَ",
+    "englishTranslation": "But the people divided their religion among them into sects - each faction, in what it has, rejoicing.",
+    "banglaTranslation": "অতঃপর মানুষ তাদের বিষয়কে বহুধা বিভক্ত করে দিয়েছে। প্রত্যেক সম্প্রদায় নিজ নিজ মতবাদ নিয়ে আনন্দিত হচ্ছে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 54,
+    "globalAyahNumber": 2727,
+    "arabicText": "فَذَرۡهُمۡ فِی غَمۡرَتِهِمۡ حَتَّىٰ حِینٍ",
+    "englishTranslation": "So leave them in their confusion for a time.",
+    "banglaTranslation": "অতএব তাদের কিছু কালের জন্যে তাদের অজ্ঞানতায় নিমজ্জত থাকতে দিন।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 55,
+    "globalAyahNumber": 2728,
+    "arabicText": "أَیَحۡسَبُونَ أَنَّمَا نُمِدُّهُم بِهِۦ مِن مَّالࣲ وَبَنِینَ",
+    "englishTranslation": "Do they think that what We extend to them of wealth and children",
+    "banglaTranslation": "তারা কি মনে করে যে, আমি তাদেরকে ধন-সম্পদ ও সন্তান-সন্ততি দিয়ে যাচ্ছি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 56,
+    "globalAyahNumber": 2729,
+    "arabicText": "نُسَارِعُ لَهُمۡ فِی ٱلۡخَیۡرَ ٰ⁠تِۚ بَل لَّا یَشۡعُرُونَ",
+    "englishTranslation": "Is [because] We hasten for them good things? Rather, they do not perceive.",
+    "banglaTranslation": "তাতে করে তাদেরকে দ্রুত মঙ্গলের দিকে নিয়ে যাচ্ছি? বরং তারা বোঝে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 57,
+    "globalAyahNumber": 2730,
+    "arabicText": "إِنَّ ٱلَّذِینَ هُم مِّنۡ خَشۡیَةِ رَبِّهِم مُّشۡفِقُونَ",
+    "englishTranslation": "Indeed, they who are apprehensive from fear of their Lord",
+    "banglaTranslation": "নিশ্চয় যারা তাদের পালনকর্তার ভয়ে সন্ত্রস্ত,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 58,
+    "globalAyahNumber": 2731,
+    "arabicText": "وَٱلَّذِینَ هُم بِـَٔایَـٰتِ رَبِّهِمۡ یُؤۡمِنُونَ",
+    "englishTranslation": "And they who believe in the signs of their Lord",
+    "banglaTranslation": "যারা তাদের পালনকর্তার কথায় বিশ্বাস স্থাপন করে,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 59,
+    "globalAyahNumber": 2732,
+    "arabicText": "وَٱلَّذِینَ هُم بِرَبِّهِمۡ لَا یُشۡرِكُونَ",
+    "englishTranslation": "And they who do not associate anything with their Lord",
+    "banglaTranslation": "যারা তাদের পালনকর্তার সাথে কাউকে শরীক করে না"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 60,
+    "globalAyahNumber": 2733,
+    "arabicText": "وَٱلَّذِینَ یُؤۡتُونَ مَاۤ ءَاتَوا۟ وَّقُلُوبُهُمۡ وَجِلَةٌ أَنَّهُمۡ إِلَىٰ رَبِّهِمۡ رَ ٰ⁠جِعُونَ",
+    "englishTranslation": "And they who give what they give while their hearts are fearful because they will be returning to their Lord -",
+    "banglaTranslation": "এবং যারা যা দান করবার, তা ভীত, কম্পিত হৃদয়ে এ কারণে দান করে যে, তারা তাদের পালনকর্তার কাছে প্রত্যাবর্তন করবে,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 61,
+    "globalAyahNumber": 2734,
+    "arabicText": "أُو۟لَـٰۤىِٕكَ یُسَـٰرِعُونَ فِی ٱلۡخَیۡرَ ٰ⁠تِ وَهُمۡ لَهَا سَـٰبِقُونَ",
+    "englishTranslation": "It is those who hasten to good deeds, and they outstrip [others] therein.",
+    "banglaTranslation": "তারাই কল্যাণ দ্রুত অর্জন করে এবং তারা তাতে অগ্রগামী।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 62,
+    "globalAyahNumber": 2735,
+    "arabicText": "وَلَا نُكَلِّفُ نَفۡسًا إِلَّا وُسۡعَهَاۚ وَلَدَیۡنَا كِتَـٰبࣱ یَنطِقُ بِٱلۡحَقِّ وَهُمۡ لَا یُظۡلَمُونَ",
+    "englishTranslation": "And We charge no soul except [with that within] its capacity, and with Us is a record which speaks with truth; and they will not be wronged.",
+    "banglaTranslation": "আমি কাউকে তার সাধ্যাতীত দায়িত্ব অর্পন করি না। আমার এক কিতাব আছে, যা সত্য ব্যক্ত করে এবং তাদের প্রতি জুলুম করা হবে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 63,
+    "globalAyahNumber": 2736,
+    "arabicText": "بَلۡ قُلُوبُهُمۡ فِی غَمۡرَةࣲ مِّنۡ هَـٰذَا وَلَهُمۡ أَعۡمَـٰلࣱ مِّن دُونِ ذَ ٰ⁠لِكَ هُمۡ لَهَا عَـٰمِلُونَ",
+    "englishTranslation": "But their hearts are covered with confusion over this, and they have [evil] deeds besides disbelief which they are doing,",
+    "banglaTranslation": "না, তাদের অন্তর এ বিষয়ে অজ্ঞানতায় আচ্ছন্ন, এ ছাড়া তাদের আরও কাজ রয়েছে, যা তারা করছে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 64,
+    "globalAyahNumber": 2737,
+    "arabicText": "حَتَّىٰۤ إِذَاۤ أَخَذۡنَا مُتۡرَفِیهِم بِٱلۡعَذَابِ إِذَا هُمۡ یَجۡـَٔرُونَ",
+    "englishTranslation": "Until when We seize their affluent ones with punishment, at once they are crying [to Allah] for help.",
+    "banglaTranslation": "এমনকি, যখন আমি তাদের ঐশ্বর্যশালী লোকদেরকে শাস্তি দ্বারা পাকড়াও করব, তখনই তারা চীৎকার জুড়ে দেবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 65,
+    "globalAyahNumber": 2738,
+    "arabicText": "لَا تَجۡـَٔرُوا۟ ٱلۡیَوۡمَۖ إِنَّكُم مِّنَّا لَا تُنصَرُونَ",
+    "englishTranslation": "Do not cry out today. Indeed, by Us you will not be helped.",
+    "banglaTranslation": "অদ্য চীৎকার করো না। তোমরা আমার কাছ থেকে নিস্কৃতি পাবে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 66,
+    "globalAyahNumber": 2739,
+    "arabicText": "قَدۡ كَانَتۡ ءَایَـٰتِی تُتۡلَىٰ عَلَیۡكُمۡ فَكُنتُمۡ عَلَىٰۤ أَعۡقَـٰبِكُمۡ تَنكِصُونَ",
+    "englishTranslation": "My verses had already been recited to you, but you were turning back on your heels",
+    "banglaTranslation": "তোমাদেরকে আমার আয়াতসমূহ শোনানো হত, তখন তোমরা উল্টো পায়ে সরে পড়তে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 67,
+    "globalAyahNumber": 2740,
+    "arabicText": "مُسۡتَكۡبِرِینَ بِهِۦ سَـٰمِرࣰا تَهۡجُرُونَ",
+    "englishTranslation": "In arrogance regarding it, conversing by night, speaking evil.",
+    "banglaTranslation": "অহংকার করে এ বিষয়ে অর্থহীন গল্প-গুজব করে যেতে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 68,
+    "globalAyahNumber": 2741,
+    "arabicText": "أَفَلَمۡ یَدَّبَّرُوا۟ ٱلۡقَوۡلَ أَمۡ جَاۤءَهُم مَّا لَمۡ یَأۡتِ ءَابَاۤءَهُمُ ٱلۡأَوَّلِینَ",
+    "englishTranslation": "Then have they not reflected over the Qur'an, or has there come to them that which had not come to their forefathers?",
+    "banglaTranslation": "অতএব তারা কি এই কালাম সম্পꦣ2503;ক চিন্তা-ভাবনা করে না? না তাদের কাছে এমন কিছু এসেছে, যা তাদের পিতৃপুরুষদের কাছে আসেনি?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 69,
+    "globalAyahNumber": 2742,
+    "arabicText": "أَمۡ لَمۡ یَعۡرِفُوا۟ رَسُولَهُمۡ فَهُمۡ لَهُۥ مُنكِرُونَ",
+    "englishTranslation": "Or did they not know their Messenger, so they are toward him disacknowledging?",
+    "banglaTranslation": "না তারা তাদের রসূলকে চেনে না, ফলে তারা তাঁকে অস্বীকার করে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 70,
+    "globalAyahNumber": 2743,
+    "arabicText": "أَمۡ یَقُولُونَ بِهِۦ جِنَّةُۢۚ بَلۡ جَاۤءَهُم بِٱلۡحَقِّ وَأَكۡثَرُهُمۡ لِلۡحَقِّ كَـٰرِهُونَ",
+    "englishTranslation": "Or do they say, \"In him is madness?\" Rather, he brought them the truth, but most of them, to the truth, are averse.",
+    "banglaTranslation": "না তারা বলে যে, তিনি পাগল ? বরং তিনি তাদের কাছে সত্য নিয়ে আগমন করেছেন এবং তাদের অধিকাংশ সত্যকে অপছন্দ করে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 71,
+    "globalAyahNumber": 2744,
+    "arabicText": "وَلَوِ ٱتَّبَعَ ٱلۡحَقُّ أَهۡوَاۤءَهُمۡ لَفَسَدَتِ ٱلسَّمَـٰوَ ٰ⁠تُ وَٱلۡأَرۡضُ وَمَن فِیهِنَّۚ بَلۡ أَتَیۡنَـٰهُم بِذِكۡرِهِمۡ فَهُمۡ عَن ذِكۡرِهِم مُّعۡرِضُونَ",
+    "englishTranslation": "But if the Truth had followed their inclinations, the heavens and the earth and whoever is in them would have been ruined. Rather, We have brought them their message, but they, from their message, are turning away.",
+    "banglaTranslation": "সত্য যদি তাদের কাছে কামনা-বাসনার অনুসারী হত, তবে নভোমন্ডল ও ভূমন্ডল এবং এগুলোর মধ্যবর্তꦣ2496; সবকিছুই বিশৃঙ্খল হয়ে পড়ত। বরং আমি তাদেরকে দান করেছি উপদেশ, কিন্তু তারা তাদের উপদেশ অনুধাবন করে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 72,
+    "globalAyahNumber": 2745,
+    "arabicText": "أَمۡ تَسۡـَٔلُهُمۡ خَرۡجࣰا فَخَرَاجُ رَبِّكَ خَیۡرࣱۖ وَهُوَ خَیۡرُ ٱلرَّ ٰ⁠زِقِینَ",
+    "englishTranslation": "Or do you, [O Muhammad], ask them for payment? But the reward of your Lord is best, and He is the best of providers.",
+    "banglaTranslation": "না আপনি তাদের কাছে কোন প্রতিদান চান? আপনার পালনকর্তার প্রতিদান উত্তম এবং তিনিই রিযিকদাতা।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 73,
+    "globalAyahNumber": 2746,
+    "arabicText": "وَإِنَّكَ لَتَدۡعُوهُمۡ إِلَىٰ صِرَ ٰ⁠طࣲ مُّسۡتَقِیمࣲ",
+    "englishTranslation": "And indeed, you invite them to a straight path.",
+    "banglaTranslation": "আপনি তো তাদেরকে সোজা পথে দাওয়াত দিচ্ছেন;"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 74,
+    "globalAyahNumber": 2747,
+    "arabicText": "وَإِنَّ ٱلَّذِینَ لَا یُؤۡمِنُونَ بِٱلۡـَٔاخِرَةِ عَنِ ٱلصِّرَ ٰ⁠طِ لَنَـٰكِبُونَ",
+    "englishTranslation": "But indeed, those who do not believe in the Hereafter are deviating from the path.",
+    "banglaTranslation": "আর যারা পরকালে বিশ্বাস করে না, তারা সোজা পথ থেকে বিচ্যুত হয়ে গেছে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 75,
+    "globalAyahNumber": 2748,
+    "arabicText": "۞ وَلَوۡ رَحِمۡنَـٰهُمۡ وَكَشَفۡنَا مَا بِهِم مِّن ضُرࣲّ لَّلَجُّوا۟ فِی طُغۡیَـٰنِهِمۡ یَعۡمَهُونَ",
+    "englishTranslation": "And even if We gave them mercy and removed what was upon them of affliction, they would persist in their transgression, wandering blindly.",
+    "banglaTranslation": "যদি আমি তাদের প্রতি দয়া করি এবং তাদের কষ্ট দূর করে দেই, তবুও তারা তাদের অবাধ্যতায় দিশেহারা হয়ে লেগে থাকবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 76,
+    "globalAyahNumber": 2749,
+    "arabicText": "وَلَقَدۡ أَخَذۡنَـٰهُم بِٱلۡعَذَابِ فَمَا ٱسۡتَكَانُوا۟ لِرَبِّهِمۡ وَمَا یَتَضَرَّعُونَ",
+    "englishTranslation": "And We had gripped them with suffering [as a warning], but they did not yield to their Lord, nor did they humbly supplicate, [and will continue thus]",
+    "banglaTranslation": "আমি তাদেরকে শাস্তি দ্বারা পাকড়াও করেছিলাম, কিন্তু তারা তাদের পালনকর্তার সামনে নত হল না এবং কাকুতি-মিনুতিও করল না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 77,
+    "globalAyahNumber": 2750,
+    "arabicText": "حَتَّىٰۤ إِذَا فَتَحۡنَا عَلَیۡهِم بَابࣰا ذَا عَذَابࣲ شَدِیدٍ إِذَا هُمۡ فِیهِ مُبۡلِسُونَ",
+    "englishTranslation": "Until when We have opened before them a door of severe punishment, immediately they will be therein in despair.",
+    "banglaTranslation": "অবশেষে যখন আমি তাদের জন্য কঠিন শাস্তির দ্বার খুলে দেব, তখন তাতে তাদের আশা ভঙ্গ হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 78,
+    "globalAyahNumber": 2751,
+    "arabicText": "وَهُوَ ٱلَّذِیۤ أَنشَأَ لَكُمُ ٱلسَّمۡعَ وَٱلۡأَبۡصَـٰرَ وَٱلۡأَفۡـِٔدَةَۚ قَلِیلࣰا مَّا تَشۡكُرُونَ",
+    "englishTranslation": "And it is He who produced for you hearing and vision and hearts; little are you grateful.",
+    "banglaTranslation": "তিনি তোমাদের কান, চোখ ও অন্তঃকরণ সৃষ্টি করেছেন; তোমরা খুবই অল্প কৃতজ্ঞতা স্বীকার করে থাক।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 79,
+    "globalAyahNumber": 2752,
+    "arabicText": "وَهُوَ ٱلَّذِی ذَرَأَكُمۡ فِی ٱلۡأَرۡضِ وَإِلَیۡهِ تُحۡشَرُونَ",
+    "englishTranslation": "And it is He who has multiplied you throughout the earth, and to Him you will be gathered.",
+    "banglaTranslation": "তিনিই তোমাদেরকে পৃথিবীতে ছড়িয়ে রেখেছেন এবং তারই দিকে তোমাদেরকে সমবেত করা হবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 80,
+    "globalAyahNumber": 2753,
+    "arabicText": "وَهُوَ ٱلَّذِی یُحۡیِۦ وَیُمِیتُ وَلَهُ ٱخۡتِلَـٰفُ ٱلَّیۡلِ وَٱلنَّهَارِۚ أَفَلَا تَعۡقِلُونَ",
+    "englishTranslation": "And it is He who gives life and causes death, and His is the alternation of the night and the day. Then will you not reason?",
+    "banglaTranslation": "তিনিই প্রাণ দান করেন এবং মৃত্যু ঘটান এবং দিবা-রাত্রির বিবর্তন তাঁরই কাজ, তবু ও কি তোমরা বুঝবে না?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 81,
+    "globalAyahNumber": 2754,
+    "arabicText": "بَلۡ قَالُوا۟ مِثۡلَ مَا قَالَ ٱلۡأَوَّلُونَ",
+    "englishTranslation": "Rather, they say like what the former peoples said.",
+    "banglaTranslation": "বরং তারা বলে যেমন তাদের পূর্ববর্তীরা বলত।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 82,
+    "globalAyahNumber": 2755,
+    "arabicText": "قَالُوۤا۟ أَءِذَا مِتۡنَا وَكُنَّا تُرَابࣰا وَعِظَـٰمًا أَءِنَّا لَمَبۡعُوثُونَ",
+    "englishTranslation": "They said, \"When we have died and become dust and bones, are we indeed to be resurrected?",
+    "banglaTranslation": "তারা বলেঃ যখন আমরা মরে যাব এবং মৃত্তিকা ও অস্থিতে পরিণত হব, তখনও কি আমরা পুনরুত্থিত হব ?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 83,
+    "globalAyahNumber": 2756,
+    "arabicText": "لَقَدۡ وُعِدۡنَا نَحۡنُ وَءَابَاۤؤُنَا هَـٰذَا مِن قَبۡلُ إِنۡ هَـٰذَاۤ إِلَّاۤ أَسَـٰطِیرُ ٱلۡأَوَّلِینَ",
+    "englishTranslation": "We have been promised this, we and our forefathers, before; this is not but legends of the former peoples.\"",
+    "banglaTranslation": "অতীতে আমাদেরকে এবং আমাদের পিতৃপুরুষদেরকে এই ওয়াদাই দেয়া হয়েছে। এটা তো পূর্ববতীদের কল্প-কথা বৈ কিছুই নয়।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 84,
+    "globalAyahNumber": 2757,
+    "arabicText": "قُل لِّمَنِ ٱلۡأَرۡضُ وَمَن فِیهَاۤ إِن كُنتُمۡ تَعۡلَمُونَ",
+    "englishTranslation": "Say, [O Muhammad], \"To whom belongs the earth and whoever is in it, if you should know?\"",
+    "banglaTranslation": "বলুন পৃথিবী এবং পৃথিবীতে যারা আছে, তারা কার? যদি তোমরা জান, তবে বল।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 85,
+    "globalAyahNumber": 2758,
+    "arabicText": "سَیَقُولُونَ لِلَّهِۚ قُلۡ أَفَلَا تَذَكَّرُونَ",
+    "englishTranslation": "They will say, \"To Allah.\" Say, \"Then will you not remember?\"",
+    "banglaTranslation": "এখন তারা বলবেঃ সবই আল্লাহর। বলুন, তবুও কি তোমরা চিন্তা কর না?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 86,
+    "globalAyahNumber": 2759,
+    "arabicText": "قُلۡ مَن رَّبُّ ٱلسَّمَـٰوَ ٰ⁠تِ ٱلسَّبۡعِ وَرَبُّ ٱلۡعَرۡشِ ٱلۡعَظِیمِ",
+    "englishTranslation": "Say, \"Who is Lord of the seven heavens and Lord of the Great Throne?\"",
+    "banglaTranslation": "বলুনঃ সপ্তাকাশ ও মহা-আরশের মালিক কে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 87,
+    "globalAyahNumber": 2760,
+    "arabicText": "سَیَقُولُونَ لِلَّهِۚ قُلۡ أَفَلَا تَتَّقُونَ",
+    "englishTranslation": "They will say, \"[They belong] to Allah.\" Say, \"Then will you not fear Him?\"",
+    "banglaTranslation": "এখন তারা বলবেঃ আল্লাহ। বলুন, তবুও কি তোমরা ভয় করবে না?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 88,
+    "globalAyahNumber": 2761,
+    "arabicText": "قُلۡ مَنۢ بِیَدِهِۦ مَلَكُوتُ كُلِّ شَیۡءࣲ وَهُوَ یُجِیرُ وَلَا یُجَارُ عَلَیۡهِ إِن كُنتُمۡ تَعۡلَمُونَ",
+    "englishTranslation": "Say, \"In whose hand is the realm of all things - and He protects while none can protect against Him - if you should know?\"",
+    "banglaTranslation": "বলুনঃ তোমাদের জানা থাকলে বল, কার হাতে সব বস্তুর কতৃর্ꦣ2468;্ব, যিনি রক্ষা করেন এবং যার কবল থেকে কেউ রক্ষা করতে পারে না ?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 89,
+    "globalAyahNumber": 2762,
+    "arabicText": "سَیَقُولُونَ لِلَّهِۚ قُلۡ فَأَنَّىٰ تُسۡحَرُونَ",
+    "englishTranslation": "They will say, \"[All belongs] to Allah.\" Say, \"Then how are you deluded?\"",
+    "banglaTranslation": "এখন তারা বলবেঃ আল্লাহর। বলুনঃ তাহলে কোথা থেকে তোমাদেরকে জাদু করা হচ্ছে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 90,
+    "globalAyahNumber": 2763,
+    "arabicText": "بَلۡ أَتَیۡنَـٰهُم بِٱلۡحَقِّ وَإِنَّهُمۡ لَكَـٰذِبُونَ",
+    "englishTranslation": "Rather, We have brought them the truth, and indeed they are liars.",
+    "banglaTranslation": "কিছুই নয়, আমি তাদের কাছে সত্য পৌঁছিয়েছি, আর তারা তো মিথ্যাবাদী।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 91,
+    "globalAyahNumber": 2764,
+    "arabicText": "مَا ٱتَّخَذَ ٱللَّهُ مِن وَلَدࣲ وَمَا كَانَ مَعَهُۥ مِنۡ إِلَـٰهٍۚ إِذࣰا لَّذَهَبَ كُلُّ إِلَـٰهِۭ بِمَا خَلَقَ وَلَعَلَا بَعۡضُهُمۡ عَلَىٰ بَعۡضࣲۚ سُبۡحَـٰنَ ٱللَّهِ عَمَّا یَصِفُونَ",
+    "englishTranslation": "Allah has not taken any son, nor has there ever been with Him any deity. [If there had been], then each deity would have taken what it created, and some of them would have sought to overcome others. Exalted is Allah above what they describe [concerning Him].",
+    "banglaTranslation": "আল্লাহ কোন সন্তান গ্রহণ করেননি এবং তাঁর সাথে কোন মাবুদ নেই। থাকলে প্রত্যেক মাবুদ নিজ নিজ সৃষ্টি নিয়ে চলে যেত এবং একজন অন্যজনের উপর প্রবল হয়ে যেত। তারা যা বলে, তা থেকে আল্লাহ পবিত্র।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 92,
+    "globalAyahNumber": 2765,
+    "arabicText": "عَـٰلِمِ ٱلۡغَیۡبِ وَٱلشَّهَـٰدَةِ فَتَعَـٰلَىٰ عَمَّا یُشۡرِكُونَ",
+    "englishTranslation": "[He is] Knower of the unseen and the witnessed, so high is He above what they associate [with Him].",
+    "banglaTranslation": "তিনি দৃশ্য ও অদৃশ্যের জ্ঞানী। তারা শরীক করে, তিনি তা থেকে উর্ধ্বে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 93,
+    "globalAyahNumber": 2766,
+    "arabicText": "قُل رَّبِّ إِمَّا تُرِیَنِّی مَا یُوعَدُونَ",
+    "englishTranslation": "Say, [O Muhammad], \"My Lord, if You should show me that which they are promised,",
+    "banglaTranslation": "বলুনঃ হে আমার পালনকর্তা! যে বিষয়ে তাদেরকে ওয়াদা দেয়া হয়েছে তা যদি আমাকে দেখান,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 94,
+    "globalAyahNumber": 2767,
+    "arabicText": "رَبِّ فَلَا تَجۡعَلۡنِی فِی ٱلۡقَوۡمِ ٱلظَّـٰلِمِینَ",
+    "englishTranslation": "My Lord, then do not place me among the wrongdoing people.\"",
+    "banglaTranslation": "হে আমার পালনকর্তা! তবে আপনি আমাকে গোনাহগার সম্প্রদায়ের অন্তর্ভূক্ত করবেন না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 95,
+    "globalAyahNumber": 2768,
+    "arabicText": "وَإِنَّا عَلَىٰۤ أَن نُّرِیَكَ مَا نَعِدُهُمۡ لَقَـٰدِرُونَ",
+    "englishTranslation": "And indeed, We are able to show you what We have promised them.",
+    "banglaTranslation": "আমি তাদেরকে যে বিষয়ের ওয়াদা দিয়েছি, তা আপনাকে দেখাতে অবশ্যই সক্ষম।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 96,
+    "globalAyahNumber": 2769,
+    "arabicText": "ٱدۡفَعۡ بِٱلَّتِی هِیَ أَحۡسَنُ ٱلسَّیِّئَةَۚ نَحۡنُ أَعۡلَمُ بِمَا یَصِفُونَ",
+    "englishTranslation": "Repel, by [means of] what is best, [their] evil. We are most knowing of what they describe.",
+    "banglaTranslation": "মন্দের জওয়াবে তাই বলুন, যা উত্তম। তারা যা বলে, আমি সে বিষয়ে সবিশেষ অবগত।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 97,
+    "globalAyahNumber": 2770,
+    "arabicText": "وَقُل رَّبِّ أَعُوذُ بِكَ مِنۡ هَمَزَ ٰ⁠تِ ٱلشَّیَـٰطِینِ",
+    "englishTranslation": "And say, \"My Lord, I seek refuge in You from the incitements of the devils,",
+    "banglaTranslation": "বলুনঃ হে আমার পালনকর্তা! আমি শয়তানের প্ররোচনা থেকে আপনার আশ্রয় প্রার্থনা করি,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 98,
+    "globalAyahNumber": 2771,
+    "arabicText": "وَأَعُوذُ بِكَ رَبِّ أَن یَحۡضُرُونِ",
+    "englishTranslation": "And I seek refuge in You, my Lord, lest they be present with me.\"",
+    "banglaTranslation": "এবং হে আমার পালনকর্তা! আমার নিকট তাদের উপস্থিতি থেকে আপনার আশ্রয় প্রার্থনা করি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 99,
+    "globalAyahNumber": 2772,
+    "arabicText": "حَتَّىٰۤ إِذَا جَاۤءَ أَحَدَهُمُ ٱلۡمَوۡتُ قَالَ رَبِّ ٱرۡجِعُونِ",
+    "englishTranslation": "[For such is the state of the disbelievers], until, when death comes to one of them, he says, \"My Lord, send me back",
+    "banglaTranslation": "যখন তাদের কারও কাছে মৃত্যু আসে, তখন সে বলেঃ হে আমার পালণকর্তা! আমাকে পুনরায় (দুনিয়াতে ) প্রেরণ করুন।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 100,
+    "globalAyahNumber": 2773,
+    "arabicText": "لَعَلِّیۤ أَعۡمَلُ صَـٰلِحࣰا فِیمَا تَرَكۡتُۚ كَلَّاۤۚ إِنَّهَا كَلِمَةٌ هُوَ قَاۤىِٕلُهَاۖ وَمِن وَرَاۤىِٕهِم بَرۡزَخٌ إِلَىٰ یَوۡمِ یُبۡعَثُونَ",
+    "englishTranslation": "That I might do righteousness in that which I left behind.\" No! It is only a word he is saying; and behind them is a barrier until the Day they are resurrected.",
+    "banglaTranslation": "যাতে আমি সৎকর্ম করতে পারি, যা আমি করিনি। কখনই নয়, এ তো তার একটি কথার কথা মাত্র। তাদের সামনে পর্দা আছে পুনরুত্থান দিবস পর্যন্ত।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 101,
+    "globalAyahNumber": 2774,
+    "arabicText": "فَإِذَا نُفِخَ فِی ٱلصُّورِ فَلَاۤ أَنسَابَ بَیۡنَهُمۡ یَوۡمَىِٕذࣲ وَلَا یَتَسَاۤءَلُونَ",
+    "englishTranslation": "So when the Horn is blown, no relationship will there be among them that Day, nor will they ask about one another.",
+    "banglaTranslation": "অতঃপর যখন শিংগায় ফুৎকার দেয়া হবে, সেদিন তাদের পারস্পরিক আত্নীয়তার বন্ধন থাকবে না এবং একে অপরকে জিজ্ঞাসাবাদ করবে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 102,
+    "globalAyahNumber": 2775,
+    "arabicText": "فَمَن ثَقُلَتۡ مَوَ ٰ⁠زِینُهُۥ فَأُو۟لَـٰۤىِٕكَ هُمُ ٱلۡمُفۡلِحُونَ",
+    "englishTranslation": "And those whose scales are heavy [with good deeds] - it is they who are the successful.",
+    "banglaTranslation": "যাদের পাল্লা ভারী হবে, তারাই হবে সফলকাম,"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 103,
+    "globalAyahNumber": 2776,
+    "arabicText": "وَمَنۡ خَفَّتۡ مَوَ ٰ⁠زِینُهُۥ فَأُو۟لَـٰۤىِٕكَ ٱلَّذِینَ خَسِرُوۤا۟ أَنفُسَهُمۡ فِی جَهَنَّمَ خَـٰلِدُونَ",
+    "englishTranslation": "But those whose scales are light - those are the ones who have lost their souls, [being] in Hell, abiding eternally.",
+    "banglaTranslation": "এবং যাদের পাল্লা হাল্কা হবে তারাই নিজেদের ক্ষতিসাধন করেছে, তারা দোযখেই চিরকাল বসবাস করবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 104,
+    "globalAyahNumber": 2777,
+    "arabicText": "تَلۡفَحُ وُجُوهَهُمُ ٱلنَّارُ وَهُمۡ فِیهَا كَـٰلِحُونَ",
+    "englishTranslation": "The Fire will sear their faces, and they therein will have taut smiles.",
+    "banglaTranslation": "আগুন তাদের মুখমন্ডল দগ্ধ করবে এবং তারা তাতে বীভৎস আকার ধারন করবে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 105,
+    "globalAyahNumber": 2778,
+    "arabicText": "أَلَمۡ تَكُنۡ ءَایَـٰتِی تُتۡلَىٰ عَلَیۡكُمۡ فَكُنتُم بِهَا تُكَذِّبُونَ",
+    "englishTranslation": "[It will be said]. \"Were not My verses recited to you and you used to deny them?\"",
+    "banglaTranslation": "তোমাদের সামনে কি আমার আয়াত সমূহ পঠিত হত না? তোমরা তো সেগুলোকে মিথ্যা বলতে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 106,
+    "globalAyahNumber": 2779,
+    "arabicText": "قَالُوا۟ رَبَّنَا غَلَبَتۡ عَلَیۡنَا شِقۡوَتُنَا وَكُنَّا قَوۡمࣰا ضَاۤلِّینَ",
+    "englishTranslation": "They will say, \"Our Lord, our wretchedness overcame us, and we were a people astray.",
+    "banglaTranslation": "তারা বলবেঃ হে আমাদের পালনকর্তা, আমরা দূর্ভাগ্যের হাতে পরাভূত ছিলাম এবং আমরা ছিলাম বিভ্রান্ত জাতি।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 107,
+    "globalAyahNumber": 2780,
+    "arabicText": "رَبَّنَاۤ أَخۡرِجۡنَا مِنۡهَا فَإِنۡ عُدۡنَا فَإِنَّا ظَـٰلِمُونَ",
+    "englishTranslation": "Our Lord, remove us from it, and if we were to return [to evil], we would indeed be wrongdoers.\"",
+    "banglaTranslation": "হে আমাদের পালনকর্তা! এ থেকে আমাদেরকে উদ্ধার কর; আমরা যদি পুনরায় তা করি, তবে আমরা গোনাহগার হব।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 108,
+    "globalAyahNumber": 2781,
+    "arabicText": "قَالَ ٱخۡسَـُٔوا۟ فِیهَا وَلَا تُكَلِّمُونِ",
+    "englishTranslation": "He will say, \"Remain despised therein and do not speak to Me.",
+    "banglaTranslation": "আল্লাহ বলবেনঃ তোমরা ধিকৃত অবস্থায় এখানেই পড়ে থাক এবং আমার সাথে কোন কথা বলো না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 109,
+    "globalAyahNumber": 2782,
+    "arabicText": "إِنَّهُۥ كَانَ فَرِیقࣱ مِّنۡ عِبَادِی یَقُولُونَ رَبَّنَاۤ ءَامَنَّا فَٱغۡفِرۡ لَنَا وَٱرۡحَمۡنَا وَأَنتَ خَیۡرُ ٱلرَّ ٰ⁠حِمِینَ",
+    "englishTranslation": "Indeed, there was a party of My servants who said, 'Our Lord, we have believed, so forgive us and have mercy upon us, and You are the best of the merciful.'",
+    "banglaTranslation": "আমার বান্দাদের একদলে বলতঃ হে আমাদের পালনকর্তা! আমরা বিশ্বাস স্থাপন করেছি। অতএব তুমি আমাদেরকে ক্ষমা কর ও আমাদের প্রতি রহম কর। তুমি তো দয়ালুদের মধ্যে শ্রেষ্ঠ দয়ালু।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 110,
+    "globalAyahNumber": 2783,
+    "arabicText": "فَٱتَّخَذۡتُمُوهُمۡ سِخۡرِیًّا حَتَّىٰۤ أَنسَوۡكُمۡ ذِكۡرِی وَكُنتُم مِّنۡهُمۡ تَضۡحَكُونَ",
+    "englishTranslation": "But you took them in mockery to the point that they made you forget My remembrance, and you used to laugh at them.",
+    "banglaTranslation": "অতঃপর তোমরা তাদেরকে ঠাট্টার পাত্ররূপে গ্রহণ করতে। এমনকি, তা তোমাদেরকে আমার স্মরণ ভুলিয়ে দিয়েছিল এবং তোমরা তাদেরকে দেখে পরিহাস করতে।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 111,
+    "globalAyahNumber": 2784,
+    "arabicText": "إِنِّی جَزَیۡتُهُمُ ٱلۡیَوۡمَ بِمَا صَبَرُوۤا۟ أَنَّهُمۡ هُمُ ٱلۡفَاۤىِٕزُونَ",
+    "englishTranslation": "Indeed, I have rewarded them this Day for their patient endurance - that they are the attainers [of success].\"",
+    "banglaTranslation": "আজ আমি তাদেরকে তাদের সবরের কারণে এমন প্রতিদান দিয়েছি যে, তারাই সফলকাম।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 112,
+    "globalAyahNumber": 2785,
+    "arabicText": "قَـٰلَ كَمۡ لَبِثۡتُمۡ فِی ٱلۡأَرۡضِ عَدَدَ سِنِینَ",
+    "englishTranslation": "[Allah] will say, \"How long did you remain on earth in number of years?\"",
+    "banglaTranslation": "আল্লাহ বলবেনঃ তোমরা পৃথিবীতে কতদিন অবস্থান করলে বছরের গণনায়?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 113,
+    "globalAyahNumber": 2786,
+    "arabicText": "قَالُوا۟ لَبِثۡنَا یَوۡمًا أَوۡ بَعۡضَ یَوۡمࣲ فَسۡـَٔلِ ٱلۡعَاۤدِّینَ",
+    "englishTranslation": "They will say, \"We remained a day or part of a day; ask those who enumerate.\"",
+    "banglaTranslation": "তারা বলবে, আমরা একদিন অথবা দিনের কিছু অংশ অবস্থান করেছি। অতএব আপনি গণনাকারীদেরকে জিজ্ঞেস করুন।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 114,
+    "globalAyahNumber": 2787,
+    "arabicText": "قَـٰلَ إِن لَّبِثۡتُمۡ إِلَّا قَلِیلࣰاۖ لَّوۡ أَنَّكُمۡ كُنتُمۡ تَعۡلَمُونَ",
+    "englishTranslation": "He will say, \"You stayed not but a little - if only you had known.",
+    "banglaTranslation": "আল্লাহ বলবেনঃ তোমরা তাতে অল্পদিনই অবস্থান করেছ, যদি তোমরা জানতে?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 115,
+    "globalAyahNumber": 2788,
+    "arabicText": "أَفَحَسِبۡتُمۡ أَنَّمَا خَلَقۡنَـٰكُمۡ عَبَثࣰا وَأَنَّكُمۡ إِلَیۡنَا لَا تُرۡجَعُونَ",
+    "englishTranslation": "Then did you think that We created you uselessly and that to Us you would not be returned?\"",
+    "banglaTranslation": "তোমরা কি ধারণা কর যে, আমি তোমাদেরকে অনর্থক সৃষ্টি করেছি এবং তোমরা আমার কাছে ফিরে আসবে না?"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 116,
+    "globalAyahNumber": 2789,
+    "arabicText": "فَتَعَـٰلَى ٱللَّهُ ٱلۡمَلِكُ ٱلۡحَقُّۖ لَاۤ إِلَـٰهَ إِلَّا هُوَ رَبُّ ٱلۡعَرۡشِ ٱلۡكَرِیمِ",
+    "englishTranslation": "So exalted is Allah, the Sovereign, the Truth; there is no deity except Him, Lord of the Noble Throne.",
+    "banglaTranslation": "অতএব শীর্ষ মহিমায় আল্লাহ, তিনি সত্যিকার মালিক, তিনি ব্যতীত কোন মাবুদ নেই। তিনি সম্মানিত আরশের মালিক।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 117,
+    "globalAyahNumber": 2790,
+    "arabicText": "وَمَن یَدۡعُ مَعَ ٱللَّهِ إِلَـٰهًا ءَاخَرَ لَا بُرۡهَـٰنَ لَهُۥ بِهِۦ فَإِنَّمَا حِسَابُهُۥ عِندَ رَبِّهِۦۤۚ إِنَّهُۥ لَا یُفۡلِحُ ٱلۡكَـٰفِرُونَ",
+    "englishTranslation": "And whoever invokes besides Allah another deity for which he has no proof - then his account is only with his Lord. Indeed, the disbelievers will not succeed.",
+    "banglaTranslation": "যে কেউ আল্লাহর সাথে অন্য উপাস্যকে ডাকে, তার কাছে যার সনদ নেই, তার হিসাব তার পালণকর্তার কাছে আছে। নিশ্চয় কাফেররা সফলকাম হবে না।"
+  },
+  {
+    "surahNumber": 23,
+    "ayahNumber": 118,
+    "globalAyahNumber": 2791,
+    "arabicText": "وَقُل رَّبِّ ٱغۡفِرۡ وَٱرۡحَمۡ وَأَنتَ خَیۡرُ ٱلرَّ ٰ⁠حِمِینَ",
+    "englishTranslation": "And, [O Muhammad], say, \"My Lord, forgive and have mercy, and You are the best of the merciful.\"",
+    "banglaTranslation": "বলূনঃ হে আমার পালনকর্তা, ক্ষমা করুন ও রহম করুন। রহমকারীদের মধ্যে আপনি শ্রেষ্ট রহমকারী।"
+  }
+]
