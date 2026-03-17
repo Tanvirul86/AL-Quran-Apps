@@ -13,7 +13,6 @@ class _EnhancedSearchScreenState extends State<EnhancedSearchScreen>
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   
-  String _selectedSearchType = 'text';
   String _selectedLanguage = 'en';
   bool _caseSensitive = false;
   bool _wholeWord = false;

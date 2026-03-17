@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/tafsir.dart';
 import '../models/tafsir_source.dart';
 import '../services/tafsir_service.dart';
 import '../theme/app_theme.dart';

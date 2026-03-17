@@ -33,6 +33,9 @@ dependencies:
   
   # Search & Text
   flutter_staggered_animations: ^1.1.1
+
+  # Color Picker
+  flutter_colorpicker: ^1.1.0
   
   # Icons
   cupertino_icons: ^1.0.6

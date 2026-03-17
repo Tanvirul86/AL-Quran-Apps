@@ -18,10 +18,7 @@ class _QiblaCompassScreenState extends State<QiblaCompassScreen>
   final PrayerTimesService _locationService = PrayerTimesService();
   
   double _qiblaDirection = 0.0;
-  double _deviceHeading = 0.0;
   double _smoothedHeading = 0.0;
-  double? _latitude;
-  double? _longitude;
   String? _locationName;
   double? _distanceToKaaba;
   bool _isLoading = true;
@@ -72,8 +69,6 @@ class _QiblaCompassScreenState extends State<QiblaCompassScreen>
       );
 
       setState(() {
-        _latitude = position.latitude;
-        _longitude = position.longitude;
         _locationName = locationName;
         _qiblaDirection = qiblaDirection;
         _distanceToKaaba = distance;
@@ -147,7 +142,6 @@ class _QiblaCompassScreenState extends State<QiblaCompassScreen>
                                      cosSum / _headingHistory.length) * 180 / math.pi;
       
       setState(() {
-        _deviceHeading = heading;
         _smoothedHeading = (avgHeading + 360) % 360;
       });
     });

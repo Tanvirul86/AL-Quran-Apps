@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../providers/settings_provider.dart';
 import '../utils/constants.dart';
 import '../theme/app_theme.dart';
@@ -8,154 +9,325 @@ import 'about_screen.dart';
 import 'translations_selector_screen.dart';
 
 void _showThemeSelector(BuildContext context, SettingsProvider settings) {
+  Color pickerColor = settings.customSeedColor;
+  final presets = AppThemeType.values.where((t) => t != AppThemeType.custom).toList();
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (context) => Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  Icons.palette_outlined,
-                  color: Theme.of(context).primaryColor,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Choose Theme',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Select your preferred color scheme',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          
-          // Theme Options
-          ...AppThemeType.values.map((theme) {
-            final isSelected = settings.currentTheme == theme;
-            return Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: () {
-                    settings.setTheme(theme);
-                    Navigator.pop(context);
-                  },
+    builder: (ctx) => StatefulBuilder(
+      builder: (ctx, setSheetState) {
+        final primary = Theme.of(context).primaryColor;
+        return DraggableScrollableSheet(
+          initialChildSize: 0.80,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          expand: false,
+          builder: (_, scrollController) {
+            return Column(
+              children: [
+                // Drag handle
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    width: 40,
+                    height: 4,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isSelected 
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).dividerColor,
-                        width: isSelected ? 2 : 1,
-                      ),
-                      color: isSelected 
-                          ? Theme.of(context).primaryColor.withOpacity(0.05)
-                          : null,
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2),
                     ),
-                    child: Row(
-                      children: [
-                        // Theme Preview
-                        Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            gradient: _getThemeGradient(theme),
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                    children: [
+                      // Header
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(Icons.palette_outlined, color: primary, size: 24),
                           ),
-                          child: isSelected
-                              ? Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                  size: 24,
-                                )
-                              : null,
-                        ),
-                        const SizedBox(width: 16),
-                        
-                        // Theme Info
-                        Expanded(
-                          child: Column(
+                          const SizedBox(width: 16),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppTheme.getThemeName(theme),
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: isSelected 
-                                      ? Theme.of(context).primaryColor
-                                      : null,
-                                ),
+                                'Choose Theme',
+                                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 2),
                               Text(
-                                AppTheme.getThemeDescription(theme),
+                                'Pick a preset or create your own',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                                  color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        
-                        // Selection Indicator
-                        if (isSelected)
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              shape: BoxShape.circle,
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+
+                      // Presets label
+                      _sectionLabel('PRESETS', primary),
+                      const SizedBox(height: 12),
+
+                      // Preset themes grid — 3 columns
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 0.80,
+                        children: presets.map((theme) {
+                          final isSelected = settings.currentTheme == theme;
+                          return GestureDetector(
+                            onTap: () {
+                              settings.setTheme(theme);
+                              Navigator.pop(ctx);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color: isSelected ? primary : Colors.grey.withOpacity(0.3),
+                                  width: isSelected ? 2.5 : 1,
+                                ),
+                                boxShadow: isSelected
+                                    ? [BoxShadow(color: primary.withOpacity(0.25), blurRadius: 8, offset: const Offset(0, 3))]
+                                    : null,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(13),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: _getThemeGradient(theme),
+                                        ),
+                                        child: isSelected
+                                            ? const Center(
+                                                child: Icon(Icons.check_circle, color: Colors.white, size: 26),
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        color: Theme.of(context).cardColor,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                                        child: Text(
+                                          AppTheme.getThemeName(theme),
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                                            color: isSelected
+                                                ? primary
+                                                : Theme.of(context).textTheme.bodyMedium?.color,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.check,
-                              size: 16,
-                              color: Colors.white,
-                            ),
+                          );
+                        }).toList(),
+                      ),
+
+                      const SizedBox(height: 24),
+                      const Divider(),
+                      const SizedBox(height: 16),
+
+                      // Custom color label
+                      _sectionLabel('CUSTOM COLOR', primary),
+                      const SizedBox(height: 12),
+
+                      // Custom color card
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: settings.currentTheme == AppThemeType.custom
+                                ? primary
+                                : Colors.grey.withOpacity(0.3),
+                            width: settings.currentTheme == AppThemeType.custom ? 2 : 1,
                           ),
-                      ],
-                    ),
+                          boxShadow: settings.currentTheme == AppThemeType.custom
+                              ? [BoxShadow(color: primary.withOpacity(0.15), blurRadius: 10)]
+                              : null,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                // Color circle
+                                GestureDetector(
+                                  onTap: () => _openColorPickerDialog(
+                                    context,
+                                    pickerColor,
+                                    (color) => setSheetState(() => pickerColor = color),
+                                  ),
+                                  child: Container(
+                                    width: 54,
+                                    height: 54,
+                                    decoration: BoxDecoration(
+                                      color: pickerColor,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.white, width: 3),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: pickerColor.withOpacity(0.4),
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Icon(Icons.colorize, color: Colors.white, size: 22),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Your Color',
+                                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        '#${pickerColor.value.toRadixString(16).substring(2).toUpperCase()}',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 13,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                OutlinedButton.icon(
+                                  onPressed: () => _openColorPickerDialog(
+                                    context,
+                                    pickerColor,
+                                    (color) => setSheetState(() => pickerColor = color),
+                                  ),
+                                  icon: const Icon(Icons.palette, size: 16),
+                                  label: const Text('Pick'),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 14),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                onPressed: () {
+                                  settings.setCustomSeedColor(pickerColor);
+                                  settings.setTheme(AppThemeType.custom);
+                                  Navigator.pop(ctx);
+                                },
+                                icon: const Icon(Icons.check_rounded),
+                                label: const Text(
+                                  'Apply Custom Theme',
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: pickerColor,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  elevation: 3,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
+              ],
             );
-          }).toList(),
-          
-          const SizedBox(height: 20),
-        ],
+          },
+        );
+      },
+    ),
+  );
+}
+
+Widget _sectionLabel(String text, Color color) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w800,
+      color: color,
+      letterSpacing: 1.5,
+    ),
+  );
+}
+
+void _openColorPickerDialog(
+  BuildContext context,
+  Color currentColor,
+  ValueChanged<Color> onColorPicked,
+) {
+  Color tempColor = currentColor;
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Pick a Color'),
+      contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      content: SingleChildScrollView(
+        child: ColorPicker(
+          pickerColor: currentColor,
+          onColorChanged: (color) => tempColor = color,
+          pickerAreaHeightPercent: 0.8,
+          enableAlpha: false,
+          displayThumbColor: true,
+          labelTypes: const [],
+        ),
       ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        FilledButton(
+          onPressed: () {
+            onColorPicked(tempColor);
+            Navigator.pop(context);
+          },
+          child: const Text('Select'),
+        ),
+      ],
     ),
   );
 }
@@ -164,13 +336,13 @@ LinearGradient _getThemeGradient(AppThemeType theme) {
   switch (theme) {
     case AppThemeType.light:
       return LinearGradient(
-        colors: [Colors.grey[100]!, Colors.white],
+        colors: [Colors.grey[200]!, Colors.grey[50]!],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
     case AppThemeType.dark:
       return LinearGradient(
-        colors: [Colors.grey[800]!, Colors.grey[900]!],
+        colors: [Colors.grey[700]!, Colors.grey[900]!],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
@@ -195,6 +367,42 @@ LinearGradient _getThemeGradient(AppThemeType theme) {
     case AppThemeType.sunset:
       return LinearGradient(
         colors: [AppTheme.sunsetTertiary, AppTheme.sunsetPrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.midnightNavy:
+      return LinearGradient(
+        colors: [AppTheme.navySecondary, AppTheme.navyPrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.roseGold:
+      return LinearGradient(
+        colors: [AppTheme.roseSecondary, AppTheme.rosePrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.purpleMystic:
+      return LinearGradient(
+        colors: [AppTheme.mysticSecondary, AppTheme.mysticPrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.emeraldDark:
+      return LinearGradient(
+        colors: [AppTheme.emeraldSecondary, AppTheme.emeraldPrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.sandDunes:
+      return LinearGradient(
+        colors: [AppTheme.sandSecondary, AppTheme.sandPrimary],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case AppThemeType.custom:
+      return const LinearGradient(
+        colors: [Colors.purple, Colors.blue],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );

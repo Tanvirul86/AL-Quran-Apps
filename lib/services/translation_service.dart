@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/translation_source.dart';
 import 'download_manager_service.dart';
 import 'dart:io';
@@ -9,6 +8,7 @@ import 'dart:io';
 class TranslationService {
   final Dio _dio = Dio();
   final DownloadManagerService _downloadManager = DownloadManagerService();
+  static final Map<String, String?> _ayahTranslationCache = {};
   
   static const String _baseUrl = 'https://api.quran.com/api/v4';
 
@@ -116,21 +116,45 @@ class TranslationService {
         }
       }
 
-      // Fetch from API
+      // Fetch from API (reliable endpoint)
       final response = await _dio.get(
-        '$_baseUrl/quran/translations/$translationId',
+        '$_baseUrl/verses/by_key/$surahNumber:$ayahNumber',
         queryParameters: {
-          'verse_key': '$surahNumber:$ayahNumber',
+          'translations': translationId,
         },
       );
 
       if (response.statusCode == 200) {
-        return response.data['translations']?[0]?['text'] as String?;
+        final text = response.data['verse']?['translations']?[0]?['text'] as String?;
+        if (text == null || text.trim().isEmpty) return null;
+
+        // Strip HTML tags used for footnotes/superscripts by upstream API.
+        return text.replaceAll(RegExp(r'<[^>]*>'), '').trim();
       }
     } catch (e) {
       // Error
     }
     return null;
+  }
+
+  /// Cached wrapper for ayah translation lookup to reduce repeated network calls.
+  Future<String?> getTranslationTextCached({
+    required int surahNumber,
+    required int ayahNumber,
+    required String translationId,
+  }) async {
+    final cacheKey = '$translationId:$surahNumber:$ayahNumber';
+    if (_ayahTranslationCache.containsKey(cacheKey)) {
+      return _ayahTranslationCache[cacheKey];
+    }
+
+    final text = await getTranslationText(
+      surahNumber: surahNumber,
+      ayahNumber: ayahNumber,
+      translationId: translationId,
+    );
+    _ayahTranslationCache[cacheKey] = text;
+    return text;
   }
 
   /// Get downloaded translations
@@ -145,25 +169,6 @@ class TranslationService {
     }
     
     return downloaded;
-  }
-
-  List<TranslationSource> _parseTranslationSources(dynamic data) {
-    final List<TranslationSource> sources = [];
-    
-    if (data is Map && data['translations'] != null) {
-      for (final item in data['translations']) {
-        sources.add(TranslationSource(
-          id: item['id'].toString(),
-          name: item['name'] ?? '',
-          language: item['language_name']?.toLowerCase() ?? 'en',
-          translator: item['author_name'] ?? '',
-          downloadUrl: 'https://cdn.quran.com/translations/${item['id']}.json',
-          fileSize: 2 * 1024 * 1024, // Estimate 2MB
-        ));
-      }
-    }
-    
-    return sources;
   }
 
   List<TranslationSource> _getDefaultTranslationSources() {

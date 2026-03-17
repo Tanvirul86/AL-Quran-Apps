@@ -158,7 +158,6 @@ class MushafService {
   /// Load page lines from Quran data
   Future<List<PageLine>> _loadPageLines(int startSurah, int startAyah, int endSurah, int endAyah) async {
     final List<PageLine> lines = [];
-    int currentLineNumber = 1;
     const int maxLinesPerPage = 15; // Real Mushaf lines per page
 
     print('Loading AUTHENTIC page lines: Surah $startSurah:$startAyah to $endSurah:$endAyah');

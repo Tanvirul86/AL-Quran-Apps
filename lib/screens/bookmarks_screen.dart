@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/bookmark_provider.dart';
 import '../providers/quran_provider.dart';
 import '../models/bookmark.dart';
-import '../models/surah.dart';
 import 'ayah_reading_screen.dart';
 import 'bookmark_folders_screen.dart';
 import '../widgets/empty_state_widget.dart';

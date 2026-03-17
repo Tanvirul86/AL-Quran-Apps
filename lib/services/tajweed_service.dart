@@ -11,24 +11,6 @@ class TajweedService {
     // This is a simplified implementation
     // In production, you'd use proper tajweed rules and color mapping
     
-    // Tajweed rules and their colors
-    final tajweedRules = {
-      // Ghunnah (nasalization) - Green
-      'م': Colors.green,
-      'ن': Colors.green,
-      
-      // Qalqalah (echo) - Red
-      'ق': Colors.red,
-      'ط': Colors.red,
-      'ب': Colors.red,
-      'ج': Colors.red,
-      'د': Colors.red,
-      
-      // Ikhfa (hiding) - Yellow
-      // Idgham (merging) - Blue
-      // Iqlab (conversion) - Orange
-    };
-
     // Return text with HTML-like color tags (simplified)
     // In production, use RichText with TextSpan
     return arabicText;

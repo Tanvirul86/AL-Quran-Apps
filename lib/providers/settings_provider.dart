@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show Color;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 import '../theme/app_theme.dart';
@@ -16,6 +17,7 @@ class SettingsProvider with ChangeNotifier {
   String _selectedBanglaTranslation = 'taqi_usmani';
   bool _highContrastMode = false;
   bool _hapticFeedbackEnabled = true;
+  Color _customSeedColor = const Color(0xFF009688);
   
   // Multi-language translation support (up to 2 languages)
   List<Map<String, String>> _selectedTranslations = [];
@@ -32,6 +34,7 @@ class SettingsProvider with ChangeNotifier {
   String get selectedBanglaTranslation => _selectedBanglaTranslation;
   bool get highContrastMode => _highContrastMode;
   bool get hapticFeedbackEnabled => _hapticFeedbackEnabled;
+  Color get customSeedColor => _customSeedColor;
   List<Map<String, String>> get selectedTranslations => List.unmodifiable(_selectedTranslations);
   
   // Legacy getters for backward compatibility
@@ -40,6 +43,15 @@ class SettingsProvider with ChangeNotifier {
 
   SettingsProvider() {
     _loadSettings();
+  }
+
+  void _syncLegacyVisibilityWithSelections({required bool updateWhenEmpty}) {
+    if (_selectedTranslations.isEmpty && !updateWhenEmpty) {
+      return;
+    }
+
+    _showEnglish = _selectedTranslations.any((t) => t['language'] == 'en');
+    _showBangla = _selectedTranslations.any((t) => t['language'] == 'bn');
   }
 
   Future<void> _loadSettings() async {
@@ -62,20 +74,24 @@ class SettingsProvider with ChangeNotifier {
     _englishFontSize = prefs.getDouble(AppConstants.keyEnglishFontSize) ?? AppConstants.defaultEnglishFontSize;
     _playbackSpeed = prefs.getDouble(AppConstants.keyPlaybackSpeed) ?? AppConstants.defaultPlaybackSpeed;
     
-    // Load selected translations list
-    final translationsJson = prefs.getString('selected_translations_list');
-    if (translationsJson != null && translationsJson.isNotEmpty) {
-      try {
-        final List<dynamic> decoded = (prefs.getStringList('selected_translations_list') ?? []).map((s) {
-          final parts = s.split(':');
+    // Load selected translations list (stored as StringList: "id:language")
+    try {
+      final rawList = prefs.getStringList('selected_translations_list') ?? [];
+      _selectedTranslations = rawList.map((s) {
+        final parts = s.split(':');
+        if (parts.length >= 2) {
           return {'id': parts[0], 'language': parts[1]};
-        }).toList();
-        _selectedTranslations = List<Map<String, String>>.from(decoded);
-      } catch (e) {
-        _selectedTranslations = [];
-      }
+        }
+        return <String, String>{};
+      }).where((m) => m.isNotEmpty).toList();
+    } catch (e) {
+      _selectedTranslations = [];
     }
-    
+
+    // If any new translation selection is present, reflect it in legacy toggles.
+    _syncLegacyVisibilityWithSelections(updateWhenEmpty: false);
+
+    _customSeedColor = Color(prefs.getInt('custom_seed_color') ?? 0xFF009688);
     notifyListeners();
   }
 
@@ -164,33 +180,48 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setSelectedTranslation(String id, String language) async {
-    // Legacy method - toggle translation
-    toggleTranslation(id, language);
+  Future<void> setCustomSeedColor(Color color) async {
+    _customSeedColor = color;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('custom_seed_color', color.value);
+    notifyListeners();
   }
-  
-  Future<void> toggleTranslation(String id, String language) async {
-    final existing = _selectedTranslations.indexWhere(
-      (t) => t['language'] == language
+
+  Future<void> setSelectedTranslation(String id, String language) async {
+    await selectTranslation(id, language);
+  }
+
+  /// Selects a translation: toggles off if same ID already selected,
+  /// replaces existing entry for the same language, or adds (max 2).
+  Future<void> selectTranslation(String id, String language) async {
+    final existingIndex = _selectedTranslations.indexWhere(
+      (t) => t['language'] == language,
     );
-    
-    if (existing != -1) {
-      // Remove if already selected
-      _selectedTranslations.removeAt(existing);
-    } else {
-      // Add if not selected (max 2)
-      if (_selectedTranslations.length < 2) {
-        _selectedTranslations.add({'id': id, 'language': language});
+
+    if (existingIndex != -1) {
+      if (_selectedTranslations[existingIndex]['id'] == id) {
+        // Same translator tapped again → deselect
+        _selectedTranslations.removeAt(existingIndex);
       } else {
-        // Replace the oldest selection
-        _selectedTranslations.removeAt(0);
-        _selectedTranslations.add({'id': id, 'language': language});
+        // Different translator in same language → replace
+        _selectedTranslations[existingIndex] = {'id': id, 'language': language};
       }
+    } else {
+      // New language — add (max 2, replace oldest if full)
+      if (_selectedTranslations.length >= 2) {
+        _selectedTranslations.removeAt(0);
+      }
+      _selectedTranslations.add({'id': id, 'language': language});
     }
+
+    // Translation tab should control Bangla/English visibility immediately.
+    _syncLegacyVisibilityWithSelections(updateWhenEmpty: true);
     
     final prefs = await SharedPreferences.getInstance();
     final stringList = _selectedTranslations.map((t) => '${t['id']}:${t['language']}').toList();
     await prefs.setStringList('selected_translations_list', stringList);
+    await prefs.setBool(AppConstants.keyShowEnglish, _showEnglish);
+    await prefs.setBool(AppConstants.keyShowBangla, _showBangla);
     notifyListeners();
   }
   
@@ -200,8 +231,11 @@ class SettingsProvider with ChangeNotifier {
   
   Future<void> clearAllTranslations() async {
     _selectedTranslations.clear();
+    _syncLegacyVisibilityWithSelections(updateWhenEmpty: true);
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('selected_translations_list');
+    await prefs.setBool(AppConstants.keyShowEnglish, _showEnglish);
+    await prefs.setBool(AppConstants.keyShowBangla, _showBangla);
     notifyListeners();
   }
 }

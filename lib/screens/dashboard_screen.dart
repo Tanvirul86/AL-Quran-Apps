@@ -3,20 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/quran_provider.dart';
 import '../models/surah.dart';
-import '../widgets/daily_ayah_widget.dart';
 import '../widgets/skeleton_loading.dart';
 import '../theme/app_theme.dart';
 import 'ayah_reading_screen.dart';
 import 'prayer_times_screen.dart';
 import 'qibla_compass_screen.dart';
-import 'reading_streak_screen.dart';
-import 'bookmarks_screen.dart';
-import 'memorization_dashboard_screen.dart';
-import 'enhanced_search_screen.dart';
-import 'downloads_screen.dart';
-import 'translations_selector_screen.dart';
 import 'juz_navigation_screen.dart';
-import 'analytics_dashboard_screen.dart';
 import 'mushaf_page_screen.dart';
 import 'inspiration_categories_screen.dart';
 import 'dua_categories_screen.dart';
@@ -25,6 +17,8 @@ import 'forty_hadith_screen.dart';
 import 'biography_categories_screen.dart';
 import 'islamic_months_screen.dart';
 import '../services/mushaf_service.dart';
+import 'zakat_calculator_screen.dart';
+import 'asmaul_husna_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -242,7 +236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      // Row 4 - Islamic Months
+                      // Row 4 - Islamic Months + new features
                       Row(
                         children: [
                           Expanded(
@@ -250,7 +244,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               context,
                               'Islamic Months',
                               Icons.calendar_month,
-                              const Color(0xFF00796B), // Teal color
+                              const Color(0xFF00796B),
                               () => Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (_) => const IslamicMonthsScreen()),
@@ -258,9 +252,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                           ),
                           const SizedBox(width: 12),
-                          const Expanded(child: SizedBox()), // Empty space
+                          Expanded(
+                            child: _buildQuickActionButton(
+                              context,
+                              'Zakat Calc',
+                              Icons.calculate,
+                              const Color(0xFFD4AF37),
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const ZakatCalculatorScreen()),
+                              ),
+                            ),
+                          ),
                           const SizedBox(width: 12),
-                          const Expanded(child: SizedBox()), // Empty space
+                          Expanded(
+                            child: _buildQuickActionButton(
+                              context,
+                              'Asma ul Husna',
+                              Icons.auto_awesome,
+                              const Color(0xFF6A1B9A),
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const AsmaulHusnaScreen()),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 28),
@@ -315,120 +331,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildLastReadCard(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor.withOpacity(0.7),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          transform: const GradientRotation(45 * 3.14159 / 180),
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.4),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: _lastReadSurahNumber != null
-              ? () {
-                  final surah = context.read<QuranProvider>().surahs.firstWhere(
-                    (s) => s.number == _lastReadSurahNumber,
-                    orElse: () => context.read<QuranProvider>().surahs.first,
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AyahReadingScreen(surah: surah),
-                    ),
-                  );
-                }
-              : null,
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.menu_book_rounded,
-                            color: Colors.white.withOpacity(0.9),
-                            size: 22,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Continue Reading',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _lastReadSurah ?? 'Start Reading',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        _lastReadSurahNumber != null 
-                          ? 'Ayah $_lastReadAyah'
-                          : 'Open Qur\'an to begin',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.85),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.25),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.4),
-                      width: 2,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

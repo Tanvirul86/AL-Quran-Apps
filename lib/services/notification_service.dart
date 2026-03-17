@@ -243,7 +243,6 @@ class NotificationService {
     // Handle notification tap
     // Navigate to appropriate screen based on payload
     if (response.payload != null) {
-      final payload = json.decode(response.payload!);
       // Handle navigation based on payload
     }
   }

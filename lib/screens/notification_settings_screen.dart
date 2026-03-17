@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../services/notification_service.dart';
 
 /// Notification Settings Screen - Configure all notification types
@@ -344,29 +343,56 @@ class _NotificationSettingsScreenState
   }
 
   Future<void> _scheduleDailyAyah() async {
-    await _notificationService.scheduleDailyAyah(_dailyAyahTime);
+    await _notificationService.scheduleDailyAyah(
+      hour: _dailyAyahTime.hour,
+      minute: _dailyAyahTime.minute,
+    );
     _showSnackBar('Daily Ayah scheduled for ${_dailyAyahTime.format(context)}');
   }
 
   Future<void> _scheduleReadingReminder() async {
-    await _notificationService.scheduleReadingReminder(_readingReminderTime);
+    final now = DateTime.now();
+    final time = DateTime(now.year, now.month, now.day,
+        _readingReminderTime.hour, _readingReminderTime.minute);
+    await _notificationService.scheduleReadingReminder(
+      title: '📖 Time to Read Quran',
+      body: 'Continue your daily Quran reading',
+      time: time,
+    );
     _showSnackBar('Reading reminder scheduled');
   }
 
   Future<void> _schedulePrayerReminders() async {
-    await _notificationService.schedulePrayerReminder();
+    final now = DateTime.now();
+    final prayers = {
+      'Fajr': DateTime(now.year, now.month, now.day, 5, 0),
+      'Dhuhr': DateTime(now.year, now.month, now.day, 12, 30),
+      'Asr': DateTime(now.year, now.month, now.day, 15, 30),
+      'Maghrib': DateTime(now.year, now.month, now.day, 18, 0),
+      'Isha': DateTime(now.year, now.month, now.day, 19, 30),
+    };
+    for (final entry in prayers.entries) {
+      await _notificationService.schedulePrayerReminder(
+        prayerName: entry.key,
+        time: entry.value,
+      );
+    }
     _showSnackBar('Prayer reminders scheduled');
   }
 
   Future<void> _scheduleMemorizationReminder() async {
+    final now = DateTime.now();
+    final time = DateTime(now.year, now.month, now.day,
+        _memorizationReminderTime.hour, _memorizationReminderTime.minute);
     await _notificationService.scheduleMemorizationReminder(
-      _memorizationReminderTime,
+      time: time,
+      message: 'Time for your daily Quran memorization session',
     );
     _showSnackBar('Memorization reminder scheduled');
   }
 
   Future<void> _scheduleStreakReminder() async {
-    await _notificationService.scheduleStreakReminder(_streakReminderTime);
+    await _notificationService.scheduleStreakReminder();
     _showSnackBar('Streak reminder scheduled');
   }
 

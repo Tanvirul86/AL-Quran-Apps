@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/memorization_provider.dart';
 import '../models/memorization_session.dart';
-import '../theme/app_theme.dart';
 import 'package:intl/intl.dart';
 
 /// Memorization Dashboard - Hifz tracking and progress

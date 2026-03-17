@@ -8,7 +8,6 @@ import '../providers/settings_provider.dart';
 import '../providers/audio_provider.dart';
 import '../providers/bookmark_provider.dart';
 import '../services/database_service.dart';
-import '../services/translation_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ayah_widget.dart';
 import '../widgets/audio_controls_widget.dart';
@@ -16,7 +15,6 @@ import '../widgets/skeleton_loading.dart';
 import '../widgets/juz_navigation_widget.dart';
 import '../widgets/reading_progress_widget.dart';
 import '../widgets/full_surah_player.dart';
-import 'translations_selector_screen.dart';
 
 class AyahReadingScreen extends StatefulWidget {
   final Surah surah;
@@ -35,6 +33,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   bool _isLoading = true;
   Map<int, bool> _bookmarkedAyahs = {};
   int _currentVisibleAyah = 1;
+  AudioProvider? _audioProvider;
   
   // Bismillah text
   static const String _bismillahText = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ";
@@ -47,6 +46,12 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     _loadAyahs();
     _loadBookmarks();
     _loadLastReadPosition();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _audioProvider = context.read<AudioProvider>();
   }
 
   Future<void> _loadAyahs() async {
@@ -166,82 +171,78 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   }
 
   Widget _buildBismillahWidget() {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor.withOpacity(0.1),
-              Theme.of(context).primaryColor.withOpacity(0.05),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(12),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primary = Theme.of(context).primaryColor;
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            primary.withOpacity(isDark ? 0.25 : 0.12),
+            primary.withOpacity(isDark ? 0.10 : 0.04),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        child: Consumer<SettingsProvider>(
-          builder: (context, settings, _) {
-            return Column(
-              children: [
-                // Arabic Bismillah
+        border: Border(
+          bottom: BorderSide(
+            color: primary.withOpacity(0.2),
+            width: 0.8,
+          ),
+        ),
+      ),
+      child: Consumer<SettingsProvider>(
+        builder: (context, settings, _) {
+          return Column(
+            children: [
+              // Ornate top border
+              _OrnateDivider(color: primary),
+              const SizedBox(height: 18),
+              Text(
+                _bismillahText,
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTheme.arabicFont,
+                  fontSize: settings.arabicFontSize + 3,
+                  height: 2.0,
+                  color: isDark ? Colors.white.withOpacity(0.93) : const Color(0xFF1A1A2E),
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 12),
+              if (settings.showBangla)
                 Text(
-                  _bismillahText,
-                  textDirection: TextDirection.rtl,
+                  _bismillahBangla,
                   textAlign: TextAlign.center,
-                  style: AppTheme.arabicTextStyle(
-                    fontSize: settings.arabicFontSize + 4, // Slightly larger
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  style: TextStyle(
+                    fontFamily: AppTheme.banglaFont,
+                    fontSize: settings.banglaFontSize - 1,
+                    color: isDark ? Colors.white.withOpacity(0.55) : const Color(0xFF4A4A6A),
+                    height: 1.6,
                   ),
                 ),
-                const SizedBox(height: 16),
-                
-                // Bangla translation
-                if (settings.showBangla)
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      _bismillahBangla,
-                      textAlign: TextAlign.center,
-                      style: AppTheme.banglaTextStyle(
-                        fontSize: settings.banglaFontSize,
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                      ),
-                    ),
+              if (settings.showEnglish) ...[  
+                const SizedBox(height: 4),
+                Text(
+                  _bismillahEnglish,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTheme.englishFont,
+                    fontSize: settings.englishFontSize - 1,
+                    color: isDark ? Colors.white.withOpacity(0.50) : const Color(0xFF6A6A8A),
+                    fontStyle: FontStyle.italic,
+                    height: 1.5,
                   ),
-                
-                if (settings.showBangla && settings.showEnglish)
-                  const SizedBox(height: 12),
-                
-                // English translation
-                if (settings.showEnglish)
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      _bismillahEnglish,
-                      textAlign: TextAlign.center,
-                      style: AppTheme.englishTextStyle(
-                        fontSize: settings.englishFontSize,
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                      ),
-                    ),
-                  ),
+                ),
               ],
-            );
-          },
-        ),
+              const SizedBox(height: 18),
+              _OrnateDivider(color: primary),
+            ],
+          );
+        },
       ),
     );
   }
@@ -265,58 +266,60 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _audioProvider?.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primary = Theme.of(context).primaryColor;
+    // Muslim Pro-style warm reading background
+    final readingBg = isDark
+        ? const Color(0xFF141414)
+        : const Color(0xFFFAF8F4);
+
     return GestureDetector(
       onHorizontalDragEnd: (details) {
-        // Swipe left = next surah, Swipe right = previous surah
-        // Adjusted sensitivity for better UX
-        if (details.primaryVelocity! < -500) {
+        if (details.primaryVelocity! < -600) {
           _navigateToNextSurah();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Swiped to next Surah'),
-              duration: Duration(milliseconds: 800),
-            ),
-          );
-        } else if (details.primaryVelocity! > 500) {
+        } else if (details.primaryVelocity! > 600) {
           _navigateToPreviousSurah();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Swiped to previous Surah'),
-              duration: Duration(milliseconds: 800),
-            ),
-          );
         }
       },
       child: Scaffold(
+        backgroundColor: readingBg,
         appBar: AppBar(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.surah.arabicName,
+                widget.surah.englishName,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: 17,
+                  color: Colors.white,
+                  letterSpacing: 0.3,
                 ),
               ),
               Text(
-                '${widget.surah.englishName} • ${widget.surah.banglaName}',
-                style: const TextStyle(
-                  fontSize: 12,
+                '${widget.surah.revelationType} • ${widget.surah.totalAyahs} Verses',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.white.withOpacity(0.8),
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
           actions: [
-            // Full Surah Player - Listen with World-Known Qaris
+            // Reciter selector
             IconButton(
-              icon: const Icon(Icons.headphones),
+              icon: const Icon(Icons.headphones_rounded, color: Colors.white),
+              tooltip: 'Change Reciter / Play Surah',
               onPressed: () {
                 showFullSurahPlayer(
                   context,
@@ -324,30 +327,25 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   surahName: '${widget.surah.englishName} - ${widget.surah.arabicName}',
                 );
               },
-              tooltip: 'Listen Full Surah',
             ),
+            // Juz navigation
             IconButton(
-              icon: const Icon(Icons.filter_list),
+              icon: const Icon(Icons.menu_book_outlined, color: Colors.white),
+              tooltip: 'Jump to Juz',
               onPressed: () {
                 showJuzNavigation(
                   context,
                   onJuzSelected: (juzNumber) async {
-                    Navigator.pop(context); // Close the modal
-                    
-                    // Get the starting surah for this juz
+                    Navigator.pop(context);
                     final juzInfo = JuzNavigationWidget.juzInfo[juzNumber];
                     if (juzInfo != null) {
                       final surahNumber = juzInfo['surah'] as int;
                       final ayahNumber = juzInfo['ayah'] as int;
-                      
-                      // Find the surah
                       final quranProvider = context.read<QuranProvider>();
                       final targetSurah = quranProvider.surahs.firstWhere(
                         (s) => s.number == surahNumber,
                         orElse: () => quranProvider.surahs.first,
                       );
-                      
-                      // Navigate to the surah and specific ayah
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -357,25 +355,10 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                           ),
                         ),
                       );
-                      
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Jumped to Juz $juzNumber (${juzInfo['name']})'),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
                     }
                   },
                 );
               },
-              tooltip: 'Jump to Juz',
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                // TODO: Implement search within surah
-              },
-              tooltip: 'Search in Surah',
             ),
           ],
         ),
@@ -383,503 +366,63 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             ? const LoadingSkeletons(type: 'ayah', count: 5)
             : Column(
                 children: [
-                  // Reading progress with enhanced styling
+                  // Surah header banner 
+                  _SurahHeaderBanner(surah: widget.surah, primary: primary, isDark: isDark),
+
+                  // Reading progress
                   ReadingProgressWidget(
                     surahNumber: widget.surah.number,
                     currentAyahNumber: _currentVisibleAyah,
                   ),
-                  
-                  // Translation selector with multi-select support
-                  Consumer<SettingsProvider>(
-                    builder: (context, settings, _) {
-                      final selectedCount = settings.selectedTranslations.length;
-                      final selectedText = selectedCount == 0 
-                          ? 'None' 
-                          : selectedCount == 1
-                              ? settings.selectedTranslations[0]['language']!.toUpperCase()
-                              : '${selectedCount} selected';
-                      
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Show Translations',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                TextButton.icon(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const TranslationsSelectorScreen(),
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.language, size: 18),
-                                  label: Text(selectedText),
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                                    visualDensity: VisualDensity.compact,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            // Horizontal scrollable list of all translation languages
-                            SizedBox(
-                              height: 40,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.zero,
-                                children: [
-                                  // English (most popular)
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('en'),
-                                      label: const Text('English'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('20', 'en');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Bangla/Bengali
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('bn'),
-                                      label: const Text('বাংলা'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('161', 'bn');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Hindi
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('hi'),
-                                      label: const Text('हिन्दी'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('122', 'hi');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Urdu
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ur'),
-                                      label: const Text('اردو'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('97', 'ur');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Arabic
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ar'),
-                                      label: const Text('العربية'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('90', 'ar');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Indonesian
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('id'),
-                                      label: const Text('Indonesia'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('33', 'id');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Turkish
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('tr'),
-                                      label: const Text('Türkçe'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('77', 'tr');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // French
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('fr'),
-                                      label: const Text('Français'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('31', 'fr');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // German
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('de'),
-                                      label: const Text('Deutsch'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('27', 'de');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Spanish
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('es'),
-                                      label: const Text('Español'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('83', 'es');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Russian
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ru'),
-                                      label: const Text('Русский'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('45', 'ru');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Persian/Farsi
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('fa'),
-                                      label: const Text('فارسی'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('135', 'fa');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Malay
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ms'),
-                                      label: const Text('Melayu'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('39', 'ms');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Chinese
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('zh'),
-                                      label: const Text('中文'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('56', 'zh');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Japanese
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ja'),
-                                      label: const Text('日本語'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('35', 'ja');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Korean
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ko'),
-                                      label: const Text('한국어'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('219', 'ko');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Tamil
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('ta'),
-                                      label: const Text('தமிழ்'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('229', 'ta');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Thai
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('th'),
-                                      label: const Text('ไทย'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('53', 'th');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Swahili
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('sw'),
-                                      label: const Text('Kiswahili'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('49', 'sw');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Portuguese
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('pt'),
-                                      label: const Text('Português'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('43', 'pt');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Dutch
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('nl'),
-                                      label: const Text('Nederlands'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('235', 'nl');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Italian
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('it'),
-                                      label: const Text('Italiano'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('153', 'it');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Albanian
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('sq'),
-                                      label: const Text('Shqip'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('47', 'sq');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Bosnian
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('bs'),
-                                      label: const Text('Bosanski'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('25', 'bs');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                  // Uzbek
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: FilterChip(
-                                      selected: settings.isTranslationSelected('uz'),
-                                      label: const Text('Oʻzbek'),
-                                      onSelected: (value) {
-                                        settings.toggleTranslation('55', 'uz');
-                                      },
-                                      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                                      checkmarkColor: Theme.of(context).primaryColor,
-                                      backgroundColor: Theme.of(context).cardColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  // Ayahs list with swipe gesture indicator
+
+                  // Ayah list
                   Expanded(
-                    child: Stack(
-                      children: [
-                        ListView.builder(
-                          controller: _scrollController,
-                          padding: const EdgeInsets.all(16),
-                          itemCount: _processedAyahs.length + (_shouldShowBismillah() ? 1 : 0),
-                          itemBuilder: (context, index) {
-                            // Show Bismillah widget first if applicable
-                            if (_shouldShowBismillah() && index == 0) {
-                              return _buildBismillahWidget();
-                            }
-                            
-                            // Adjust index for actual ayah
-                            final ayahIndex = _shouldShowBismillah() ? index - 1 : index;
-                            final ayah = _processedAyahs[ayahIndex];
-                            
-                            return AyahWidget(
-                              ayah: ayah,
-                              isBookmarked: _bookmarkedAyahs[ayah.ayahNumber] ?? false,
-                              onBookmarkToggle: () async {
-                                final bookmarkProvider = context.read<BookmarkProvider>();
-                                await bookmarkProvider.toggleBookmark(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(bottom: 24),
+                      itemCount: _processedAyahs.length +
+                          (_shouldShowBismillah() ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (_shouldShowBismillah() && index == 0) {
+                          return _buildBismillahWidget();
+                        }
+                        final ayahIndex =
+                            _shouldShowBismillah() ? index - 1 : index;
+                        final ayah = _processedAyahs[ayahIndex];
+                        return AyahWidget(
+                          ayah: ayah,
+                          isBookmarked:
+                              _bookmarkedAyahs[ayah.ayahNumber] ?? false,
+                          onBookmarkToggle: () async {
+                            final bookmarkProvider =
+                                context.read<BookmarkProvider>();
+                            await bookmarkProvider.toggleBookmark(
+                              ayah.surahNumber,
+                              ayah.ayahNumber,
+                            );
+                            setState(() {
+                              _bookmarkedAyahs[ayah.ayahNumber] =
+                                  !(_bookmarkedAyahs[ayah.ayahNumber] ?? false);
+                            });
+                          },
+                          onPlay: () {
+                            context.read<AudioProvider>().playAyah(
                                   ayah.surahNumber,
                                   ayah.ayahNumber,
                                 );
-                                setState(() {
-                                  _bookmarkedAyahs[ayah.ayahNumber] =
-                                      !(_bookmarkedAyahs[ayah.ayahNumber] ?? false);
-                                });
-                              },
-                              onPlay: () {
-                                context.read<AudioProvider>().playAyah(
-                                      ayah.surahNumber,
-                                      ayah.ayahNumber,
-                                    );
-                              },
-                              onVisibilityChanged: () {
-                                setState(() {
-                                  _currentVisibleAyah = ayah.ayahNumber;
-                                });
-                                _saveReadingProgress(ayah.ayahNumber);
-                              },
-                            );
                           },
-                        ),
-                        // Swipe hint indicator
-                        Positioned(
-                          bottom: 16,
-                          left: 0,
-                          right: 0,
-                          child: Center(
-                            child: Opacity(
-                              opacity: 0.4,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.chevron_left, size: 16),
-                                  Text(
-                                    'Swipe to navigate',
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                  const Icon(Icons.chevron_right, size: 16),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                          onVisibilityChanged: () {
+                            setState(() {
+                              _currentVisibleAyah = ayah.ayahNumber;
+                            });
+                            _saveReadingProgress(ayah.ayahNumber);
+                          },
+                        );
+                      },
                     ),
                   ),
-                  // Audio controls
+
+                  // Audio player bar
                   const AudioControlsWidget(),
                 ],
               ),
@@ -916,6 +459,173 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       );
     }
   }
+}
 
+// ─── Ornate divider (decorative Islamic chapter separator) ─────────────────
+class _OrnateDivider extends StatelessWidget {
+  final Color color;
+  const _OrnateDivider({required this.color});
 
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Divider(color: color.withOpacity(0.35), thickness: 0.8)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Icon(Icons.diamond_outlined, size: 10, color: color.withOpacity(0.7)),
+        ),
+        SizedBox(
+          width: 24,
+          child: Center(
+            child: Transform.rotate(
+              angle: 0.785,
+              child: Container(
+                width: 7,
+                height: 7,
+                decoration: BoxDecoration(
+                  border: Border.all(color: color.withOpacity(0.7), width: 1.2),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Icon(Icons.diamond_outlined, size: 10, color: color.withOpacity(0.7)),
+        ),
+        Expanded(child: Divider(color: color.withOpacity(0.35), thickness: 0.8)),
+      ],
+    );
+  }
+}
+
+// ─── Surah header banner ────────────────────────────────────────────────────
+class _SurahHeaderBanner extends StatelessWidget {
+  final Surah surah;
+  final Color primary;
+  final bool isDark;
+
+  const _SurahHeaderBanner({
+    required this.surah,
+    required this.primary,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final goldenAccent = isDark ? const Color(0xFFD4AF37) : const Color(0xFFB8860B);
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            primary,
+            primary.withOpacity(0.82),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Surah number badge + Arabic name
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
+                  color: Colors.white.withOpacity(0.15),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  '${surah.number}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Text(
+                surah.arabicName,
+                textDirection: TextDirection.rtl,
+                style: const TextStyle(
+                  fontFamily: 'Scheherazade',
+                  fontSize: 28,
+                  color: Colors.white,
+                  height: 1.3,
+                  letterSpacing: 1,
+                ),
+              ),
+              const SizedBox(width: 14),
+              const SizedBox(width: 32), // balance
+            ],
+          ),
+          const SizedBox(height: 6),
+          // English + Bangla name
+          Text(
+            '${surah.englishName}  •  ${surah.banglaName}',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.88),
+              fontSize: 13,
+              letterSpacing: 0.3,
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Metadata row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _badge('${surah.totalAyahs} Verses', goldenAccent),
+              const SizedBox(width: 8),
+              _badge(surah.revelationType, goldenAccent),
+              const SizedBox(width: 8),
+              _badge('Juz ${_getJuzNumber(surah.number)}', goldenAccent),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _badge(String label, Color accent) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: accent.withOpacity(0.6), width: 0.8),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: Colors.white.withOpacity(0.95),
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.2,
+        ),
+      ),
+    );
+  }
+
+  int _getJuzNumber(int surahNumber) {
+    const juzBoundaries = [
+      2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16,
+      17, 17, 18, 19, 19, 20, 21, 22, 22, 23, 24, 25, 25, 26, 26, 27,
+      27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 29, 30, 30, 30, 30, 30,
+      30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+      30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+      30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+      30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    ];
+    if (surahNumber < 1 || surahNumber > 114) return 1;
+    return juzBoundaries[surahNumber - 1];
+  }
 }

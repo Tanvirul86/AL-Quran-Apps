@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/quran_provider.dart';
 import 'providers/audio_provider.dart';
 import 'providers/settings_provider.dart';
@@ -9,9 +8,6 @@ import 'providers/bookmark_provider.dart';
 import 'providers/memorization_provider.dart';
 import 'providers/achievement_provider.dart';
 import 'models/reading_goal.dart';
-import 'screens/home_screen.dart';
-import 'widgets/splash_screen.dart';
-import 'widgets/onboarding_screen.dart';
 import 'widgets/app_initializer.dart';
 import 'theme/app_theme.dart';
 import 'theme/high_contrast_theme.dart';
@@ -22,10 +18,6 @@ void main() async {
   
   // Initialize notification service
   await NotificationService().initialize();
-  
-  // Initialize audio service for background playback
-  final audioProvider = AudioProvider();
-  await audioProvider.initializeAudioService();
   
   // Set preferred orientations
   SystemChrome.setPreferredOrientations([
@@ -58,7 +50,7 @@ class QuranApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: settingsProvider.highContrastMode
                 ? HighContrastTheme.lightTheme
-                : AppTheme.getTheme(settingsProvider.currentTheme),
+                : AppTheme.getTheme(settingsProvider.currentTheme, customSeedColor: settingsProvider.customSeedColor),
             darkTheme: settingsProvider.highContrastMode
                 ? HighContrastTheme.darkTheme
                 : AppTheme.darkTheme,

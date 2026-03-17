@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quran_provider.dart';
 import '../models/ayah.dart';
-import '../models/surah.dart';
-import 'ayah_widget.dart';
 import 'package:intl/intl.dart';
 
 /// Widget for displaying daily ayah with reflection

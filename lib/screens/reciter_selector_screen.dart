@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/enhanced_reciter_service.dart';
 import '../models/reciter.dart';
-import 'package:provider/provider.dart';
 
 /// Reciter Selector - Choose from 15 world-renowned reciters
 class ReciterSelectorScreen extends StatefulWidget {
@@ -25,10 +25,10 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
   }
 
   Future<void> _loadSavedReciter() async {
-    final reciter = await _reciterService.getSelectedReciter();
+    final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
-        _selectedReciterId = reciter.id;
+        _selectedReciterId = prefs.getString('selected_reciter_id') ?? 'Abdul_Basit_Murattal';
       });
     }
   }
@@ -125,7 +125,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
                           children: [
                             const Icon(Icons.flag, size: 16),
                             const SizedBox(width: 4),
-                            Text(reciter.country),
+                            Text(reciter.country ?? 'Unknown'),
                           ],
                         ),
                       ],
@@ -155,13 +155,13 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
               // Recitation Style Chips
               Wrap(
                 spacing: 8,
-                children: reciter.recitationStyles.map((style) {
-                  return Chip(
-                    label: Text(style.name.toUpperCase()),
+                children: [
+                  Chip(
+                    label: Text(reciter.style.toUpperCase()),
                     labelStyle: const TextStyle(fontSize: 12),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 12),
@@ -214,7 +214,8 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
   }
 
   Future<void> _selectReciter(Reciter reciter) async {
-    await _reciterService.saveSelectedReciter(reciter.id);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_reciter_id', reciter.id);
     setState(() {
       _selectedReciterId = reciter.id;
     });
@@ -287,16 +288,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
     });
 
     try {
-      await _reciterService.downloadFullQuran(
-        reciter.id,
-        onProgress: (progress) {
-          if (mounted) {
-            setState(() {
-              _downloadProgress[reciter.id] = progress;
-            });
-          }
-        },
-      );
+      await _reciterService.downloadFullQuran(reciter.id);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -378,7 +370,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
     });
 
     try {
-      await _reciterService.downloadSurahAudio(reciter.id, surahNumber);
+      await _reciterService.downloadSurahAudio(reciterId: reciter.id, surahNumber: surahNumber);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

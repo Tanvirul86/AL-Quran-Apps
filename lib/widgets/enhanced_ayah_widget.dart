@@ -3,9 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/ayah.dart';
-import '../models/word_meaning.dart';
 import '../providers/settings_provider.dart';
-import '../services/quran_service.dart';
 import '../theme/app_theme.dart';
 
 /// Enhanced ayah widget with word meanings, tajweed, and sharing
@@ -34,13 +32,6 @@ class EnhancedAyahWidget extends StatefulWidget {
 class _EnhancedAyahWidgetState extends State<EnhancedAyahWidget> {
   bool _isTextSelected = false;
   String _selectedText = '';
-
-  void _onTextSelection(String text) {
-    setState(() {
-      _selectedText = text;
-      _isTextSelected = text.isNotEmpty;
-    });
-  }
 
   Future<void> _shareAyah() async {
     final settings = context.read<SettingsProvider>();

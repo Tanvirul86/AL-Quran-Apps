@@ -2,7 +2,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:math' as math;
 import 'dart:convert';
 import 'notification_service.dart';
@@ -20,7 +19,6 @@ class PrayerTimesService {
   ));
 
   // Location and athan settings
-  Position? _lastKnownLocation;
   bool _isLocationEnabled = false;
   bool _athanAlertsEnabled = true;
   Map<String, bool> _prayerAthanEnabled = {
@@ -106,7 +104,6 @@ class PrayerTimesService {
           desiredAccuracy: LocationAccuracy.medium,
           timeLimit: const Duration(seconds: 10),
         );
-        _lastKnownLocation = position;
         await _saveLastLocation(position);
         return position;
       } catch (e) {

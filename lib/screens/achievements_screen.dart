@@ -266,9 +266,9 @@ class AchievementsScreen extends StatelessWidget {
                     ],
 
                     // Unlock Date (for unlocked achievements)
-                    if (isUnlocked && achievement.unlockedAt != null)
+                    if (isUnlocked && achievement.unlockedDate != null)
                       Text(
-                        'Unlocked ${_formatDate(achievement.unlockedAt!)}',
+                        'Unlocked ${_formatDate(achievement.unlockedDate!)}',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey.shade600,

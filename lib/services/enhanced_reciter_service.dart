@@ -1,17 +1,10 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/reciter.dart';
 import 'download_manager_service.dart';
-import 'dart:io';
 
 /// Enhanced Reciter service with world-known reciters and downloadable audio
 class EnhancedReciterService {
-  final Dio _dio = Dio();
   final DownloadManagerService _downloadManager = DownloadManagerService();
   
-  static const String _baseUrl = 'https://api.quran.com/api/v4';
-
   /// Get all available reciters - returns world-known reciters with reliable audio sources
   Future<List<Reciter>> getAllReciters() async {
     // Always use world-known reciters with verified MP3Quran.net URLs
@@ -152,24 +145,6 @@ class EnhancedReciterService {
         'surah_${reciterId}_$surahNumber',
       );
     }
-  }
-
-  List<Reciter> _parseReciters(dynamic data) {
-    final List<Reciter> reciters = [];
-    
-    if (data is Map && data['recitations'] != null) {
-      for (final item in data['recitations']) {
-        reciters.add(Reciter(
-          id: item['id'].toString(),
-          name: item['reciter_name'] ?? '',
-          nameArabic: item['reciter_name_arabic'] ?? '',
-          style: item['style'] ?? 'Murattal',
-          audioUrlPattern: 'https://verses.quran.com/${item['id']}/{surah}_{ayah}.mp3',
-        ));
-      }
-    }
-    
-    return reciters;
   }
 
   /// World-renowned reciters with verified audio sources from MP3Quran.net

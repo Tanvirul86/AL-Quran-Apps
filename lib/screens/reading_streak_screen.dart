@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/reading_progress.dart';
 import '../services/database_service.dart';
-import '../providers/quran_provider.dart';
 
 class ReadingStreakScreen extends StatefulWidget {
   const ReadingStreakScreen({super.key});

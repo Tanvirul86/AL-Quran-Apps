@@ -3,278 +3,512 @@ import '../models/islamic_month_models.dart';
 class IslamicMonthsService {
   static List<IslamicMonth> getIslamicMonths() {
     return [
-      // 1. Muharram
       IslamicMonth(
         number: 1,
         nameAr: 'مُحَرَّم',
         nameEn: 'Muharram',
         nameBn: 'মুহাররম',
-        significance: 'The first month of the Islamic calendar. One of the four sacred months in which fighting is forbidden. It is a time for reflection and remembrance.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের প্রথম মাস। চারটি পবিত্র মাসের মধ্যে একটি যেখানে যুদ্ধ নিষিদ্ধ। এটি প্রতিফলন এবং স্মরণের একটি সময়।',
+        meaning: 'The Sacred / Forbidden',
+        meaningBn: 'পবিত্র / নিষিদ্ধ',
+        isSacredMonth: true,
+        significance:
+            'Muharram is one of the four sacred months mentioned in the Qur\'an. It is a month of restraint, repentance, and extra worship.',
+        significanceBn:
+            'মুহাররম কুরআনে উল্লেখিত চারটি পবিত্র মাসের একটি। এটি আত্মসংযম, তওবা ও অতিরিক্ত ইবাদতের মাস।',
+        quranRef: 'At-Tawbah 9:36',
+        quranAyahEn:
+            'Indeed, the number of months with Allah is twelve months... of these, four are sacred.',
+        keyHadith:
+            'The best fasting after Ramadan is fasting in Allah\'s month, Muharram.',
+        keyHadithRef: 'Sahih Muslim 1163',
+        recommendedDeeds: [
+          'Fast on Ashura with one additional day (9th or 11th)',
+          'Increase Dhikr and Istighfar',
+          'Review Hijrah lessons and renew intentions',
+        ],
+        recommendedDeedsBn: [
+          'আশুরার সাথে ৯ বা ১১ তারিখে অতিরিক্ত রোজা',
+          'জিকির ও ইস্তিগফার বৃদ্ধি',
+          'হিজরতের শিক্ষা স্মরণ ও নিয়ত নবায়ন',
+        ],
         events: [
           ImportantEvent(
             day: 1,
-            titleEn: 'Islamic New Year',
-            titleBn: 'ইসলামিক নববর্ষ',
-            descriptionEn: 'The first day of the Islamic calendar, marking the beginning of a new Hijri year. It commemorates the migration (Hijrah) of Prophet Muhammad (ﷺ) from Makkah to Madinah.',
-            descriptionBn: 'ইসলামিক ক্যালেন্ডারের প্রথম দিন, একটি নতুন হিজরি বছরের সূচনা চিহ্নিত করে। এটি নবী মুহাম্মাদ (ﷺ) এর মক্কা থেকে মদিনায় হিজরতের স্মরণ করে।',
+            titleEn: 'Hijri New Year Begins',
+            titleBn: 'হিজরি নববর্ষের শুরু',
+            descriptionEn:
+                'The Islamic year begins. The Hijri calendar was institutionalized during the caliphate of Umar ibn al-Khattab (RA), anchored to Hijrah.',
+            descriptionBn:
+                'ইসলামিক বছর শুরু হয়। উমর (রাঃ)-এর খেলাফতে হিজরি বর্ষপঞ্জি প্রাতিষ্ঠানিকভাবে চালু হয়, যার ভিত্তি হিজরত।',
+            hadithRef: 'Historical consensus of early Islamic governance',
+          ),
+          ImportantEvent(
+            day: 9,
+            titleEn: 'Tasu\'a Fast (Sunnah)',
+            titleBn: 'তাসু\'আর রোজা (সুন্নাহ)',
+            descriptionEn:
+                'The Prophet ﷺ intended fasting the 9th along with the 10th to differ from previous communities.',
+            descriptionBn:
+                'নবী ﷺ ১০ তারিখের সাথে ৯ তারিখ রোজা রাখতে বলেছেন, পূর্ববর্তী জাতির পদ্ধতি থেকে ভিন্নতা করার জন্য।',
+            hadithRef: 'Sahih Muslim 1134',
           ),
           ImportantEvent(
             day: 10,
-            titleEn: 'Day of Ashura',
-            titleBn: 'আশুরার দিন',
-            descriptionEn: 'The 10th day of Muharram, commemorating when Allah saved Prophet Musa (Moses) and the Israelites from Pharaoh. Prophet Muhammad (ﷺ) fasted on this day and recommended Muslims to fast.',
-            descriptionBn: 'মুহাররমের ১০তম দিন, যখন আল্লাহ নবী মুসা (মূসা) এবং ইসরায়েলীদের ফেরাউন থেকে রক্ষা করেছিলেন তার স্মরণে। নবী মুহাম্মাদ (ﷺ) এই দিনে রোজা রাখতেন এবং মুসলমানদের রোজা রাখার সুপারিশ করেছিলেন।',
+            titleEn: 'Ashura',
+            titleBn: 'আশুরা',
+            descriptionEn:
+                'Fasting Ashura expiates sins of the previous year. The Prophet ﷺ fasted it and encouraged fasting it.',
+            descriptionBn:
+                'আশুরার রোজা পূর্ববর্তী এক বছরের গুনাহের কাফফারা হয়। নবী ﷺ নিজে রোজা রেখেছেন এবং উৎসাহ দিয়েছেন।',
+            hadithRef: 'Sahih Bukhari 2004; Sahih Muslim 1130, 1162',
+            isHighImportance: true,
           ),
         ],
       ),
 
-      // 2. Safar
       IslamicMonth(
         number: 2,
         nameAr: 'صَفَر',
         nameEn: 'Safar',
         nameBn: 'সফর',
-        significance: 'The second month of the Islamic calendar. The name means "empty" or "yellow" as houses were empty during this time when Arabs would travel for trade.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের দ্বিতীয় মাস। নামের অর্থ "খালি" বা "হলুদ" কারণ এই সময়ে আরবরা বাণিজ্যের জন্য তাদের ঘর খালি রাখত।',
+        meaning: 'Whistling/Empty (classical usage)',
+        meaningBn: 'খালি/প্রস্থান (প্রচলিত ব্যুৎপত্তি)',
+        significance:
+            'Safar has no inherent bad omen in Islam. Muslims are instructed to reject superstition and continue normal worship and reliance on Allah.',
+        significanceBn:
+            'ইসলামে সফর মাস নিজে অশুভ নয়। কুসংস্কার বর্জন করে স্বাভাবিক ইবাদত ও আল্লাহর উপর ভরসা রাখতে বলা হয়েছে।',
+        keyHadith:
+            'No contagion (by itself), no evil omen, no hama, and no Safar (as a superstition).',
+        keyHadithRef: 'Sahih Bukhari 5757; Sahih Muslim 2220',
+        recommendedDeeds: [
+          'Avoid superstitious practices',
+          'Strengthen Tawakkul (trust in Allah)',
+          'Keep consistent daily prayers and Qur\'an',
+        ],
+        recommendedDeedsBn: [
+          'কুসংস্কার ত্যাগ করা',
+          'তাওয়াক্কুল (আল্লাহর উপর ভরসা) বৃদ্ধি',
+          'নিয়মিত নামাজ ও কুরআন চর্চা',
+        ],
         events: [
           ImportantEvent(
-            day: 27,
-            titleEn: 'Night Journey Preparations',
-            titleBn: 'রাত্রি ভ্রমণের প্রস্তুতি',
-            descriptionEn: 'Historical significance in the Islamic calendar. This month witnessed various events in the life of Prophet Muhammad (ﷺ).',
-            descriptionBn: 'ইসলামিক ক্যালেন্ডারে ঐতিহাসিক তাৎপর্য। এই মাসে নবী মুহাম্মাদ (ﷺ) এর জীবনে বিভিন্ন ঘটনা ঘটেছিল।',
+            day: 1,
+            titleEn: 'Month of Rejecting Superstition',
+            titleBn: 'কুসংস্কার বর্জনের মাস',
+            descriptionEn:
+                'Islamic teaching rejects the idea that Safar itself brings harm or misfortune.',
+            descriptionBn:
+                'ইসলাম সফর মাসকে স্বয়ং অমঙ্গলজনক মনে করার ধারণা প্রত্যাখ্যান করে।',
+            hadithRef: 'Sahih Bukhari 5757; Sahih Muslim 2220',
+            isHighImportance: true,
+          ),
+          ImportantEvent(
+            day: 15,
+            titleEn: 'Continue Good Deeds without Innovation',
+            titleBn: 'বিদআত ছাড়া নিয়মিত নেক আমল',
+            descriptionEn:
+                'No special fixed ritual is established exclusively for Safar; continue established Sunnah deeds.',
+            descriptionBn:
+                'সফরের জন্য আলাদা নির্ধারিত বিশেষ ইবাদত প্রমাণিত নয়; সুন্নতপ্রসূত আমল অব্যাহত রাখুন।',
+            hadithRef: 'General fiqh principle from authentic Sunnah practice',
           ),
         ],
       ),
 
-      // 3. Rabi' al-Awwal
       IslamicMonth(
         number: 3,
         nameAr: 'رَبِيع ٱلْأَوَّل',
-        nameEn: "Rabi' al-Awwal",
-        nameBn: 'রবিউল আউয়াল',
-        significance: 'The third month of the Islamic calendar, meaning "the first spring". This is the blessed month of the birth of Prophet Muhammad (ﷺ).',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের তৃতীয় মাস, যার অর্থ "প্রথম বসন্ত"। এই মাসে নবী মুহাম্মাদ (ﷺ) জন্মগ্রহণ করেছিলেন।',
+        nameEn: 'Rabi\' al-Awwal',
+        nameBn: 'রবিউল আউয়াল',
+        significance:
+            'A month linked to major Sirah milestones, including the Prophet\'s ﷺ migration period and establishment of the Madinan community.',
+        significanceBn:
+            'এই মাস নবী ﷺ-এর হিজরত-পর্ব ও মদিনাভিত্তিক সমাজ প্রতিষ্ঠার গুরুত্বপূর্ণ সিরাত ঘটনাবলির সাথে সংশ্লিষ্ট।',
+        recommendedDeeds: [
+          'Study the Sirah in depth',
+          'Increase Salawat upon the Prophet ﷺ',
+          'Follow his Sunnah in character and worship',
+        ],
+        recommendedDeedsBn: [
+          'সিরাত অধ্যয়ন বৃদ্ধি',
+          'নবী ﷺ-এর উপর দরূদ বৃদ্ধি',
+          'আখলাক ও ইবাদতে সুন্নাহ অনুসরণ',
+        ],
         events: [
           ImportantEvent(
             day: 12,
-            titleEn: 'Mawlid al-Nabi (Birth of the Prophet)',
-            titleBn: 'মাওলিদ আল-নবী (নবীর জন্মদিন)',
-            descriptionEn: 'The birth of Prophet Muhammad (ﷺ) in 570 CE in Makkah. Many Muslims celebrate this day with gatherings, recitation of poetry in praise of the Prophet, and acts of charity.',
-            descriptionBn: '৫৭০ খ্রিস্টাব্দে মক্কায় নবী মুহাম্মাদ (ﷺ) এর জন্ম। অনেক মুসলমান এই দিনটি সমাবেশ, নবীর প্রশংসায় কবিতা পাঠ এবং দাতব্য কাজের মাধ্যমে উদযাপন করে।',
+            titleEn: 'Arrival in Madinah (widely reported date)',
+            titleBn: 'মদিনায় আগমন (প্রচলিত বর্ণিত তারিখ)',
+            descriptionEn:
+                'The Prophet ﷺ arrived in the Madinah region after Hijrah, marking the beginning of an Islamic society and state structure. Exact date details differ in historical reports.',
+            descriptionBn:
+                'হিজরতের পর নবী ﷺ মদিনা অঞ্চলে পৌঁছান; এর মাধ্যমে ইসলামি সমাজ-রাষ্ট্রের ভিত্তি প্রতিষ্ঠিত হয়। নির্দিষ্ট তারিখে ঐতিহাসিক বর্ণনায় পার্থক্য আছে।',
+            hadithRef: 'Early Sirah sources (Ibn Ishaq/Ibn Hisham) with variant narrations',
+            isHighImportance: true,
           ),
           ImportantEvent(
-            day: 17,
-            titleEn: 'Migration to Madinah Completed',
-            titleBn: 'মদিনায় হিজরত সম্পন্ন',
-            descriptionEn: 'Prophet Muhammad (ﷺ) arrived in Madinah on this day, marking the establishment of the first Islamic state.',
-            descriptionBn: 'নবী মুহাম্মাদ (ﷺ) এই দিনে মদিনায় পৌঁছেছিলেন, প্রথম ইসলামী রাষ্ট্র প্রতিষ্ঠার সূচনা করে।',
+            day: 12,
+            titleEn: 'Passing of the Prophet ﷺ (widely reported)',
+            titleBn: 'নবী ﷺ-এর ওফাত (প্রচলিত বর্ণনা)',
+            descriptionEn:
+                'Many classical reports mention Monday in Rabi\' al-Awwal as the Prophet\'s ﷺ passing; scholars discuss exact day details.',
+            descriptionBn:
+                'অনেক শাস্ত্রীয় বর্ণনায় রবিউল আউয়ালের সোমবার নবী ﷺ-এর ওফাতের কথা এসেছে; নির্দিষ্ট দিন নিয়ে আলেমদের আলোচনা আছে।',
+            hadithRef: 'Sahih al-Bukhari (Book of Maghazi) and Sirah discussions',
+            isHighImportance: true,
           ),
         ],
       ),
 
-      // 4. Rabi' al-Thani
       IslamicMonth(
         number: 4,
         nameAr: 'رَبِيع ٱلثَّانِي',
-        nameEn: "Rabi' al-Thani",
+        nameEn: 'Rabi\' al-Thani',
         nameBn: 'রবিউস সানি',
-        significance: 'The fourth month of the Islamic calendar, meaning "the second spring".',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের চতুর্থ মাস, যার অর্থ "দ্বিতীয় বসন্ত"।',
-        events: [],
+        significance:
+            'No universally established annual festival is fixed for this month in primary texts. It remains a normal month for obedience and growth.',
+        significanceBn:
+            'প্রাথমিক শরঈ সূত্রে এ মাসের জন্য সর্বজনস্বীকৃত বার্ষিক উৎসব নির্ধারিত নেই; এটি সাধারণভাবে নেক আমলের ধারাবাহিকতার মাস।',
+        recommendedDeeds: [
+          'Maintain regular Sunnah fasting (Mondays/Thursdays)',
+          'Increase Qur\'an recitation',
+          'Give charity quietly',
+        ],
+        recommendedDeedsBn: [
+          'সোম-বৃহস্পতিবার সুন্নত রোজা',
+          'কুরআন তিলাওয়াত বৃদ্ধি',
+          'গোপনে সদকা করা',
+        ],
+        events: [
+          ImportantEvent(
+            day: 1,
+            titleEn: 'Month of Steadfast Deeds',
+            titleBn: 'ধারাবাহিক নেক আমলের মাস',
+            descriptionEn:
+                'The best deeds are those that are consistent even if small; this applies in every month including Rabi\' al-Thani.',
+            descriptionBn:
+                'সর্বোত্তম আমল হলো ধারাবাহিক আমল, যদিও তা কম হয়—এ নীতি রবিউস সানিসহ সব মাসে প্রযোজ্য।',
+            hadithRef: 'Sahih Bukhari 6464; Sahih Muslim 783',
+          ),
+        ],
       ),
 
-      // 5. Jumada al-Awwal
       IslamicMonth(
         number: 5,
         nameAr: 'جُمَادَىٰ ٱلْأُولَىٰ',
-        nameEn: "Jumada al-Awwal",
-        nameBn: 'জমাদিউল আউয়াল',
-        significance: 'The fifth month of the Islamic calendar, meaning "the first of parched land". Named so because it fell in the dry summer season.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের পঞ্চম মাস, যার অর্থ "শুষ্ক ভূমির প্রথম"। এই নামকরণ করা হয়েছিল কারণ এটি শুষ্ক গ্রীষ্মের মৌসুমে পড়েছিল।',
+        nameEn: 'Jumada al-Awwal',
+        nameBn: 'জমাদিউল আউয়াল',
+        significance:
+            'Historically connected to major Sirah events in the Madinan period, including the Battle of Mu\'tah (8 AH).',
+        significanceBn:
+            'মাদানি যুগের গুরুত্বপূর্ণ সিরাত ঘটনাবলির সাথে এই মাস যুক্ত, বিশেষত মুতা যুদ্ধ (৮ হিজরি)।',
         events: [
           ImportantEvent(
-            day: 13,
-            titleEn: 'Birth of Imam Ali (رضي الله عنه)',
-            titleBn: 'ইমাম আলী (রাঃ) এর জন্ম',
-            descriptionEn: 'The birth of Ali ibn Abi Talib, cousin and son-in-law of Prophet Muhammad (ﷺ), the fourth Caliph of Islam, known for his knowledge, bravery, and piety.',
-            descriptionBn: 'আলী ইবনে আবি তালিবের জন্ম, নবী মুহাম্মাদ (ﷺ) এর চাচাতো ভাই এবং জামাতা, ইসলামের চতুর্থ খলিফা, তাঁর জ্ঞান, সাহস এবং ধার্মিকতার জন্য পরিচিত।',
+            day: 1,
+            titleEn: 'Battle of Mu\'tah (8 AH, in this month)',
+            titleBn: 'মুতা যুদ্ধ (৮ হিজরি, এই মাসে)',
+            descriptionEn:
+                'A major expedition against Byzantine-aligned forces. It highlighted sacrifice and leadership of Zayd, Ja\'far, and Ibn Rawahah (RA).',
+            descriptionBn:
+                'বাইজেন্টাইন-সমর্থিত বাহিনীর বিরুদ্ধে গুরুত্বপূর্ণ অভিযান; জায়েদ, জাফর ও ইবনু রাওয়াহা (রাঃ)-এর ত্যাগ ও নেতৃত্ব এতে উজ্জ্বল।',
+            hadithRef: 'Sahih al-Bukhari, Kitab al-Maghazi',
+            isHighImportance: true,
           ),
         ],
       ),
 
-      // 6. Jumada al-Thani
       IslamicMonth(
         number: 6,
-        nameAr: 'جُمَادَىٰ ٱلثَّانِيَة',
-        nameEn: "Jumada al-Thani",
+        nameAr: 'جُمَادَىٰ ٱلْآخِرَة',
+        nameEn: 'Jumada al-Akhirah',
         nameBn: 'জমাদিউস সানি',
-        significance: 'The sixth month of the Islamic calendar, meaning "the second of parched land".',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের ষষ্ঠ মাস, যার অর্থ "শুষ্ক ভূমির দ্বিতীয়"।',
+        significance:
+            'A month without fixed obligatory rituals, ideal for continuing beneficial knowledge, repentance and family rights.',
+        significanceBn:
+            'এ মাসে নির্দিষ্ট ফরজ বার্ষিক রীতি নেই; ইলম, তওবা ও হক আদায়ে ধারাবাহিকতার জন্য উপযুক্ত মাস।',
         events: [
           ImportantEvent(
-            day: 20,
-            titleEn: 'Birth of Fatimah az-Zahra (رضي الله عنها)',
-            titleBn: 'ফাতিমা আয-যাহরা (রাঃ) এর জন্ম',
-            descriptionEn: 'The birth of Fatimah, beloved daughter of Prophet Muhammad (ﷺ) and wife of Ali ibn Abi Talib, known for her piety, patience, and devotion.',
-            descriptionBn: 'ফাতিমার জন্ম, নবী মুহাম্মাদ (ﷺ) এর প্রিয় কন্যা এবং আলী ইবনে আবি তালিবের স্ত্রী, তাঁর ধার্মিকতা, ধৈর্য এবং ভক্তির জন্য পরিচিত।',
+            day: 1,
+            titleEn: 'Continue Sunnah-Centered Worship',
+            titleBn: 'সুন্নাহকেন্দ্রিক ইবাদত অব্যাহত রাখা',
+            descriptionEn:
+                'Use the month to strengthen prayer, Qur\'an, and rights of kinship without introducing unfounded rituals.',
+            descriptionBn:
+                'বিদআত ছাড়া নামাজ, কুরআন ও আত্মীয়তার হক জোরদার করার মাস হিসেবে কাজে লাগান।',
+            hadithRef: 'General Sunnah principle',
           ),
         ],
       ),
 
-      // 7. Rajab
       IslamicMonth(
         number: 7,
         nameAr: 'رَجَب',
         nameEn: 'Rajab',
         nameBn: 'রজব',
-        significance: 'The seventh month of the Islamic calendar and one of the four sacred months. The name means "respect" or "honor". Fighting was forbidden during this month.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের সপ্তম মাস এবং চারটি পবিত্র মাসের একটি। নামের অর্থ "সম্মান" বা "মর্যাদা"। এই মাসে যুদ্ধ নিষিদ্ধ ছিল।',
+        isSacredMonth: true,
+        significance:
+            'Rajab is one of the four sacred months. It is a time to avoid sin and prepare spiritually for Sha\'ban and Ramadan.',
+        significanceBn:
+            'রজব চারটি পবিত্র মাসের একটি। গুনাহ থেকে বিরত থাকা এবং শাবান-রমজানের আধ্যাত্মিক প্রস্তুতির মাস।',
+        quranRef: 'At-Tawbah 9:36',
         events: [
           ImportantEvent(
-            day: 27,
-            titleEn: 'Isra and Mi\'raj',
-            titleBn: 'ইসরা ও মিরাজ',
-            descriptionEn: 'The night journey of Prophet Muhammad (ﷺ) from Makkah to Jerusalem and his ascension to the heavens. During this journey, the five daily prayers were prescribed.',
-            descriptionBn: 'নবী মুহাম্মাদ (ﷺ) এর মক্কা থেকে জেরুজালেমে রাত্রি ভ্রমণ এবং স্বর্গে আরোহণ। এই যাত্রার সময় পাঁচ ওয়াক্ত নামাজ নির্ধারিত হয়েছিল।',
+            day: 1,
+            titleEn: 'Sacred Month Begins',
+            titleBn: 'পবিত্র মাসের সূচনা',
+            descriptionEn:
+                'Rajab begins as a sacred month in which wrongdoing should be especially avoided.',
+            descriptionBn:
+                'রজব পবিত্র মাস হিসেবে শুরু হয়; এ সময়ে গুনাহ থেকে বিশেষভাবে বাঁচতে হবে।',
+            quranRef: 'At-Tawbah 9:36',
+            isHighImportance: true,
+          ),
+          ImportantEvent(
+            day: 15,
+            titleEn: 'Warning Against Unverified Rajab Rituals',
+            titleBn: 'রজবের অপ্রমাণিত আমল থেকে সতর্কতা',
+            descriptionEn:
+                'Scholars caution against attaching fixed acts to Rajab without authentic evidence. Focus on established Sunnah deeds.',
+            descriptionBn:
+                'সাহিহ প্রমাণ ছাড়া রজবের সাথে নির্দিষ্ট আমল জুড়ে না দিতে আলেমরা সতর্ক করেছেন; প্রমাণিত সুন্নাহ আমলে থাকুন।',
+            hadithRef: 'Hadith criticism works of Ibn Hajar, Ibn Rajab (scholarly guidance)',
           ),
         ],
       ),
 
-      // 8. Sha'ban
       IslamicMonth(
         number: 8,
         nameAr: 'شَعْبَان',
-        nameEn: "Sha'ban",
+        nameEn: 'Sha\'ban',
         nameBn: 'শাবান',
-        significance: 'The eighth month of the Islamic calendar. The name means "scattered" or "separation" as Arab tribes dispersed to find water. It is a month of preparation for Ramadan.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের অষ্টম মাস। নামের অর্থ "ছড়িয়ে পড়া" বা "বিচ্ছেদ" কারণ আরব গোত্রগুলি পানি খুঁজতে ছড়িয়ে পড়েছিল। এটি রমজানের প্রস্তুতির একটি মাস।',
+        significance:
+            'Sha\'ban is a preparation month before Ramadan. The Prophet ﷺ used to fast much of this month.',
+        significanceBn:
+            'শাবান রমজানের পূর্বপ্রস্তুতির মাস। নবী ﷺ এ মাসে অনেক বেশি নফল রোজা রাখতেন।',
+        keyHadith:
+            'I did not see the Prophet complete fasting in any month besides Ramadan, and I did not see him fasting in any month more than Sha\'ban.',
+        keyHadithRef: 'Sahih Bukhari 1969; Sahih Muslim 1156',
         events: [
           ImportantEvent(
             day: 15,
-            titleEn: 'Mid-Sha\'ban (Laylat al-Bara\'ah)',
-            titleBn: 'মধ্য-শাবান (শবে বরাত)',
-            descriptionEn: 'The night of mid-Sha\'ban, also known as Laylat al-Bara\'ah. Many Muslims spend this night in prayer and ask for forgiveness.',
-            descriptionBn: 'মধ্য-শাবানের রাত, যা লাইলাতুল বারাআহ নামেও পরিচিত। অনেক মুসলমান এই রাতটি প্রার্থনায় কাটান এবং ক্ষমা প্রার্থনা করেন।',
+            titleEn: 'Middle of Sha\'ban (date known, practices differ)',
+            titleBn: 'মধ্য-শাবান (তারিখ পরিচিত, আমলে মতপার্থক্য)',
+            descriptionEn:
+                'The date is known in the calendar, but scholars differ on assigning special fixed rituals to this night. Follow authenticated worship only.',
+            descriptionBn:
+                'ক্যালেন্ডারে তারিখটি পরিচিত, তবে এ রাতে নির্দিষ্ট বিশেষ আমল নির্ধারণে আলেমদের মতভেদ আছে। প্রমাণিত আমলেই সীমাবদ্ধ থাকুন।',
+            hadithRef: 'Scholarly discussions on authenticity (tahqiq-based fiqh)',
+          ),
+          ImportantEvent(
+            day: 16,
+            titleEn: 'Qiblah Change (reported in this period)',
+            titleBn: 'কিবলা পরিবর্তন (এই সময়পর্বে বর্ণিত)',
+            descriptionEn:
+                'The direction of prayer was changed to the Ka\'bah in Madinah during this period according many reports.',
+            descriptionBn:
+                'অনেক বর্ণনা অনুযায়ী মদিনা পর্বে এ সময় কিবলা বাইতুল মুকাদ্দাস থেকে কা\'বার দিকে পরিবর্তিত হয়।',
+            quranRef: 'Al-Baqarah 2:144',
+            isHighImportance: true,
           ),
         ],
       ),
 
-      // 9. Ramadan
       IslamicMonth(
         number: 9,
         nameAr: 'رَمَضَان',
         nameEn: 'Ramadan',
         nameBn: 'রমজান',
-        significance: 'The ninth and holiest month of the Islamic calendar. Muslims fast from dawn to sunset. The Quran was first revealed during this month. One of the five pillars of Islam.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের নবম এবং পবিত্রতম মাস। মুসলমানরা ভোর থেকে সূর্যাস্ত পর্যন্ত রোজা রাখে। এই মাসে কুরআন প্রথম অবতীর্ণ হয়েছিল। ইসলামের পাঁচটি স্তম্ভের একটি।',
+        significance:
+            'The holiest month in which fasting is obligatory and the Qur\'an was revealed. It includes Laylat al-Qadr in the last ten nights.',
+        significanceBn:
+            'সবচেয়ে পবিত্র মাস; এতে রোজা ফরজ এবং কুরআন নাযিল হয়েছে। শেষ দশ রাতে লাইলাতুল কদর রয়েছে।',
+        quranRef: 'Al-Baqarah 2:185',
+        keyHadithRef: 'Sahih Bukhari 1901; Sahih Muslim 760',
+        recommendedDeeds: [
+          'Observe obligatory fast properly',
+          'Pray Taraweeh and Qiyam',
+          'Search for Laylat al-Qadr in odd last ten nights',
+          'Increase charity and Qur\'an recitation',
+        ],
+        recommendedDeedsBn: [
+          'ফরজ রোজা সুন্দরভাবে পালন',
+          'তারাবি ও কিয়ামুল লাইল',
+          'শেষ দশ বিজোড় রাতে লাইলাতুল কদর অনুসন্ধান',
+          'সদকা ও কুরআন তিলাওয়াত বৃদ্ধি',
+        ],
         events: [
           ImportantEvent(
-            day: 10,
-            titleEn: 'Passing of Khadijah (رضي الله عنها)',
-            titleBn: 'খাদিজা (রাঃ) এর ওফাত',
-            descriptionEn: 'The passing of Khadijah bint Khuwaylid, the first wife of Prophet Muhammad (ﷺ), the first person to accept Islam, and a pillar of support during difficult times.',
-            descriptionBn: 'খাদিজা বিনতে খুওয়াইলিদের ওফাত, নবী মুহাম্মাদ (ﷺ) এর প্রথম স্ত্রী, ইসলাম গ্রহণকারী প্রথম ব্যক্তি এবং কঠিন সময়ে সমর্থনের স্তম্ভ।',
-          ),
-          ImportantEvent(
             day: 17,
-            titleEn: 'Battle of Badr',
-            titleBn: 'বদর যুদ্ধ',
-            descriptionEn: 'The first major battle between Muslims and Makkans in 624 CE. Despite being outnumbered 3:1, Muslims achieved a decisive victory with Allah\'s help, marking a turning point in Islamic history.',
-            descriptionBn: '৬২৪ খ্রিস্টাব্দে মুসলমান এবং মক্কাবাসীদের মধ্যে প্রথম বড় যুদ্ধ। ৩:১ অনুপাতে সংখ্যায় কম হওয়া সত্ত্বেও, মুসলমানরা আল্লাহর সাহায্যে নিষ্পত্তিমূলক বিজয় অর্জন করে, ইসলামী ইতিহাসে একটি টার্নিং পয়েন্ট চিহ্নিত করে।',
+            titleEn: 'Battle of Badr (2 AH)',
+            titleBn: 'বদর যুদ্ধ (২ হিজরি)',
+            descriptionEn:
+                'The first decisive battle in Islam where Allah granted victory to the believers despite small numbers.',
+            descriptionBn:
+                'ইসলামের প্রথম সিদ্ধান্তমূলক যুদ্ধ; স্বল্প সংখ্যক মুমিনকে আল্লাহ বিজয় দান করেন।',
+            quranRef: 'Al-Anfal 8:9-12',
+            isHighImportance: true,
           ),
           ImportantEvent(
-            day: 19,
-            titleEn: 'Conquest of Makkah',
-            titleBn: 'মক্কা বিজয়',
-            descriptionEn: 'The peaceful conquest of Makkah in 630 CE (8 AH), when Prophet Muhammad (ﷺ) entered the city with 10,000 companions and purified the Ka\'bah from idols.',
-            descriptionBn: '৬৩০ খ্রিস্টাব্দে (৮ হিজরী) মক্কার শান্তিপূর্ণ বিজয়, যখন নবী মুহাম্মাদ (ﷺ) ১০,০০০ সাহাবীদের সাথে শহরে প্রবেশ করেন এবং কাবাকে মূর্তি থেকে পবিত্র করেন।',
+            day: 20,
+            titleEn: 'Conquest of Makkah (8 AH)',
+            titleBn: 'মক্কা বিজয় (৮ হিজরি)',
+            descriptionEn:
+                'A major turning point when Makkah entered Islam and idols were removed from the Ka\'bah.',
+            descriptionBn:
+                'মক্কা ইসলামে প্রবেশ করে এবং কা\'বা থেকে মূর্তি অপসারণ করা হয়—ইসলামী ইতিহাসের বড় মোড়।',
+            quranRef: 'An-Nasr 110:1-3',
+            isHighImportance: true,
           ),
           ImportantEvent(
             day: 21,
-            titleEn: 'Laylat al-Qadr (Night of Power) - Last 10 Nights',
-            titleBn: 'লাইলাতুল কদর (শক্তির রাত্রি) - শেষ ১০ রাত',
-            descriptionEn: 'The night when the Quran was first revealed to Prophet Muhammad (ﷺ). It is better than a thousand months. Muslims seek this night in the last 10 odd nights of Ramadan, especially on the 21st, 23rd, 25th, 27th, or 29th.',
-            descriptionBn: 'রাত্রি যখন কুরআন প্রথম নবী মুহাম্মাদ (ﷺ) এর কাছে অবতীর্ণ হয়েছিল। এটি হাজার মাসের চেয়ে ভাল। মুসলমানরা রমজানের শেষ ১০ বিজোড় রাতে, বিশেষত ২১, ২৩, ২৫, ২৭ বা ২৯ তারিখে এই রাত্রি খোঁজেন।',
+            titleEn: 'Last Ten Nights Begin (Seek Laylat al-Qadr)',
+            titleBn: 'শেষ দশ রাত শুরু (লাইলাতুল কদর অনুসন্ধান)',
+            descriptionEn:
+                'The Prophet ﷺ intensified worship in the last ten nights and urged seeking Laylat al-Qadr in odd nights.',
+            descriptionBn:
+                'নবী ﷺ শেষ দশ রাতে ইবাদত বাড়াতেন এবং বিজোড় রাতে লাইলাতুল কদর অনুসন্ধানের নির্দেশ দেন।',
+            hadithRef: 'Sahih Bukhari 2017; Sahih Muslim 1167',
           ),
         ],
       ),
 
-      // 10. Shawwal
       IslamicMonth(
         number: 10,
         nameAr: 'شَوَّال',
         nameEn: 'Shawwal',
-        nameBn: 'শাওয়াল',
-        significance: 'The tenth month of the Islamic calendar. The name means "raised" as camels would raise their tails during this time. It begins with Eid al-Fitr celebration.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের দশম মাস। নামের অর্থ "উত্থিত" কারণ এই সময়ে উটগুলি তাদের লেজ তুলত। এটি ঈদ-উল-ফিতর উদযাপনের সাথে শুরু হয়।',
+        nameBn: 'শাওয়াল',
+        significance:
+            'Shawwal begins with Eid al-Fitr and includes the Sunnah of six voluntary fasts after Ramadan.',
+        significanceBn:
+            'শাওয়াল ঈদুল ফিতর দিয়ে শুরু হয় এবং রমজানের পর ৬টি নফল রোজার সুন্নাহ এতে রয়েছে।',
         events: [
           ImportantEvent(
             day: 1,
             titleEn: 'Eid al-Fitr',
-            titleBn: 'ঈদ-উল-ফিতর',
-            descriptionEn: 'The festival of breaking the fast, celebrated on the first day of Shawwal after completing the month of Ramadan. Muslims perform special prayers, give charity, and celebrate with family.',
-            descriptionBn: 'রোজা ভাঙার উৎসব, রমজান মাস সম্পন্ন করার পরে শাওয়ালের প্রথম দিনে উদযাপিত হয়। মুসলমানরা বিশেষ নামাজ আদায় করে, দাতব্য দেয় এবং পরিবারের সাথে উদযাপন করে।',
+            titleBn: 'ঈদুল ফিতর',
+            descriptionEn:
+                'A day of gratitude after Ramadan: Eid prayer, Zakah al-Fitr completion, family ties and lawful joy.',
+            descriptionBn:
+                'রমজান শেষে কৃতজ্ঞতার দিন: ঈদের নামাজ, সদকাতুল ফিতর, আত্মীয়তা ও হালাল আনন্দ।',
+            hadithRef: 'Sahih Bukhari (Eid chapters); Sahih Muslim (Eid chapters)',
+            isHighImportance: true,
+          ),
+          ImportantEvent(
+            day: 2,
+            titleEn: 'Six Fasts of Shawwal (any 6 days)',
+            titleBn: 'শাওয়ালের ৬ রোজা (যে কোনো ৬ দিন)',
+            descriptionEn:
+                'Whoever fasts Ramadan and follows it with six days of Shawwal gets the reward like fasting the whole year.',
+            descriptionBn:
+                'যে ব্যক্তি রমজানের রোজার পর শাওয়ালের ৬টি রোজা রাখে, সে যেন পুরো বছর রোজা রাখল—এমন সওয়াব পায়।',
+            hadithRef: 'Sahih Muslim 1164',
+            isHighImportance: true,
+          ),
+          ImportantEvent(
+            day: 7,
+            titleEn: 'Battle of Uhud (3 AH)',
+            titleBn: 'উহুদ যুদ্ধ (৩ হিজরি)',
+            descriptionEn:
+                'A major lesson in obedience, patience and discipline after early Muslim setbacks.',
+            descriptionBn:
+                'আনুগত্য, ধৈর্য ও শৃঙ্খলার গুরুত্বপূর্ণ শিক্ষা বহনকারী ঐতিহাসিক যুদ্ধ।',
+            quranRef: 'Aal-Imran 3:152-153',
           ),
         ],
       ),
 
-      // 11. Dhul-Qa'dah
       IslamicMonth(
         number: 11,
         nameAr: 'ذُو ٱلْقَعْدَة',
-        nameEn: "Dhul-Qa'dah",
+        nameEn: 'Dhul-Qa\'dah',
         nameBn: 'জিলকদ',
-        significance: 'The eleventh month of the Islamic calendar and one of the four sacred months. The name means "the one of truce" as fighting was forbidden. It precedes the Hajj season.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের একাদশ মাস এবং চারটি পবিত্র মাসের একটি। নামের অর্থ "যুদ্ধবিরতির সময়" কারণ যুদ্ধ নিষিদ্ধ ছিল। এটি হজের মৌসুমের আগে আসে।',
+        isSacredMonth: true,
+        significance:
+            'A sacred month and the opening period of Hajj preparations. Warfare was traditionally suspended.',
+        significanceBn:
+            'এটি পবিত্র মাস এবং হজ্জ প্রস্তুতির সূচনাকাল। ঐতিহ্যগতভাবে এ মাসে যুদ্ধবিগ্রহ স্থগিত থাকত।',
+        quranRef: 'At-Tawbah 9:36',
         events: [
           ImportantEvent(
+            day: 1,
+            titleEn: 'Sacred Month Reminder',
+            titleBn: 'পবিত্র মাসের নির্দেশনা',
+            descriptionEn:
+                'As a sacred month, Muslims should avoid oppression and increase obedience.',
+            descriptionBn:
+                'পবিত্র মাস হিসেবে জুলুম বর্জন ও ইবাদত বৃদ্ধি করা আবশ্যক।',
+            quranRef: 'At-Tawbah 9:36',
+            isHighImportance: true,
+          ),
+          ImportantEvent(
             day: 25,
-            titleEn: 'Treaty of Hudaybiyyah',
-            titleBn: 'হুদায়বিয়ার সন্ধি',
-            descriptionEn: 'The peace treaty between Muslims and Makkans in 628 CE (6 AH). Though it seemed unfavorable at first, Allah called it a "Clear Victory" (Fath al-Mubin) in the Quran.',
-            descriptionBn: '৬২৮ খ্রিস্টাব্দে (৬ হিজরী) মুসলমান এবং মক্কাবাসীদের মধ্যে শান্তি চুক্তি। যদিও প্রথমে এটি প্রতিকূল মনে হয়েছিল, আল্লাহ কুরআনে এটিকে "সুস্পষ্ট বিজয়" (ফাতহ আল-মুবীন) বলে অভিহিত করেছেন।',
+            titleEn: 'Treaty of Hudaybiyyah (6 AH, in this month)',
+            titleBn: 'হুদায়বিয়ার সন্ধি (৬ হিজরি, এ মাসে)',
+            descriptionEn:
+                'A strategic peace treaty Allah called a clear victory, opening the door for rapid spread of Islam.',
+            descriptionBn:
+                'আল্লাহ যাকে ‘স্পষ্ট বিজয়’ বলেছেন, সেই কৌশলগত শান্তিচুক্তি ইসলামের দ্রুত বিস্তারের পথ খুলে দেয়।',
+            quranRef: 'Al-Fath 48:1',
+            isHighImportance: true,
           ),
         ],
       ),
 
-      // 12. Dhul-Hijjah
       IslamicMonth(
         number: 12,
         nameAr: 'ذُو ٱلْحِجَّة',
         nameEn: 'Dhul-Hijjah',
         nameBn: 'জিলহজ্জ',
-        significance: 'The twelfth and final month of the Islamic calendar. One of the four sacred months. The month of Hajj (pilgrimage), one of the five pillars of Islam. The first ten days are among the most blessed.',
-        significanceBn: 'ইসলামিক ক্যালেন্ডারের দ্বাদশ এবং চূড়ান্ত মাস। চারটি পবিত্র মাসের একটি। হজ্জের (তীর্থযাত্রা) মাস, ইসলামের পাঁচটি স্তম্ভের একটি। প্রথম দশ দিন সবচেয়ে আশীর্বাদপূর্ণ।',
+        isSacredMonth: true,
+        significance:
+            'The month of Hajj and Eid al-Adha. The first ten days are among the greatest days of the year for righteous deeds.',
+        significanceBn:
+            'হজ্জ ও ঈদুল আযহার মাস। এ মাসের প্রথম দশ দিন নেক আমলের জন্য বছরের সেরা দিনগুলোর অন্তর্ভুক্ত।',
+        keyHadith:
+            'There are no days in which righteous deeds are more beloved to Allah than these ten days.',
+        keyHadithRef: 'Sahih Bukhari 969',
         events: [
           ImportantEvent(
             day: 8,
-            titleEn: 'Day of Tarwiyah (Hajj Begins)',
-            titleBn: 'তারবিয়াহর দিন (হজ্জ শুরু)',
-            descriptionEn: 'Pilgrims begin their journey to Mina, preparing for the main days of Hajj. They spend the day in worship and reflection.',
-            descriptionBn: 'তীর্থযাত্রীরা মিনার দিকে তাদের যাত্রা শুরু করে, হজ্জের প্রধান দিনগুলির জন্য প্রস্তুতি নিয়ে। তারা ইবাদত এবং প্রতিফলনে দিন কাটায়।',
+            titleEn: 'Day of Tarwiyah',
+            titleBn: 'ইয়াওমুত তারবিয়াহ',
+            descriptionEn:
+                'Pilgrims move to Mina to begin core Hajj rites.',
+            descriptionBn:
+                'হাজিরা হজ্জের মূল আনুষ্ঠানিকতা শুরু করতে মিনায় গমন করেন।',
+            hadithRef: 'Hajj chapters in Sahih Muslim',
           ),
           ImportantEvent(
             day: 9,
             titleEn: 'Day of Arafah',
-            titleBn: 'আরাফাহর দিন',
-            descriptionEn: 'The most important day of Hajj where pilgrims stand at Mount Arafat. Prophet Muhammad (ﷺ) delivered his farewell sermon on this day. Fasting on this day expiates sins of two years for those not performing Hajj.',
-            descriptionBn: 'হজ্জের সবচেয়ে গুরুত্বপূর্ণ দিন যেখানে তীর্থযাত্রীরা আরাফাত পর্বতে দাঁড়ায়। নবী মুহাম্মাদ (ﷺ) এই দিনে তাঁর বিদায়ী ভাষণ দিয়েছিলেন। যারা হজ্জ করছেন না তাদের জন্য এই দিনে রোজা রাখা দুই বছরের পাপ মোচন করে।',
+            titleBn: 'ইয়াওমু আরাফাহ',
+            descriptionEn:
+                'The greatest day of Hajj. For non-pilgrims, fasting this day expiates sins of the previous and coming year.',
+            descriptionBn:
+                'হজ্জের শ্রেষ্ঠ দিন। অ-হাজিদের জন্য এ দিনের রোজা অতীত ও আগত এক বছরের গুনাহের কাফফারা হয়।',
+            hadithRef: 'Sahih Muslim 1162',
+            isHighImportance: true,
           ),
           ImportantEvent(
             day: 10,
-            titleEn: 'Eid al-Adha (Festival of Sacrifice)',
-            titleBn: 'ঈদ-উল-আযহা (কুরবানীর ঈদ)',
-            descriptionEn: 'The festival of sacrifice, commemorating Prophet Ibrahim\'s (Abraham) willingness to sacrifice his son for Allah. Muslims sacrifice animals and distribute meat to family, friends, and the poor.',
-            descriptionBn: 'কুরবানীর উৎসব, নবী ইব্রাহিম (আব্রাহাম) এর আল্লাহর জন্য তাঁর পুত্রকে কুরবানী করার ইচ্ছার স্মরণে। মুসলমানরা পশু কুরবানী করে এবং পরিবার, বন্ধুবান্ধব এবং গরীবদের মধ্যে মাংস বিতরণ করে।',
+            titleEn: 'Eid al-Adha / Day of Sacrifice',
+            titleBn: 'ঈদুল আযহা / কুরবানির দিন',
+            descriptionEn:
+                'Commemorates the devotion of Ibrahim (AS); Muslims offer sacrifice and distribute meat.',
+            descriptionBn:
+                'ইবরাহিম (আঃ)-এর আনুগত্য স্মরণে মুসলমানরা কুরবানি করে এবং মাংস বণ্টন করে।',
+            quranRef: 'Al-Hajj 22:34-37',
+            isHighImportance: true,
           ),
           ImportantEvent(
-            day: 18,
-            titleEn: 'Ghadir Khumm',
-            titleBn: 'গাদীর খুম',
-            descriptionEn: 'The event where Prophet Muhammad (ﷺ) gave his final sermon during his last pilgrimage, emphasizing the importance of following the Quran and Sunnah.',
-            descriptionBn: 'ঘটনা যেখানে নবী মুহাম্মাদ (ﷺ) তাঁর শেষ তীর্থযাত্রার সময় তাঁর চূড়ান্ত ভাষণ দিয়েছিলেন, কুরআন এবং সুন্নাহ অনুসরণের গুরুত্বের উপর জোর দিয়ে।',
+            day: 11,
+            titleEn: 'Days of Tashriq (11-13 Dhul-Hijjah)',
+            titleBn: 'আইয়্যামুত তাশরীক (১১-১৩ জিলহজ্জ)',
+            descriptionEn:
+                'Days of eating, drinking, and remembrance of Allah after Eid; pilgrims continue rites in Mina.',
+            descriptionBn:
+                'ঈদের পর আল্লাহর জিকির, হালাল আহার ও মিনায় হজ্জের বাকি আনুষ্ঠানিকতার দিনসমূহ।',
+            hadithRef: 'Sahih Muslim 1141',
           ),
         ],
       ),

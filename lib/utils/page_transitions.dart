@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Custom page route with slide transition
-class SlidePageRoute extends PageRouteBuilder {
+class SlidePageRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
   final AxisDirection direction;
 
@@ -43,7 +43,7 @@ class SlidePageRoute extends PageRouteBuilder {
 }
 
 /// Fade page route
-class FadePageRoute extends PageRouteBuilder {
+class FadePageRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
 
   FadePageRoute({required this.page})
@@ -60,7 +60,7 @@ class FadePageRoute extends PageRouteBuilder {
 }
 
 /// Scale and fade route
-class ScalePageRoute extends PageRouteBuilder {
+class ScalePageRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
 
   ScalePageRoute({required this.page})
@@ -88,7 +88,7 @@ class ScalePageRoute extends PageRouteBuilder {
 }
 
 /// Bottom sheet slide route
-class BottomSheetPageRoute extends PageRouteBuilder {
+class BottomSheetPageRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
 
   BottomSheetPageRoute({required this.page})

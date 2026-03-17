@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quran_provider.dart';
-import '../providers/settings_provider.dart';
 import 'dashboard_screen.dart';
-import 'search_screen.dart';
+import 'translations_selector_screen.dart';
 import 'bookmarks_screen.dart';
 import 'settings_screen.dart';
 
@@ -16,13 +15,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  int _lastNonTranslationIndex = 0;
 
-  final List<Widget> _screens = [
-    const DashboardScreen(),
-    const SearchScreen(),
-    const BookmarksScreen(),
-    const SettingsScreen(),
-  ];
+  List<Widget> _buildScreens() {
+    return [
+      const DashboardScreen(),
+      TranslationsSelectorScreen(
+        onApplyAndGoReading: () {
+          setState(() {
+            _currentIndex = _lastNonTranslationIndex;
+          });
+        },
+      ),
+      const BookmarksScreen(),
+      const SettingsScreen(),
+    ];
+  }
 
   @override
   void initState() {
@@ -38,12 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: _screens,
+        children: _buildScreens(),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() {
+            if (index != 1) {
+              _lastNonTranslationIndex = index;
+            }
             _currentIndex = index;
           });
         },
@@ -54,8 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.translate_outlined),
+            selectedIcon: Icon(Icons.translate),
+            label: 'Translation',
           ),
           NavigationDestination(
             icon: Icon(Icons.bookmark_outline),

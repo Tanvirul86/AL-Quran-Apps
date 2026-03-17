@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import '../models/reciter.dart';
-import '../utils/constants.dart';
 
 /// Service for downloading and managing offline audio
 class AudioDownloadService {

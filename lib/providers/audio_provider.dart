@@ -8,6 +8,7 @@ enum RepeatMode { none, one, all }
 /// Provider for audio playback state with advanced features
 class AudioProvider with ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
+  static bool _audioServiceInitialized = false;
   
   bool _isPlaying = false;
   bool _isLoading = false;
@@ -33,20 +34,10 @@ class AudioProvider with ChangeNotifier {
 
   AudioProvider() {
     _initAudioPlayer();
+    initializeAudioService();
   }
 
   void _initAudioPlayer() {
-    // Set audio session for background playback
-    _audioPlayer.setAudioSource(
-      AudioSource.uri(Uri.parse(''), tag: const MediaItem(
-        id: 'quran_audio',
-        title: 'Quran Recitation',
-        artist: 'Al-Quran Pro',
-      )),
-    ).catchError((error) {
-      // Initial setup - will be replaced when actual audio plays
-    });
-    
     _audioPlayer.positionStream.listen((position) {
       _position = position;
       notifyListeners();
@@ -208,6 +199,7 @@ class AudioProvider with ChangeNotifier {
 
   /// Initialize audio service for background playback
   Future<void> initializeAudioService() async {
+    if (_audioServiceInitialized) return;
     try {
       await AudioService.init(
         builder: () => AudioPlayerHandler(_audioPlayer),
@@ -218,6 +210,7 @@ class AudioProvider with ChangeNotifier {
           androidStopForegroundOnPause: true,
         ),
       );
+      _audioServiceInitialized = true;
     } catch (e) {
       debugPrint('Error initializing audio service: $e');
     }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide RepeatMode;
 import 'package:provider/provider.dart';
 import '../providers/audio_provider.dart';
 import '../providers/settings_provider.dart';
@@ -249,13 +249,11 @@ class _AudioMiniPlayerState extends State<AudioMiniPlayer>
 
   IconData _getRepeatIcon(RepeatMode mode) {
     switch (mode) {
-      case RepeatMode.off:
+      case RepeatMode.none:
         return Icons.repeat;
       case RepeatMode.one:
         return Icons.repeat_one;
       case RepeatMode.all:
-        return Icons.repeat;
-      default:
         return Icons.repeat;
     }
   }

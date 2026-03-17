@@ -1,4 +1,5 @@
-import 'package:vibration/vibration.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 
@@ -10,10 +11,7 @@ class HapticFeedbackHelper {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       if (!settings.hapticFeedbackEnabled) return;
     }
-    
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 10);
-    }
+    HapticFeedback.lightImpact();
   }
 
   /// Medium haptic feedback
@@ -22,10 +20,7 @@ class HapticFeedbackHelper {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       if (!settings.hapticFeedbackEnabled) return;
     }
-    
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 20);
-    }
+    HapticFeedback.mediumImpact();
   }
 
   /// Heavy haptic feedback
@@ -34,10 +29,7 @@ class HapticFeedbackHelper {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       if (!settings.hapticFeedbackEnabled) return;
     }
-    
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 30);
-    }
+    HapticFeedback.heavyImpact();
   }
 
   /// Success feedback
@@ -46,10 +38,7 @@ class HapticFeedbackHelper {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       if (!settings.hapticFeedbackEnabled) return;
     }
-    
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(pattern: [0, 50, 50, 50]);
-    }
+    HapticFeedback.mediumImpact();
   }
 
   /// Error feedback
@@ -58,9 +47,6 @@ class HapticFeedbackHelper {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       if (!settings.hapticFeedbackEnabled) return;
     }
-    
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(pattern: [0, 100, 50, 100]);
-    }
+    HapticFeedback.heavyImpact();
   }
 }
