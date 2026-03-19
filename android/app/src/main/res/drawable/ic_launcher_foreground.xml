@@ -4,10 +4,121 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Background Circle -->
     <path
         android:fillColor="#1B5E20"
-        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+        android:pathData="M54,54m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0"/>
+    
+    <!-- Outer Decorative Circle -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M54,30L54,54L72,62L54,78L36,62L54,54L54,30Z"/>
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="2"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M54,54m-42,0a42,42 0,1 1,84 0a42,42 0,1 1,-84 0"/>
+    
+    <!-- Inner Decorative Circle -->
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M54,54m-36,0a36,36 0,1 1,72 0a36,36 0,1 1,-72 0"/>
+    
+    <!-- Left Book Cover (Page) -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M30,35 L45,35 L45,73 L30,73 Q25,73 25,68 L25,40 Q25,35 30,35 Z"/>
+    
+    <!-- Right Book Cover (Page) -->
+    <path
+        android:fillColor="#FFE082"
+        android:pathData="M63,35 L78,35 Q83,35 83,40 L83,68 Q83,73 78,73 L63,73 L63,35 Z"/>
+    
+    <!-- Book Spine/Center Line -->
+    <path
+        android:strokeColor="#1B5E20"
+        android:strokeWidth="1.5"
+        android:pathData="M54,35 L54,73"/>
+    
+    <!-- Left Page Decorative Lines (Islamic Pattern) -->
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="0.8"
+        android:pathData="M32,45 L43,45"/>
+    
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="0.8"
+        android:pathData="M32,52 L43,52"/>
+    
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="0.8"
+        android:pathData="M32,59 L43,59"/>
+    
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="0.8"
+        android:pathData="M32,66 L43,66"/>
+    
+    <!-- Right Page Decorative Lines (Islamic Pattern) -->
+    <path
+        android:strokeColor="#C19A3B"
+        android:strokeWidth="0.8"
+        android:pathData="M65,45 L76,45"/>
+    
+    <path
+        android:strokeColor="#C19A3B"
+        android:strokeWidth="0.8"
+        android:pathData="M65,52 L76,52"/>
+    
+    <path
+        android:strokeColor="#C19A3B"
+        android:strokeWidth="0.8"
+        android:pathData="M65,59 L76,59"/>
+    
+    <path
+        android:strokeColor="#C19A3B"
+        android:strokeWidth="0.8"
+        android:pathData="M65,66 L76,66"/>
+    
+    <!-- Center Decorative Ornament (Islamic Star) -->
+    <g android:translateX="54" android:translateY="54">
+        <!-- Center circle -->
+        <circle
+            android:cx="0"
+            android:cy="0"
+            android:r="3"
+            android:fillColor="#D4AF37"/>
+        
+        <!-- 4-point star rays -->
+        <path
+            android:strokeColor="#D4AF37"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-6 L0,6 M-6,0 L6,0"/>
+        
+        <!-- Diagonal rays -->
+        <path
+            android:strokeColor="#FFE082"
+            android:strokeWidth="0.8"
+            android:pathData="M-4,-4 L4,4 M4,-4 L-4,4"/>
+    </g>
+    
+    <!-- Bottom Decorative Elements -->
+    <circle
+        android:cx="35"
+        android:cy="78"
+        android:r="2"
+        android:fillColor="#D4AF37"/>
+    
+    <circle
+        android:cx="54"
+        android:cy="78"
+        android:r="2"
+        android:fillColor="#D4AF37"/>
+    
+    <circle
+        android:cx="73"
+        android:cy="78"
+        android:r="2"
+        android:fillColor="#D4AF37"/>
 </vector>
