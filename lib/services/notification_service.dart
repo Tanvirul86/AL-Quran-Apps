@@ -1,5 +1,8 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/notification_model.dart';
@@ -19,6 +22,9 @@ class NotificationService {
   Future<void> initialize() async {
     if (_initialized) return;
 
+    // Timezone init is required for zonedSchedule to fire at local prayer times.
+    await _initializeTimezone();
+
     const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
@@ -36,7 +42,20 @@ class NotificationService {
       onDidReceiveNotificationResponse: _onNotificationTap,
     );
 
+    // Ensure any persisted reminders are restored after app restart/upgrade.
+    await rescheduleSavedNotifications();
     _initialized = true;
+  }
+
+  Future<void> _initializeTimezone() async {
+    try {
+      tzdata.initializeTimeZones();
+      final localName = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(localName));
+    } catch (_) {
+      // Fallback to UTC if local zone detection fails.
+      tz.setLocalLocation(tz.UTC);
+    }
   }
 
   /// Request notification permissions
@@ -50,21 +69,36 @@ class NotificationService {
   }
 
   /// Schedule a notification
-  Future<void> scheduleNotification(QuranNotification notification) async {
-    await _notifications.zonedSchedule(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      tz.TZDateTime.from(notification.scheduledTime, tz.local),
-      _notificationDetails(),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      payload: json.encode(notification.payload),
-      matchDateTimeComponents: notification.isRepeating
-          ? DateTimeComponents.time
-          : null,
-    );
+  Future<void> scheduleNotification(
+    QuranNotification notification, {
+    bool useAdhanSound = false,
+  }) async {
+    Future<void> doSchedule(AndroidScheduleMode mode) {
+      return _notifications.zonedSchedule(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        tz.TZDateTime.from(notification.scheduledTime, tz.local),
+        _notificationDetails(useAdhanSound: useAdhanSound),
+        androidScheduleMode: mode,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: json.encode(notification.payload),
+        matchDateTimeComponents: notification.isRepeating
+            ? DateTimeComponents.time
+            : null,
+      );
+    }
+
+    try {
+      await doSchedule(AndroidScheduleMode.exactAllowWhileIdle);
+    } on PlatformException catch (e) {
+      if (e.code == 'exact_alarms_not_permitted') {
+        await doSchedule(AndroidScheduleMode.inexactAllowWhileIdle);
+      } else {
+        rethrow;
+      }
+    }
 
     // Save notification to preferences
     await _saveNotification(notification);
@@ -108,7 +142,7 @@ class NotificationService {
     bool isRepeating = true,
   }) async {
     final notification = QuranNotification(
-      id: 'reading_reminder_${time.millisecondsSinceEpoch}',
+      id: 'reading_reminder',
       title: title,
       body: body,
       type: NotificationType.readingReminder,
@@ -123,6 +157,7 @@ class NotificationService {
   Future<void> schedulePrayerReminder({
     required String prayerName,
     required DateTime time,
+    bool useAdhanSound = false,
   }) async {
     final notification = QuranNotification(
       id: 'prayer_$prayerName',
@@ -133,7 +168,7 @@ class NotificationService {
       isRepeating: true,
     );
 
-    await scheduleNotification(notification);
+    await scheduleNotification(notification, useAdhanSound: useAdhanSound);
   }
 
   /// Schedule memorization reminder
@@ -142,7 +177,7 @@ class NotificationService {
     required String message,
   }) async {
     final notification = QuranNotification(
-      id: 'memorization_${time.millisecondsSinceEpoch}',
+      id: 'memorization_reminder',
       title: '📚 Memorization Time',
       body: message,
       type: NotificationType.memorizationReminder,
@@ -173,7 +208,10 @@ class NotificationService {
   /// Schedule streak reminder
   Future<void> scheduleStreakReminder() async {
     final now = DateTime.now();
-    final reminderTime = DateTime(now.year, now.month, now.day, 20, 0);
+    var reminderTime = DateTime(now.year, now.month, now.day, 20, 0);
+    if (reminderTime.isBefore(now)) {
+      reminderTime = reminderTime.add(const Duration(days: 1));
+    }
     
     final notification = QuranNotification(
       id: 'streak_reminder',
@@ -185,6 +223,40 @@ class NotificationService {
     );
 
     await scheduleNotification(notification);
+  }
+
+  /// Fire an immediate local notification for verification.
+  Future<void> showInstantNotification({
+    required String title,
+    required String body,
+    bool useAdhanSound = false,
+  }) async {
+    await _notifications.show(
+      DateTime.now().millisecondsSinceEpoch % 100000,
+      title,
+      body,
+      _notificationDetails(useAdhanSound: useAdhanSound),
+      payload: json.encode({'type': 'test'}),
+    );
+  }
+
+  /// Rehydrate persisted notifications (helps after reboot/app restart).
+  Future<void> rescheduleSavedNotifications() async {
+    final notifications = await getScheduledNotifications();
+    final now = DateTime.now();
+    for (final n in notifications.where((n) => n.isEnabled)) {
+      final scheduleTime = n.isRepeating && n.scheduledTime.isBefore(now)
+          ? DateTime(now.year, now.month, now.day, n.scheduledTime.hour, n.scheduledTime.minute)
+          : n.scheduledTime;
+      final normalized = scheduleTime.isBefore(now) && n.isRepeating
+          ? scheduleTime.add(const Duration(days: 1))
+          : scheduleTime;
+
+      await scheduleNotification(
+        n.copyWith(scheduledTime: normalized),
+        useAdhanSound: n.payload?['useAdhanSound'] == true,
+      );
+    }
   }
 
   /// Cancel a notification
@@ -237,23 +309,30 @@ class NotificationService {
 
   // Private helper methods
 
-  NotificationDetails _notificationDetails() {
-    return const NotificationDetails(
-      android: AndroidNotificationDetails(
-        'quran_app_channel',
-        'Quran Notifications',
-        channelDescription: 'Notifications for Quran reading and reminders',
-        importance: Importance.high,
-        priority: Priority.high,
-        enableVibration: true,
-        playSound: true,
-      ),
-      iOS: DarwinNotificationDetails(
-        presentAlert: true,
-        presentBadge: true,
-        presentSound: true,
-      ),
+  NotificationDetails _notificationDetails({bool useAdhanSound = false}) {
+    final android = AndroidNotificationDetails(
+      useAdhanSound ? 'quran_adhan_channel' : 'quran_app_channel',
+      useAdhanSound ? 'Quran Athan Alerts' : 'Quran Notifications',
+      channelDescription: useAdhanSound
+          ? 'Athan alerts for prayer times'
+          : 'Notifications for Quran reading and reminders',
+      importance: Importance.high,
+      priority: Priority.high,
+      enableVibration: true,
+      playSound: true,
+      sound: useAdhanSound
+          ? const RawResourceAndroidNotificationSound('adhan')
+          : null,
     );
+
+    final ios = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      sound: useAdhanSound ? 'adhan.aiff' : null,
+    );
+
+    return NotificationDetails(android: android, iOS: ios);
   }
 
   void _onNotificationTap(NotificationResponse response) {

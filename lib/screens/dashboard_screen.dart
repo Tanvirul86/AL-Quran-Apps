@@ -36,6 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int? _lastReadSurahNumber;
   int? _lastReadAyah;
   int _lastReadMushafPage = 1;
+  bool _hasMushafProgress = false;
 
   @override
   void initState() {
@@ -60,12 +61,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         (rawSurahName ?? '').contains('পেজ');
 
     final mushafPage = await mushafService.getLastReadPage();
+    final hasMushafProgress = prefs.containsKey('last_read_page');
 
     setState(() {
       _lastReadSurah = (!hasValidSurah || looksLikeMushafText) ? null : rawSurahName;
       _lastReadSurahNumber = hasValidSurah ? rawSurahNumber : null;
       _lastReadAyah = hasValidSurah ? rawAyah : null;
       _lastReadMushafPage = mushafPage;
+      _hasMushafProgress = hasMushafProgress;
     });
   }
 
@@ -137,7 +140,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         const SizedBox(height: 20),
                         // Two-row horizontal quick actions
                         SizedBox(
-                          height: 214,
+                          height: 224,
                           child: GridView(
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
@@ -146,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               crossAxisCount: 2,
                               mainAxisSpacing: 10,
                               crossAxisSpacing: 10,
-                              childAspectRatio: 1.8,
+                              childAspectRatio: 1.45,
                             ),
                             children: [
                               _buildQuickActionButton(context, 'Prayer Times',
@@ -183,7 +186,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 _showDailyInspirationDialog(context);
                               }),
                               _buildQuickActionButton(context, 'Al Quran',
-                                  Icons.import_books, Colors.brown, () {
+                                  Icons.book, Colors.brown, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                   context,
@@ -310,25 +313,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildContinueReadingQuickAction(BuildContext context) {
+    final primary = Theme.of(context).primaryColor;
     return GlassCard(
       padding: EdgeInsets.zero,
       child: InkWell(
         onTap: () => _showContinueReadingOptions(context),
         borderRadius: BorderRadius.circular(14),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.2),
-                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [primary, primary.withOpacity(0.78)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.menu_book_rounded,
-                  color: Theme.of(context).primaryColor,
-                  size: 22,
+                  color: Colors.white,
+                  size: 21,
                 ),
               ),
               const SizedBox(width: 12),
@@ -339,9 +349,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Text(
                       'Continue Reading',
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor.withOpacity(0.7),
+                        color: primary.withOpacity(0.72),
                         fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                        fontSize: 11.5,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -350,9 +360,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? '$_lastReadSurah • Ayah $_lastReadAyah'
                           : 'Tap to continue Quran text',
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                        color: primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -360,17 +370,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.arrow_forward_rounded,
-                  color: Theme.of(context).primaryColor,
-                  size: 18,
-                ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                color: primary.withOpacity(0.85),
+                size: 20,
               ),
             ],
           ),
@@ -392,24 +395,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(9),
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [color, color.withOpacity(0.75)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  shape: BoxShape.circle,
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: Colors.white, size: 20),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 7),
               Text(
                 label,
                 textAlign: TextAlign.center,
@@ -417,8 +422,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 10,
-                  height: 1.1,
+                  fontSize: 10.5,
+                  height: 1.2,
                   color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
@@ -495,32 +500,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
 
-            const SizedBox(height: 16),
+            if (_hasMushafProgress) ...[
+              const SizedBox(height: 16),
 
-            // Mushaf Mode Option
-            ListTile(
-              leading: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.brown.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(Icons.auto_stories, color: Colors.brown),
-              ),
-              title: const Text('Mushaf Pages'),
-              subtitle: Text('Continue from page $_lastReadMushafPage'),
-              onTap: () async {
-                Navigator.pop(context);
-                final mushafService = MushafService();
-                final lastPage = await mushafService.getLastReadPage();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => MushafPageScreen(initialPage: lastPage),
+              // Mushaf Mode Option (only shown after user has read Mushaf before)
+              ListTile(
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.brown.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                );
-              },
-            ),
+                  child: const Icon(Icons.auto_stories, color: Colors.brown),
+                ),
+                title: const Text('Mushaf Pages'),
+                subtitle: Text('Continue from page $_lastReadMushafPage'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final mushafService = MushafService();
+                  final lastPage = await mushafService.getLastReadPage();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => MushafPageScreen(initialPage: lastPage),
+                    ),
+                  );
+                },
+              ),
+            ],
 
             const SizedBox(height: 16),
           ],

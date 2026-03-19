@@ -18,6 +18,7 @@ import '../utils/word_highlighter.dart';
 class AyahWidget extends StatelessWidget {
   final Ayah ayah;
   final bool arabicOnlyMode;
+  final bool useLightText;
   final bool isBookmarked;
   final VoidCallback onBookmarkToggle;
   final VoidCallback onPlay;
@@ -27,6 +28,7 @@ class AyahWidget extends StatelessWidget {
     super.key,
     required this.ayah,
     this.arabicOnlyMode = false,
+    this.useLightText = false,
     required this.isBookmarked,
     required this.onBookmarkToggle,
     required this.onPlay,
@@ -49,10 +51,11 @@ class AyahWidget extends StatelessWidget {
     return Consumer<SettingsProvider>(
       builder: (context, settings, _) {
         final primary = Theme.of(context).primaryColor;
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+        final hasDarkBackground = isDarkTheme || useLightText;
 
         final bgColor = isActive
-            ? primary.withOpacity(isDark ? 0.15 : 0.07)
+            ? primary.withOpacity(hasDarkBackground ? 0.15 : 0.07)
             : Colors.transparent;
 
         return GestureDetector(
@@ -94,7 +97,7 @@ class AyahWidget extends StatelessWidget {
                                     text: TextSpan(
                                       children: TajweedParser.parse(
                                         ayah.tajweedText!,
-                                        _getArabicStyle(settings, isDark),
+                                        _getArabicStyle(settings, hasDarkBackground),
                                       ),
                                     ),
                                   )
@@ -103,21 +106,21 @@ class AyahWidget extends StatelessWidget {
                                     arabicText: _getArabicText(settings),
                                     ayah: ayah,
                                     settings: settings,
-                                    isDark: isDark,
+                                    isDark: hasDarkBackground,
                                   ),
                           ),
                         ],
                       ),
 
                       if (!arabicOnlyMode)
-                        ..._buildTranslationWidgets(settings, primary, isDark),
+                        ..._buildTranslationWidgets(settings, primary, hasDarkBackground),
                     ],
                   ),
                 ),
                 Divider(
                   height: 1,
                   thickness: 0.4,
-                  color: isDark
+                  color: hasDarkBackground
                       ? Colors.white.withOpacity(0.08)
                       : Colors.black.withOpacity(0.08),
                   indent: 20,
@@ -501,8 +504,12 @@ class AyahWidget extends StatelessWidget {
   }
 
   TextStyle _getArabicStyle(SettingsProvider settings, bool isDark) {
+    final scriptFont = settings.scriptType == QuranScriptType.indopak
+        ? AppTheme.arabicFontAlt
+        : AppTheme.arabicFont;
+
     return TextStyle(
-      fontFamily: AppTheme.arabicFont,
+      fontFamily: scriptFont,
       fontSize: settings.arabicFontSize,
       height: 2.1,
       color: isDark ? Colors.white.withOpacity(0.93) : const Color(0xFF1A1A2E),

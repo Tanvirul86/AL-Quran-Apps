@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final primary = Theme.of(context).primaryColor;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final navBg = isDark ? const Color(0xFF111827) : Colors.white;
+    final inactiveColor = isDark ? Colors.grey.shade300 : Colors.grey.shade600;
 
     return Scaffold(
       body: IndexedStack(
@@ -111,6 +112,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                       color: selected ? primary.withOpacity(0.12) : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
+                      border: selected
+                          ? Border.all(color: primary.withOpacity(0.25), width: 0.8)
+                          : null,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -120,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           child: Icon(
                             selected ? tab.selectedIcon : tab.icon,
                             key: ValueKey(selected),
-                            color: selected ? primary : Colors.grey.shade400,
+                            color: selected ? primary : inactiveColor,
                             size: 22,
                           ),
                         ),
@@ -130,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: selected ? FontWeight.w700 : FontWeight.normal,
-                            color: selected ? primary : Colors.grey.shade400,
+                            color: selected ? primary : inactiveColor,
                           ),
                           child: Text(tab.label),
                         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_service.dart';
+import '../services/prayer_times_service.dart';
 
 /// Notification Settings Screen - Configure all notification types
 class NotificationSettingsScreen extends StatefulWidget {
@@ -13,6 +15,7 @@ class NotificationSettingsScreen extends StatefulWidget {
 class _NotificationSettingsScreenState
     extends State<NotificationSettingsScreen> {
   late NotificationService _notificationService;
+  final PrayerTimesService _prayerTimesService = PrayerTimesService();
 
   // Notification toggles
   bool _dailyAyahEnabled = true;
@@ -20,6 +23,7 @@ class _NotificationSettingsScreenState
   bool _prayerReminderEnabled = false;
   bool _memorizationReminderEnabled = false;
   bool _streakReminderEnabled = true;
+  bool _useAdhanSound = false;
 
   // Time settings
   TimeOfDay _dailyAyahTime = const TimeOfDay(hour: 8, minute: 0);
@@ -44,8 +48,84 @@ class _NotificationSettingsScreenState
   }
 
   Future<void> _loadSettings() async {
-    // Load saved settings from SharedPreferences
-    // For now using defaults
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _dailyAyahEnabled = prefs.getBool('notif_daily_ayah_enabled') ?? true;
+      _readingReminderEnabled =
+          prefs.getBool('notif_reading_enabled') ?? false;
+      _prayerReminderEnabled =
+          prefs.getBool('notif_prayer_enabled') ?? false;
+      _memorizationReminderEnabled =
+          prefs.getBool('notif_memorization_enabled') ?? false;
+      _streakReminderEnabled = prefs.getBool('notif_streak_enabled') ?? true;
+      _useAdhanSound = prefs.getBool('notif_use_adhan_sound') ?? false;
+
+      _dailyAyahTime = TimeOfDay(
+        hour: prefs.getInt('notif_daily_h') ?? 8,
+        minute: prefs.getInt('notif_daily_m') ?? 0,
+      );
+      _readingReminderTime = TimeOfDay(
+        hour: prefs.getInt('notif_reading_h') ?? 20,
+        minute: prefs.getInt('notif_reading_m') ?? 0,
+      );
+      _memorizationReminderTime = TimeOfDay(
+        hour: prefs.getInt('notif_mem_h') ?? 18,
+        minute: prefs.getInt('notif_mem_m') ?? 0,
+      );
+      _streakReminderTime = TimeOfDay(
+        hour: prefs.getInt('notif_streak_h') ?? 21,
+        minute: prefs.getInt('notif_streak_m') ?? 0,
+      );
+    });
+
+    if (_prayerReminderEnabled) {
+      await _refreshPrayerTimesForDisplay();
+    }
+  }
+
+  Future<void> _saveSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notif_daily_ayah_enabled', _dailyAyahEnabled);
+    await prefs.setBool('notif_reading_enabled', _readingReminderEnabled);
+    await prefs.setBool('notif_prayer_enabled', _prayerReminderEnabled);
+    await prefs.setBool('notif_memorization_enabled', _memorizationReminderEnabled);
+    await prefs.setBool('notif_streak_enabled', _streakReminderEnabled);
+    await prefs.setBool('notif_use_adhan_sound', _useAdhanSound);
+
+    await prefs.setInt('notif_daily_h', _dailyAyahTime.hour);
+    await prefs.setInt('notif_daily_m', _dailyAyahTime.minute);
+    await prefs.setInt('notif_reading_h', _readingReminderTime.hour);
+    await prefs.setInt('notif_reading_m', _readingReminderTime.minute);
+    await prefs.setInt('notif_mem_h', _memorizationReminderTime.hour);
+    await prefs.setInt('notif_mem_m', _memorizationReminderTime.minute);
+    await prefs.setInt('notif_streak_h', _streakReminderTime.hour);
+    await prefs.setInt('notif_streak_m', _streakReminderTime.minute);
+  }
+
+  Future<void> _refreshPrayerTimesForDisplay() async {
+    try {
+      final position = await _prayerTimesService.getCurrentLocationSafe();
+      final times = await _prayerTimesService.getPrayerTimes(
+        date: DateTime.now(),
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
+
+      if (!mounted) return;
+      setState(() {
+        _prayerTimes
+          ..clear()
+          ..addAll({
+            'Fajr': TimeOfDay.fromDateTime(times['Fajr']!),
+            'Dhuhr': TimeOfDay.fromDateTime(times['Dhuhr']!),
+            'Asr': TimeOfDay.fromDateTime(times['Asr']!),
+            'Maghrib': TimeOfDay.fromDateTime(times['Maghrib']!),
+            'Isha': TimeOfDay.fromDateTime(times['Isha']!),
+          });
+      });
+    } catch (_) {
+      // Keep existing fallback display times.
+    }
   }
 
   @override
@@ -69,13 +149,17 @@ class _NotificationSettingsScreenState
               setState(() => _dailyAyahEnabled = value);
               if (value) {
                 _scheduleDailyAyah();
+              } else {
+                _notificationService.cancelNotification('daily_ayah');
               }
+              _saveSettings();
             },
             onTimeChanged: (time) {
               setState(() => _dailyAyahTime = time);
               if (_dailyAyahEnabled) {
                 _scheduleDailyAyah();
               }
+              _saveSettings();
             },
           ),
 
@@ -93,13 +177,17 @@ class _NotificationSettingsScreenState
               setState(() => _readingReminderEnabled = value);
               if (value) {
                 _scheduleReadingReminder();
+              } else {
+                _notificationService.cancelNotification('reading_reminder');
               }
+              _saveSettings();
             },
             onTimeChanged: (time) {
               setState(() => _readingReminderTime = time);
               if (_readingReminderEnabled) {
                 _scheduleReadingReminder();
               }
+              _saveSettings();
             },
           ),
 
@@ -122,13 +210,17 @@ class _NotificationSettingsScreenState
               setState(() => _memorizationReminderEnabled = value);
               if (value) {
                 _scheduleMemorizationReminder();
+              } else {
+                _notificationService.cancelNotification('memorization_reminder');
               }
+              _saveSettings();
             },
             onTimeChanged: (time) {
               setState(() => _memorizationReminderTime = time);
               if (_memorizationReminderEnabled) {
                 _scheduleMemorizationReminder();
               }
+              _saveSettings();
             },
           ),
 
@@ -146,13 +238,17 @@ class _NotificationSettingsScreenState
               setState(() => _streakReminderEnabled = value);
               if (value) {
                 _scheduleStreakReminder();
+              } else {
+                _notificationService.cancelNotification('streak_reminder');
               }
+              _saveSettings();
             },
             onTimeChanged: (time) {
               setState(() => _streakReminderTime = time);
               if (_streakReminderEnabled) {
                 _scheduleStreakReminder();
               }
+              _saveSettings();
             },
           ),
 
@@ -294,12 +390,28 @@ class _NotificationSettingsScreenState
                     setState(() => _prayerReminderEnabled = value);
                     if (value) {
                       _schedulePrayerReminders();
+                    } else {
+                      for (final prayer in _prayerTimes.keys) {
+                        _notificationService.cancelNotification('prayer_$prayer');
+                      }
                     }
+                    _saveSettings();
                   },
                 ),
               ],
             ),
             if (_prayerReminderEnabled) ...[
+              const Divider(),
+              SwitchListTile(
+                title: const Text('Use Adhan Sound (Optional)'),
+                subtitle: const Text('Requires adhan sound resource in app'),
+                value: _useAdhanSound,
+                onChanged: (value) async {
+                  setState(() => _useAdhanSound = value);
+                  await _saveSettings();
+                  await _schedulePrayerReminders();
+                },
+              ),
               const Divider(),
               ..._prayerTimes.entries.map((entry) {
                 return Padding(
@@ -347,6 +459,7 @@ class _NotificationSettingsScreenState
       hour: _dailyAyahTime.hour,
       minute: _dailyAyahTime.minute,
     );
+    await _saveSettings();
     _showSnackBar('Daily Ayah scheduled for ${_dailyAyahTime.format(context)}');
   }
 
@@ -359,24 +472,28 @@ class _NotificationSettingsScreenState
       body: 'Continue your daily Quran reading',
       time: time,
     );
+    await _saveSettings();
     _showSnackBar('Reading reminder scheduled');
   }
 
   Future<void> _schedulePrayerReminders() async {
-    final now = DateTime.now();
-    final prayers = {
-      'Fajr': DateTime(now.year, now.month, now.day, 5, 0),
-      'Dhuhr': DateTime(now.year, now.month, now.day, 12, 30),
-      'Asr': DateTime(now.year, now.month, now.day, 15, 30),
-      'Maghrib': DateTime(now.year, now.month, now.day, 18, 0),
-      'Isha': DateTime(now.year, now.month, now.day, 19, 30),
-    };
+    await _refreshPrayerTimesForDisplay();
+    final position = await _prayerTimesService.getCurrentLocationSafe();
+    final prayers = await _prayerTimesService.getPrayerTimes(
+      date: DateTime.now(),
+      latitude: position.latitude,
+      longitude: position.longitude,
+    );
+
     for (final entry in prayers.entries) {
+      if (entry.key == 'Sunrise') continue;
       await _notificationService.schedulePrayerReminder(
         prayerName: entry.key,
         time: entry.value,
+        useAdhanSound: _useAdhanSound,
       );
     }
+    await _saveSettings();
     _showSnackBar('Prayer reminders scheduled');
   }
 
@@ -388,22 +505,23 @@ class _NotificationSettingsScreenState
       time: time,
       message: 'Time for your daily Quran memorization session',
     );
+    await _saveSettings();
     _showSnackBar('Memorization reminder scheduled');
   }
 
   Future<void> _scheduleStreakReminder() async {
     await _notificationService.scheduleStreakReminder();
+    await _saveSettings();
     _showSnackBar('Streak reminder scheduled');
   }
 
   Future<void> _sendTestNotification() async {
-    // Send immediate test notification
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Test notification sent!'),
-        duration: Duration(seconds: 2),
-      ),
+    await _notificationService.showInstantNotification(
+      title: _useAdhanSound ? '🕌 Test Adhan Reminder' : '🔔 Test Reminder',
+      body: 'If you received this, local notifications are working.',
+      useAdhanSound: _useAdhanSound,
     );
+    _showSnackBar('Test notification sent');
   }
 
   void _showSnackBar(String message) {

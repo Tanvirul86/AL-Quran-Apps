@@ -44,6 +44,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   AudioProvider? _audioProvider;
   VoidCallback? _audioListener;
   int? _lastScrolledToAyah; // Track which ayah we've scrolled to (different from playing)
+  bool _isAutoScrolling = false;
+  DateTime? _lastAutoScrollAt;
   ReadingMode _readingMode = ReadingMode.day;
   
   // Bismillah text
@@ -165,17 +167,47 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
 
   void _scrollToAyah(int ayahNumber) {
     if (_scrollController.positions.isEmpty || _processedAyahs.isEmpty) return;
+    if (_isAutoScrolling) return;
+
+    // Prevent back-to-back scroll animations that feel like shaking.
+    final now = DateTime.now();
+    if (_lastAutoScrollAt != null &&
+        now.difference(_lastAutoScrollAt!) < const Duration(milliseconds: 650)) {
+      return;
+    }
 
     final targetKey = _ayahItemKeys[ayahNumber];
     final targetContext = targetKey?.currentContext;
     if (targetContext != null) {
-      // Keep currently reciting ayah around the middle of the screen.
+      final targetRender = targetContext.findRenderObject() as RenderBox?;
+      if (targetRender != null) {
+        final screenHeight = MediaQuery.of(context).size.height;
+        final topBand = screenHeight * 0.30;
+        final bottomBand = screenHeight * 0.70;
+        final targetTop = targetRender.localToGlobal(Offset.zero).dy;
+        final targetBottom = targetTop + targetRender.size.height;
+
+        // If the active ayah is already in middle viewport zone, don't scroll.
+        final isInsideComfortZone =
+            targetTop >= topBand && targetBottom <= bottomBand;
+        if (isInsideComfortZone) {
+          return;
+        }
+      }
+
+      // Recenter only when ayah leaves comfort zone.
+      _isAutoScrolling = true;
+      _lastAutoScrollAt = now;
       Scrollable.ensureVisible(
         targetContext,
         alignment: 0.5,
-        duration: const Duration(milliseconds: 420),
-        curve: Curves.easeInOutCubic,
-      );
+        duration: const Duration(milliseconds: 360),
+        curve: Curves.easeOutCubic,
+      ).whenComplete(() {
+        if (mounted) {
+          _isAutoScrolling = false;
+        }
+      });
       return;
     }
 
@@ -202,11 +234,17 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       milliseconds: (300 + (distance * 0.5).toInt()).clamp(200, 800),
     );
     
+    _isAutoScrolling = true;
+    _lastAutoScrollAt = now;
     _scrollController.animateTo(
       targetOffset,
       duration: duration,
       curve: Curves.easeInOutCubic,
-    );
+    ).whenComplete(() {
+      if (mounted) {
+        _isAutoScrolling = false;
+      }
+    });
   }
 
   bool _isSurahWithStandaloneBismillah() {
@@ -355,7 +393,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   }
 
   Widget _buildBismillahWidget() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final hasDarkBackground = isDarkTheme || _readingMode == ReadingMode.night;
     final primary = Theme.of(context).primaryColor;
     return Container(
       width: double.infinity,
@@ -364,8 +403,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            primary.withOpacity(isDark ? 0.25 : 0.12),
-            primary.withOpacity(isDark ? 0.10 : 0.04),
+            primary.withOpacity(hasDarkBackground ? 0.25 : 0.12),
+            primary.withOpacity(hasDarkBackground ? 0.10 : 0.04),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -392,7 +431,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   fontFamily: AppTheme.arabicFont,
                   fontSize: settings.arabicFontSize + 3,
                   height: 2.0,
-                  color: isDark ? Colors.white.withOpacity(0.93) : const Color(0xFF1A1A2E),
+                  color: hasDarkBackground
+                      ? Colors.white.withOpacity(0.93)
+                      : const Color(0xFF1A1A2E),
                   letterSpacing: 0.5,
                 ),
               ),
@@ -404,7 +445,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   style: TextStyle(
                     fontFamily: AppTheme.banglaFont,
                     fontSize: settings.banglaFontSize - 1,
-                    color: isDark ? Colors.white.withOpacity(0.55) : const Color(0xFF4A4A6A),
+                    color: hasDarkBackground
+                        ? Colors.white.withOpacity(0.74)
+                        : const Color(0xFF4A4A6A),
                     height: 1.6,
                   ),
                 ),
@@ -416,7 +459,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   style: TextStyle(
                     fontFamily: AppTheme.englishFont,
                     fontSize: settings.englishFontSize - 1,
-                    color: isDark ? Colors.white.withOpacity(0.50) : const Color(0xFF6A6A8A),
+                    color: hasDarkBackground
+                        ? Colors.white.withOpacity(0.72)
+                        : const Color(0xFF6A6A8A),
                     fontStyle: FontStyle.italic,
                     height: 1.5,
                   ),
@@ -462,6 +507,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final hasDarkReadingBackground = isDark || _readingMode == ReadingMode.night;
     final primary = Theme.of(context).primaryColor;
     // Reading mode background
     final readingBg = isDark && _readingMode == ReadingMode.day
@@ -636,14 +682,6 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             ? const LoadingSkeletons(type: 'ayah', count: 5)
             : Column(
                 children: [
-                  // Surah header banner
-                  if (!widget.arabicOnlyMode)
-                    _SurahHeaderBanner(
-                      surah: widget.surah,
-                      primary: primary,
-                      isDark: isDark,
-                    ),
-
                   // Reading progress
                   if (!widget.arabicOnlyMode)
                     ReadingProgressWidget(
@@ -670,6 +708,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                           child: AyahWidget(
                             ayah: ayah,
                             arabicOnlyMode: widget.arabicOnlyMode,
+                            useLightText: hasDarkReadingBackground,
                             isBookmarked:
                                 _bookmarkedAyahs[ayah.ayahNumber] ?? false,
                             onBookmarkToggle: () async {

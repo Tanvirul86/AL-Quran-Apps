@@ -4,121 +4,83 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Background Circle -->
+
+    <!-- Deep emerald medallion -->
     <path
-        android:fillColor="#1B5E20"
-        android:pathData="M54,54m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0"/>
-    
-    <!-- Outer Decorative Circle -->
+        android:fillColor="#0B4A30"
+        android:pathData="M54,54m-48,0a48,48 0,1 1,96 0a48,48 0,1 1,-96 0"/>
+
+    <!-- Premium gold outer ring -->
     <path
-        android:strokeColor="#D4AF37"
-        android:strokeWidth="2"
         android:fillColor="@android:color/transparent"
-        android:pathData="M54,54m-42,0a42,42 0,1 1,84 0a42,42 0,1 1,-84 0"/>
-    
-    <!-- Inner Decorative Circle -->
+        android:strokeColor="#D9B44A"
+        android:strokeWidth="2.8"
+        android:pathData="M54,54m-40.5,0a40.5,40.5 0,1 1,81 0a40.5,40.5 0,1 1,-81 0"/>
+
+    <!-- Subtle inner ring -->
     <path
-        android:strokeColor="#D4AF37"
-        android:strokeWidth="1.5"
         android:fillColor="@android:color/transparent"
-        android:pathData="M54,54m-36,0a36,36 0,1 1,72 0a36,36 0,1 1,-72 0"/>
-    
-    <!-- Left Book Cover (Page) -->
+        android:strokeColor="#F2D37A"
+        android:strokeWidth="1"
+        android:pathData="M54,54m-34.5,0a34.5,34.5 0,1 1,69 0a34.5,34.5 0,1 1,-69 0"/>
+
+    <!-- Crescent on top (clean Islamic cue) -->
     <path
-        android:fillColor="#D4AF37"
-        android:pathData="M30,35 L45,35 L45,73 L30,73 Q25,73 25,68 L25,40 Q25,35 30,35 Z"/>
-    
-    <!-- Right Book Cover (Page) -->
+        android:fillColor="#D9B44A"
+        android:pathData="M54,24m-7,0a7,7 0,1 1,14 0a7,7 0,1 1,-14 0"/>
     <path
-        android:fillColor="#FFE082"
-        android:pathData="M63,35 L78,35 Q83,35 83,40 L83,68 Q83,73 78,73 L63,73 L63,35 Z"/>
-    
-    <!-- Book Spine/Center Line -->
+        android:fillColor="#0B4A30"
+        android:pathData="M56,24m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+
+    <!-- Star -->
     <path
-        android:strokeColor="#1B5E20"
+        android:fillColor="#F7E7B2"
+        android:pathData="M66,23 L67.2,25.5 L70,25.9 L67.9,27.7 L68.5,30.5 L66,29.1 L63.5,30.5 L64.1,27.7 L62,25.9 L64.8,25.5 Z"/>
+
+    <!-- Open Quran body: left page -->
+    <path
+        android:fillColor="#E2BD5A"
+        android:pathData="M29,66 C29,51 37,43 49,43 C51.8,43 54,44 54,44 L54,78 C54,78 50.7,77 47,77 C35.3,77 29,73 29,66 Z"/>
+
+    <!-- Open Quran body: right page -->
+    <path
+        android:fillColor="#F5E0A1"
+        android:pathData="M79,66 C79,51 71,43 59,43 C56.2,43 54,44 54,44 L54,78 C54,78 57.3,77 61,77 C72.7,77 79,73 79,66 Z"/>
+
+    <!-- Center spine -->
+    <path
+        android:strokeColor="#B98D26"
         android:strokeWidth="1.5"
-        android:pathData="M54,35 L54,73"/>
-    
-    <!-- Left Page Decorative Lines (Islamic Pattern) -->
+        android:pathData="M54,44 L54,78"/>
+
+    <!-- Page details: left -->
     <path
-        android:strokeColor="#FFE082"
+        android:strokeColor="#F6E8B8"
         android:strokeWidth="0.8"
-        android:pathData="M32,45 L43,45"/>
-    
+        android:pathData="M34,58 L49,58"/>
     <path
-        android:strokeColor="#FFE082"
+        android:strokeColor="#F6E8B8"
         android:strokeWidth="0.8"
-        android:pathData="M32,52 L43,52"/>
-    
+        android:pathData="M34,63 L49,63"/>
+
+    <!-- Page details: right -->
     <path
-        android:strokeColor="#FFE082"
+        android:strokeColor="#CFA03A"
         android:strokeWidth="0.8"
-        android:pathData="M32,59 L43,59"/>
-    
+        android:pathData="M59,58 L74,58"/>
     <path
-        android:strokeColor="#FFE082"
+        android:strokeColor="#CFA03A"
         android:strokeWidth="0.8"
-        android:pathData="M32,66 L43,66"/>
-    
-    <!-- Right Page Decorative Lines (Islamic Pattern) -->
+        android:pathData="M59,63 L74,63"/>
+
+    <!-- Bottom ornaments (balanced and minimal) -->
     <path
-        android:strokeColor="#C19A3B"
-        android:strokeWidth="0.8"
-        android:pathData="M65,45 L76,45"/>
-    
+        android:fillColor="#D9B44A"
+        android:pathData="M40,82m-1.8,0a1.8,1.8 0,1 1,3.6 0a1.8,1.8 0,1 1,-3.6 0"/>
     <path
-        android:strokeColor="#C19A3B"
-        android:strokeWidth="0.8"
-        android:pathData="M65,52 L76,52"/>
-    
+        android:fillColor="#D9B44A"
+        android:pathData="M54,84m-2.1,0a2.1,2.1 0,1 1,4.2 0a2.1,2.1 0,1 1,-4.2 0"/>
     <path
-        android:strokeColor="#C19A3B"
-        android:strokeWidth="0.8"
-        android:pathData="M65,59 L76,59"/>
-    
-    <path
-        android:strokeColor="#C19A3B"
-        android:strokeWidth="0.8"
-        android:pathData="M65,66 L76,66"/>
-    
-    <!-- Center Decorative Ornament (Islamic Star) -->
-    <g android:translateX="54" android:translateY="54">
-        <!-- Center circle -->
-        <circle
-            android:cx="0"
-            android:cy="0"
-            android:r="3"
-            android:fillColor="#D4AF37"/>
-        
-        <!-- 4-point star rays -->
-        <path
-            android:strokeColor="#D4AF37"
-            android:strokeWidth="1.2"
-            android:pathData="M0,-6 L0,6 M-6,0 L6,0"/>
-        
-        <!-- Diagonal rays -->
-        <path
-            android:strokeColor="#FFE082"
-            android:strokeWidth="0.8"
-            android:pathData="M-4,-4 L4,4 M4,-4 L-4,4"/>
-    </g>
-    
-    <!-- Bottom Decorative Elements -->
-    <circle
-        android:cx="35"
-        android:cy="78"
-        android:r="2"
-        android:fillColor="#D4AF37"/>
-    
-    <circle
-        android:cx="54"
-        android:cy="78"
-        android:r="2"
-        android:fillColor="#D4AF37"/>
-    
-    <circle
-        android:cx="73"
-        android:cy="78"
-        android:r="2"
-        android:fillColor="#D4AF37"/>
+        android:fillColor="#D9B44A"
+        android:pathData="M68,82m-1.8,0a1.8,1.8 0,1 1,3.6 0a1.8,1.8 0,1 1,-3.6 0"/>
 </vector>

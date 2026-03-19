@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
+import '../theme/app_theme.dart';
 import 'glass_card.dart';
 
 class QuranTextSettingsSheet extends StatelessWidget {
@@ -11,6 +12,8 @@ class QuranTextSettingsSheet extends StatelessWidget {
     final settings = context.watch<SettingsProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final scheme = Theme.of(context).colorScheme;
+    final baseTextColor = isDark ? Colors.white.withOpacity(0.96) : const Color(0xFF121212);
+    final secondaryTextColor = isDark ? Colors.white.withOpacity(0.82) : const Color(0xFF2C2C2C);
 
     return GlassCard(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
@@ -36,14 +39,14 @@ class QuranTextSettingsSheet extends StatelessWidget {
               'Quran Text Settings',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: scheme.onSurface,
+                    color: baseTextColor,
                   ),
             ),
             const SizedBox(height: 8),
             Text(
               'Customize your reading experience with different scripts and Tajweed rules.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.85),
+                    color: secondaryTextColor,
                     fontWeight: FontWeight.w500,
                     height: 1.45,
                   ),
@@ -81,8 +84,17 @@ class QuranTextSettingsSheet extends StatelessWidget {
             _buildSectionTitle(context, 'Tajweed Color Coding'),
             const SizedBox(height: 12),
             SwitchListTile(
-              title: const Text('Enable Tajweed Colors'),
-              subtitle: const Text('Highlight rules like Ghunnah, Qalqalah, etc.'),
+              title: Text(
+                'Enable Tajweed Colors',
+                style: TextStyle(
+                  color: baseTextColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: Text(
+                'Highlight rules like Ghunnah, Qalqalah, etc.',
+                style: TextStyle(color: secondaryTextColor),
+              ),
               value: settings.isTajweedEnabled,
               onChanged: (value) => settings.setTajweedEnabled(value),
               activeColor: Theme.of(context).primaryColor,
@@ -124,17 +136,20 @@ class QuranTextSettingsSheet extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1D2431) : Colors.white,
+                  color: isDark ? const Color(0xFF1B2431).withOpacity(0.9) : Colors.white.withOpacity(0.96),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: scheme.outline.withOpacity(0.35),
+                    color: scheme.outline.withOpacity(0.42),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
                   style: TextStyle(
-                    fontFamily: 'Scheherazade',
+                    fontFamily: settings.scriptType == QuranScriptType.indopak
+                        ? AppTheme.arabicFontAlt
+                        : AppTheme.arabicFont,
                     fontSize: 24,
+                    color: Color(0xFF111111),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -149,16 +164,16 @@ class QuranTextSettingsSheet extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1D2431) : Colors.white,
+                color: isDark ? const Color(0xFF1B2431).withOpacity(0.9) : Colors.white.withOpacity(0.96),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: scheme.outline.withOpacity(0.35),
+                  color: scheme.outline.withOpacity(0.42),
                 ),
               ),
               child: Text(
                 'Arabic script data is sourced from verified providers such as Quran.com and Tanzil.net. Please keep attribution and license terms when packaging or redistributing text datasets.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: scheme.onSurface.withOpacity(0.9),
+                      color: secondaryTextColor,
                       fontSize: 12.5,
                       fontWeight: FontWeight.w500,
                       height: 1.4,
@@ -189,7 +204,7 @@ class QuranTextSettingsSheet extends StatelessWidget {
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColor.withOpacity(0.95),
           ),
     );
   }
@@ -255,6 +270,9 @@ class _ScriptTypeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primary = Theme.of(context).primaryColor;
+    final textColor = isDark ? Colors.white.withOpacity(0.94) : const Color(0xFF1A1A1A);
+    final subtitleColor = isDark ? Colors.white.withOpacity(0.76) : const Color(0xFF4A4A4A);
     
     return InkWell(
       onTap: onTap,
@@ -264,13 +282,13 @@ class _ScriptTypeCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected 
-              ? Theme.of(context).primaryColor.withOpacity(0.15)
-              : (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+              ? primary.withOpacity(0.18)
+              : (isDark ? Colors.white : Colors.black).withOpacity(0.09),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected 
-                ? Theme.of(context).primaryColor 
-                : (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                ? primary 
+                : (isDark ? Colors.white : Colors.black).withOpacity(0.16),
             width: 2,
           ),
         ),
@@ -280,7 +298,7 @@ class _ScriptTypeCard extends StatelessWidget {
               title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: isSelected ? Theme.of(context).primaryColor : null,
+                color: isSelected ? primary : textColor,
               ),
             ),
             const SizedBox(height: 4),
@@ -288,7 +306,7 @@ class _ScriptTypeCard extends StatelessWidget {
               subtitle,
               style: TextStyle(
                 fontSize: 10,
-                color: (isDark ? Colors.white : Colors.black).withOpacity(0.5),
+                color: subtitleColor,
               ),
             ),
           ],
