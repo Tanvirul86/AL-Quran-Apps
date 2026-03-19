@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'providers/quran_provider.dart';
 import 'providers/audio_provider.dart';
-import 'providers/settings_provider.dart';
 import 'providers/bookmark_provider.dart';
 import 'providers/memorization_provider.dart';
+import 'providers/quran_provider.dart';
+import 'providers/settings_provider.dart';
 import 'providers/achievement_provider.dart';
+import 'providers/ai_provider.dart';
 import 'models/reading_goal.dart';
 import 'widgets/app_initializer.dart';
 import 'theme/app_theme.dart';
@@ -42,6 +43,7 @@ class QuranApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ReadingGoalProvider()),
         ChangeNotifierProvider(create: (_) => MemorizationProvider()),
         ChangeNotifierProvider(create: (_) => AchievementProvider()),
+        ChangeNotifierProvider(create: (_) => AIProvider()),
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, _) {

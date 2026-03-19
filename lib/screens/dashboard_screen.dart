@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/quran_provider.dart';
@@ -19,6 +20,11 @@ import 'islamic_months_screen.dart';
 import '../services/mushaf_service.dart';
 import 'zakat_calculator_screen.dart';
 import 'asmaul_husna_screen.dart';
+import 'notification_settings_screen.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/spiritual_background.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'surah_list_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -55,325 +61,274 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none),
+            tooltip: 'Notification Settings',
             onPressed: () {
-              // TODO: Implement notifications
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const NotificationSettingsScreen()),
+              );
             },
           ),
         ],
       ),
-      body: Consumer<QuranProvider>(
-        builder: (context, quranProvider, _) {
-          if (quranProvider.isLoading) {
-            return const LoadingSkeletons(type: 'surah', count: 8);
-          }
+      body: SpiritualBackground(
+        child: Consumer<QuranProvider>(
+          builder: (context, quranProvider, _) {
+            if (quranProvider.isLoading) {
+              return const LoadingSkeletons(type: 'surah', count: 8);
+            }
 
-          final surahs = quranProvider.surahs;
+            final surahs = quranProvider.surahs;
 
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Quick Actions Header
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.flash_on,
-                            color: Theme.of(context).primaryColor,
-                            size: 24,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Quick Actions',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Quick Actions Header
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.flash_on,
                               color: Theme.of(context).primaryColor,
-                              letterSpacing: 0.3,
+                              size: 24,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      // Continue Reading Button (Full Width)
-                      _buildContinueReadingQuickAction(context),
-                      const SizedBox(height: 12),
-                      // Row 1
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Prayer Times',
-                              Icons.access_time_filled,
-                              Colors.orange,
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const PrayerTimesScreen()),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Quick Actions',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).primaryColor,
+                                letterSpacing: 0.3,
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Qibla',
-                              Icons.explore,
-                              Colors.teal,
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const QiblaCompassScreen()),
-                              ),
+                          ],
+                        )
+                            .animate()
+                            .fadeIn(duration: 400.ms)
+                            .slideX(begin: -0.1),
+                        const SizedBox(height: 14),
+                        // Continue Reading Button (Full Width)
+                        _buildContinueReadingQuickAction(context)
+                            .animate()
+                            .fadeIn(delay: 200.ms)
+                            .scale(curve: Curves.easeOutBack),
+                        const SizedBox(height: 20),
+                        // Two-row horizontal quick actions
+                        SizedBox(
+                          height: 214,
+                          child: GridView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 1.8,
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Daily Duas',
-                              Icons.favorite,
-                              Colors.pink,
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const DuaCategoriesScreen()),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Row 2
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Jump to Juz',
-                              Icons.menu_book,
-                              Colors.indigo,
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const JuzNavigationScreen()),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Inspiration',
-                              Icons.auto_awesome,
-                              Colors.amber,
-                              () => _showDailyInspirationDialog(context),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Mushaf Pages',
-                              Icons.auto_stories,
-                              Colors.brown,
-                              () async {
-                                final mushafService = MushafService();
-                                final lastPage = await mushafService.getLastReadPage();
+                            children: [
+                              _buildQuickActionButton(context, 'Prayer Times',
+                                  Icons.access_time_filled, Colors.orange, () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const PrayerTimesScreen()));
+                              }),
+                              _buildQuickActionButton(
+                                  context, 'Qibla', Icons.explore, Colors.teal,
+                                  () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const QiblaCompassScreen()));
+                              }),
+                              _buildQuickActionButton(context, 'Daily Duas',
+                                  Icons.favorite, Colors.pink, () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const DuaCategoriesScreen()));
+                              }),
+                              _buildQuickActionButton(context, 'Jump to Juz',
+                                  Icons.menu_book, Colors.indigo, () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const JuzNavigationScreen()));
+                              }),
+                              _buildQuickActionButton(context, 'Inspiration',
+                                  Icons.auto_awesome, Colors.amber, () {
+                                HapticFeedback.lightImpact();
+                                _showDailyInspirationDialog(context);
+                              }),
+                              _buildQuickActionButton(context, 'Quran Text',
+                                  Icons.text_fields_rounded, Colors.brown, () {
+                                HapticFeedback.lightImpact();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => MushafPageScreen(initialPage: lastPage),
+                                    builder: (_) => const SurahListScreen(
+                                      arabicOnlyMode: true,
+                                    ),
                                   ),
                                 );
-                              },
-                            ),
+                              }),
+                              _buildQuickActionButton(context, 'Tasbih',
+                                  Icons.radio_button_checked, Colors.cyan, () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const TasbihScreen()));
+                              }),
+                              _buildQuickActionButton(
+                                  context,
+                                  '40 Hadith',
+                                  Icons.menu_book_rounded,
+                                  const Color(0xFF6A1B9A), () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const FortyHadithScreen()));
+                              }),
+                              _buildQuickActionButton(context, 'Biographies',
+                                  Icons.people, const Color(0xFF795548), () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const BiographyCategoriesScreen()));
+                              }),
+                              _buildQuickActionButton(
+                                  context,
+                                  'Islamic Months',
+                                  Icons.calendar_month,
+                                  const Color(0xFF00796B), () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const IslamicMonthsScreen()));
+                              }),
+                              _buildQuickActionButton(context, 'Zakat Calc',
+                                  Icons.calculate, const Color(0xFFD4AF37), () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const ZakatCalculatorScreen()));
+                              }),
+                              _buildQuickActionButton(
+                                  context,
+                                  'Asma ul Husna',
+                                  Icons.auto_awesome,
+                                  const Color(0xFF6A1B9A), () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const AsmaulHusnaScreen()));
+                              }),
+                            ],
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Row 3 - Additional Actions
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Tasbih',
-                              Icons.radio_button_checked,
-                              Colors.cyan,
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const TasbihScreen()),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              '40 Hadith',
-                              Icons.menu_book_rounded,
-                              const Color(0xFF6A1B9A), // Deep purple color matching app theme
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const FortyHadithScreen()),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Biographies',
-                              Icons.people,
-                              const Color(0xFF795548), // Brown color matching app theme
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const BiographyCategoriesScreen()),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Row 4 - Islamic Months + new features
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Islamic Months',
-                              Icons.calendar_month,
-                              const Color(0xFF00796B),
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const IslamicMonthsScreen()),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Zakat Calc',
-                              Icons.calculate,
-                              const Color(0xFFD4AF37),
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const ZakatCalculatorScreen()),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildQuickActionButton(
-                              context,
-                              'Asma ul Husna',
-                              Icons.auto_awesome,
-                              const Color(0xFF6A1B9A),
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const AsmaulHusnaScreen()),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 28),
+                        ).animate().fadeIn(delay: 300.ms).slideX(begin: 0.05),
+                        const SizedBox(height: 28),
 
-                      // Surahs Header
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.book_rounded,
-                            color: Theme.of(context).primaryColor,
-                            size: 24,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Surahs',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                        // Surahs Header
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.book_rounded,
                               color: Theme.of(context).primaryColor,
-                              letterSpacing: 0.3,
+                              size: 24,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            const SizedBox(width: 10),
+                            Text(
+                              'Surahs',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).primaryColor,
+                                letterSpacing: 0.3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              
-              // Surah List
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final surah = surahs[index];
-                    return _SurahListItem(
-                      surah: surah,
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AyahReadingScreen(surah: surah),
-                          ),
-                        );
-                        _loadLastRead(); // Refresh last read when returning
-                      },
-                    );
-                  },
-                  childCount: surahs.length,
+
+                // Surah List
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final surah = surahs[index];
+                      return _SurahListItem(
+                        surah: surah,
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AyahReadingScreen(surah: surah),
+                            ),
+                          );
+                          _loadLastRead(); // Refresh last read when returning
+                        },
+                      );
+                    },
+                    childCount: surahs.length,
+                  ),
                 ),
-              ),
-              const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
-            ],
-          );
-        },
+                const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
   Widget _buildContinueReadingQuickAction(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
+    return GlassCard(
+      padding: EdgeInsets.zero,
       child: InkWell(
         onTap: () => _showContinueReadingOptions(context),
         borderRadius: BorderRadius.circular(14),
-        splashColor: Colors.white.withOpacity(0.2),
-        highlightColor: Colors.white.withOpacity(0.1),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withOpacity(0.85),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).primaryColor.withOpacity(0.25),
-                blurRadius: 8,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
           child: Row(
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Theme.of(context).primaryColor.withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.menu_book_rounded,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   size: 22,
                 ),
               ),
@@ -385,18 +340,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Text(
                       'Continue Reading',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Theme.of(context).primaryColor.withOpacity(0.7),
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _lastReadSurah != null 
+                      _lastReadSurah != null
                           ? '$_lastReadSurah • Ayah $_lastReadAyah'
                           : 'Tap to start reading',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -409,12 +364,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_forward_rounded,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   size: 18,
                 ),
               ),
@@ -427,41 +382,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildQuickActionButton(
     BuildContext context,
-    String label, 
-    IconData icon, 
+    String label,
+    IconData icon,
     Color color,
     VoidCallback onTap,
   ) {
-    return Material(
-      color: Colors.transparent,
+    return GlassCard(
+      padding: EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
-        splashColor: color.withOpacity(0.2),
-        highlightColor: color.withOpacity(0.1),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: color.withOpacity(0.2),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: color.withOpacity(0.08),
-                blurRadius: 8,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(9),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [color, color.withOpacity(0.75)],
@@ -469,27 +407,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     end: Alignment.bottomRight,
                   ),
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: color.withOpacity(0.25),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
                 ),
-                child: Icon(icon, color: Colors.white, size: 22),
+                child: Icon(icon, color: Colors.white, size: 20),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Text(
                 label,
                 textAlign: TextAlign.center,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 11,
+                  fontSize: 10,
+                  height: 1.1,
                   color: Theme.of(context).textTheme.bodyMedium?.color,
-                  letterSpacing: 0.1,
                 ),
               ),
             ],
@@ -518,7 +449,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            
+
             // Surah Mode Option
             ListTile(
               leading: Container(
@@ -530,12 +461,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: const Icon(Icons.list_alt, color: Colors.blue),
               ),
               title: const Text('Surah Mode'),
-              subtitle: Text(_lastReadSurah ?? 'Continue from where you left off'),
+              subtitle:
+                  Text(_lastReadSurah ?? 'Continue from where you left off'),
               onTap: () {
                 Navigator.pop(context);
                 final surahs = context.read<QuranProvider>().surahs;
                 if (surahs.isEmpty) return;
-                
+
                 final surah = _lastReadSurahNumber != null
                     ? surahs.firstWhere(
                         (s) => s.number == _lastReadSurahNumber,
@@ -550,9 +482,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               },
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Mushaf Mode Option
             ListTile(
               leading: Container(
@@ -577,7 +509,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               },
             ),
-            
+
             const SizedBox(height: 16),
           ],
         ),
@@ -683,7 +615,9 @@ class _SurahListItem extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor.withOpacity(0.1),
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(

@@ -864,4 +864,15 @@ class AppTheme {
       letterSpacing: 0.3,
     );
   }
+
+  // Glassmorphism effect properties
+  static double get glassBlur => 15.0;
+  static double get glassOpacity => 0.12;
+  static double get glassBorderOpacity => 0.25;
+  
+  static Color glassColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light 
+        ? Colors.white 
+        : Colors.black;
+  }
 }

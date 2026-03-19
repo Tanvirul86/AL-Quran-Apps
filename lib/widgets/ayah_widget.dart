@@ -6,30 +6,33 @@ import '../models/ayah.dart';
 import '../providers/settings_provider.dart';
 import '../providers/audio_provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/ai_provider.dart';
+import 'glass_card.dart';
 import 'tafsir_bottom_sheet.dart';
+import 'quran_text_settings_sheet.dart';
+import '../utils/tajweed_parser.dart';
 import '../screens/translations_selector_screen.dart';
 import '../services/translation_service.dart';
 
 class AyahWidget extends StatelessWidget {
   final Ayah ayah;
+  final bool arabicOnlyMode;
   final bool isBookmarked;
   final VoidCallback onBookmarkToggle;
   final VoidCallback onPlay;
-  final VoidCallback onVisibilityChanged;
   static final TranslationService _translationService = TranslationService();
 
   const AyahWidget({
     super.key,
     required this.ayah,
+    this.arabicOnlyMode = false,
     required this.isBookmarked,
     required this.onBookmarkToggle,
     required this.onPlay,
-    required this.onVisibilityChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => onVisibilityChanged());
     final isActive = context.select<AudioProvider, bool>(
       (audio) =>
           audio.currentSurah == ayah.surahNumber &&
@@ -77,25 +80,29 @@ class AyahWidget extends StatelessWidget {
                           _VerseNumberBadge(number: ayah.ayahNumber, color: primary),
                           const SizedBox(width: 10),
                           Expanded(
-                            child: Text(
-                              ayah.arabicText,
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontFamily: AppTheme.arabicFont,
-                                fontSize: settings.arabicFontSize,
-                                height: 2.1,
-                                color: isDark
-                                    ? Colors.white.withOpacity(0.93)
-                                    : const Color(0xFF1A1A2E),
-                                letterSpacing: 0.6,
-                              ),
-                            ),
+                            child: settings.isTajweedEnabled && ayah.tajweedText != null
+                                ? RichText(
+                                    textDirection: TextDirection.rtl,
+                                    textAlign: TextAlign.right,
+                                    text: TextSpan(
+                                      children: TajweedParser.parse(
+                                        ayah.tajweedText!,
+                                        _getArabicStyle(settings, isDark),
+                                      ),
+                                    ),
+                                  )
+                                : Text(
+                                    _getArabicText(settings),
+                                    textDirection: TextDirection.rtl,
+                                    textAlign: TextAlign.right,
+                                    style: _getArabicStyle(settings, isDark),
+                                  ),
                           ),
                         ],
                       ),
 
-                      ..._buildTranslationWidgets(settings, primary, isDark),
+                      if (!arabicOnlyMode)
+                        ..._buildTranslationWidgets(settings, primary, isDark),
                     ],
                   ),
                 ),
@@ -224,15 +231,21 @@ class AyahWidget extends StatelessWidget {
     final primary = Theme.of(context).primaryColor;
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
       builder: (_) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.86,
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
               Container(
                 width: 40,
                 height: 4,
@@ -300,18 +313,28 @@ class AyahWidget extends StatelessWidget {
                   onBookmarkToggle();
                 },
               ),
+              if (!arabicOnlyMode)
+                _ActionTile(
+                  icon: Icons.translate_rounded,
+                  label: 'Select / Deselect Translation',
+                  color: Colors.deepPurple,
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TranslationsSelectorScreen(),
+                      ),
+                    );
+                  },
+                ),
               _ActionTile(
-                icon: Icons.translate_rounded,
-                label: 'Select / Deselect Translation',
-                color: Colors.deepPurple,
+                icon: Icons.auto_awesome,
+                label: 'AI Spiritual Insight',
+                color: Colors.purple,
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const TranslationsSelectorScreen(),
-                    ),
-                  );
+                  _showAIInsight(context);
                 },
               ),
               _ActionTile(
@@ -325,6 +348,20 @@ class AyahWidget extends StatelessWidget {
                     surahNumber: ayah.surahNumber,
                     ayahNumber: ayah.ayahNumber,
                     arabicText: ayah.arabicText,
+                  );
+                },
+              ),
+              _ActionTile(
+                icon: Icons.text_fields_rounded,
+                label: 'Quran Text Settings',
+                color: Colors.orange,
+                onTap: () {
+                  Navigator.pop(context);
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    builder: (context) => const QuranTextSettingsSheet(),
                   );
                 },
               ),
@@ -349,16 +386,118 @@ class AyahWidget extends StatelessWidget {
                 color: Colors.blue,
                 onTap: () {
                   Navigator.pop(context);
+                  final shareText = arabicOnlyMode
+                      ? '${ayah.arabicText}\n\n— Surah ${ayah.surahNumber}, Verse ${ayah.ayahNumber}\nAl-Quran Pro'
+                      : '${ayah.arabicText}\n\n${ayah.englishTranslation}\n\n— Surah ${ayah.surahNumber}, Verse ${ayah.ayahNumber}\nAl-Quran Pro';
                   Share.share(
-                    '${ayah.arabicText}\n\n${ayah.englishTranslation}\n\n— Surah ${ayah.surahNumber}, Verse ${ayah.ayahNumber}\nAl-Quran Pro',
+                    shareText,
                   );
                 },
               ),
               const SizedBox(height: 8),
-            ],
+                ],
+              ),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  void _showAIInsight(BuildContext context) async {
+    final aiProvider = context.read<AIProvider>();
+    final primary = Theme.of(context).primaryColor;
+    
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.4,
+        maxChildSize: 0.7,
+        minChildSize: 0.3,
+        expand: false,
+        builder: (_, scrollController) => GlassCard(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+          child: FutureBuilder<String?>(
+            future: aiProvider.getAyahInsight(ayah.surahNumber, ayah.ayahNumber),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              
+              final insight = snapshot.data ?? "Spiritual wisdom is flowing through the digital realms...";
+              
+              return ListView(
+                controller: scrollController,
+                padding: const EdgeInsets.all(24),
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Icon(Icons.auto_awesome, color: Colors.purple, size: 28),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'AI Spiritual Insight',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    insight,
+                    style: TextStyle(
+                      fontSize: 17,
+                      height: 1.7,
+                      fontStyle: FontStyle.italic,
+                      color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.9),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Note: This insight is designed for contemplation and spiritual reflection.",
+                    style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.normal),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _getArabicText(SettingsProvider settings) {
+    if (settings.scriptType == QuranScriptType.indopak && ayah.indopakText != null) {
+      return ayah.indopakText!;
+    }
+    return ayah.uthmaniText ?? ayah.arabicText;
+  }
+
+  TextStyle _getArabicStyle(SettingsProvider settings, bool isDark) {
+    return TextStyle(
+      fontFamily: AppTheme.arabicFont,
+      fontSize: settings.arabicFontSize,
+      height: 2.1,
+      color: isDark ? Colors.white.withOpacity(0.93) : const Color(0xFF1A1A2E),
+      letterSpacing: 0.6,
     );
   }
 }

@@ -4,6 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 import '../theme/app_theme.dart';
 
+enum QuranScriptType {
+  uthmani,
+  indopak,
+}
+
 /// Provider for app settings
 class SettingsProvider with ChangeNotifier {
   bool _showBangla = true;
@@ -18,6 +23,10 @@ class SettingsProvider with ChangeNotifier {
   bool _highContrastMode = false;
   bool _hapticFeedbackEnabled = true;
   Color _customSeedColor = const Color(0xFF009688);
+  double _glassmorphismIntensity = 1.0; // 0.0 (Off) to 1.0 (Full)
+  
+  QuranScriptType _scriptType = QuranScriptType.uthmani;
+  bool _isTajweedEnabled = false;
   
   // Multi-language translation support (up to 2 languages)
   List<Map<String, String>> _selectedTranslations = [];
@@ -35,6 +44,9 @@ class SettingsProvider with ChangeNotifier {
   bool get highContrastMode => _highContrastMode;
   bool get hapticFeedbackEnabled => _hapticFeedbackEnabled;
   Color get customSeedColor => _customSeedColor;
+  double get glassmorphismIntensity => _glassmorphismIntensity;
+  QuranScriptType get scriptType => _scriptType;
+  bool get isTajweedEnabled => _isTajweedEnabled;
   List<Map<String, String>> get selectedTranslations => List.unmodifiable(_selectedTranslations);
   
   // Legacy getters for backward compatibility
@@ -92,6 +104,11 @@ class SettingsProvider with ChangeNotifier {
     _syncLegacyVisibilityWithSelections(updateWhenEmpty: false);
 
     _customSeedColor = Color(prefs.getInt('custom_seed_color') ?? 0xFF009688);
+    _glassmorphismIntensity = prefs.getDouble('glassmorphism_intensity') ?? 1.0;
+    
+    _scriptType = QuranScriptType.values[prefs.getInt('quran_script_type') ?? 0];
+    _isTajweedEnabled = prefs.getBool('is_tajweed_enabled') ?? false;
+
     notifyListeners();
   }
 
@@ -184,6 +201,27 @@ class SettingsProvider with ChangeNotifier {
     _customSeedColor = color;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('custom_seed_color', color.value);
+    notifyListeners();
+  }
+
+  Future<void> setGlassmorphismIntensity(double value) async {
+    _glassmorphismIntensity = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('glassmorphism_intensity', value);
+    notifyListeners();
+  }
+
+  Future<void> setScriptType(QuranScriptType type) async {
+    _scriptType = type;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('quran_script_type', type.index);
+    notifyListeners();
+  }
+
+  Future<void> setTajweedEnabled(bool enabled) async {
+    _isTajweedEnabled = enabled;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('is_tajweed_enabled', enabled);
     notifyListeners();
   }
 

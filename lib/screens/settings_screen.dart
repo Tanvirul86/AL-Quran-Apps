@@ -451,6 +451,36 @@ class SettingsScreen extends StatelessWidget {
                     value: settings.hapticFeedbackEnabled,
                     onChanged: (value) => settings.setHapticFeedbackEnabled(value),
                   ),
+                  Divider(height: 1, indent: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Glassmorphism Intensity',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              '${(settings.glassmorphismIntensity * 100).toInt()}%',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Slider(
+                          value: settings.glassmorphismIntensity,
+                          onChanged: (val) => settings.setGlassmorphismIntensity(val),
+                          activeColor: Theme.of(context).primaryColor,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),

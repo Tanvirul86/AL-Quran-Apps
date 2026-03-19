@@ -64,7 +64,6 @@ class _TasbihScreenState extends State<TasbihScreen>
       _selectedDhikr = _tasbihService.currentDhikr;
       _currentCount = _tasbihService.currentCount;
       _hapticEnabled = _tasbihService.hapticEnabled;
-      print('Loaded count for $_selectedDhikr: $_currentCount');
     });
   }
 

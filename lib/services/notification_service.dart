@@ -153,6 +153,23 @@ class NotificationService {
     await scheduleNotification(notification);
   }
 
+  /// Schedule daily tasbih reminder
+  Future<void> scheduleTasbihReminder({
+    required DateTime time,
+    required String message,
+  }) async {
+    final notification = QuranNotification(
+      id: 'tasbih_reminder',
+      title: 'SubhanAllah Reminder',
+      body: message,
+      type: NotificationType.readingReminder,
+      scheduledTime: time,
+      isRepeating: true,
+    );
+
+    await scheduleNotification(notification);
+  }
+
   /// Schedule streak reminder
   Future<void> scheduleStreakReminder() async {
     final now = DateTime.now();

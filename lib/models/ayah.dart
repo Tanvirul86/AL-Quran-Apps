@@ -3,7 +3,10 @@ class Ayah {
   final int surahNumber;
   final int ayahNumber;
   final int globalAyahNumber; // Sequential number across all surahs
-  final String arabicText; // Uthmani text
+  final String arabicText; // Standard Uthmani text (legacy fallback)
+  final String? uthmaniText; // High-fidelity Uthmani
+  final String? indopakText; // IndoPak script
+  final String? tajweedText; // Text with Tajweed tags
   final String englishTranslation;
   final String banglaTranslation;
   final String? transliteration; // Optional
@@ -16,6 +19,9 @@ class Ayah {
     required this.ayahNumber,
     required this.globalAyahNumber,
     required this.arabicText,
+    this.uthmaniText,
+    this.indopakText,
+    this.tajweedText,
     required this.englishTranslation,
     required this.banglaTranslation,
     this.transliteration,
@@ -28,6 +34,9 @@ class Ayah {
       ayahNumber: json['ayahNumber'] as int,
       globalAyahNumber: json['globalAyahNumber'] as int,
       arabicText: json['arabicText'] as String,
+      uthmaniText: json['uthmaniText'] as String?,
+      indopakText: json['indopakText'] as String?,
+      tajweedText: json['tajweedText'] as String?,
       englishTranslation: json['englishTranslation'] as String,
       banglaTranslation: json['banglaTranslation'] as String,
       transliteration: json['transliteration'] as String?,
@@ -43,6 +52,9 @@ class Ayah {
       'ayahNumber': ayahNumber,
       'globalAyahNumber': globalAyahNumber,
       'arabicText': arabicText,
+      'uthmaniText': uthmaniText,
+      'indopakText': indopakText,
+      'tajweedText': tajweedText,
       'englishTranslation': englishTranslation,
       'banglaTranslation': banglaTranslation,
       'transliteration': transliteration,
@@ -64,6 +76,9 @@ class Ayah {
       ayahNumber: ayahNumber,
       globalAyahNumber: globalAyahNumber,
       arabicText: arabicText,
+      uthmaniText: uthmaniText,
+      indopakText: indopakText,
+      tajweedText: tajweedText,
       englishTranslation: englishTranslation,
       banglaTranslation: banglaTranslation,
       transliteration: transliteration,

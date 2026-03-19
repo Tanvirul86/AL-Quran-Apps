@@ -4,6 +4,8 @@ import 'dart:convert';
 import '../services/prayer_times_service.dart';
 import '../services/notification_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/spiritual_background.dart';
 import 'dart:async';
 
 class PrayerTimesScreen extends StatefulWidget {
@@ -152,7 +154,8 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           ),
         ],
       ),
-      body: _isLoading
+      body: SpiritualBackground(
+        child: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
               ? Center(
@@ -178,45 +181,51 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         padding: const EdgeInsets.all(16),
                         children: [
                           // Location card
-                          Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.location_on, color: Colors.green),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Location',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Text(
-                                          _locationName ?? 'Unknown',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                          GlassCard(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.primaryGreen.withOpacity(0.1),
+                                    shape: BoxShape.circle,
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.edit_location),
-                                    onPressed: () {
-                                      // TODO: Allow manual location input
-                                    },
+                                  child: Icon(Icons.location_on, color: AppTheme.primaryGreen, size: 20),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Your Location',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.grey.shade500,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        _locationName ?? 'Unknown',
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.refresh_rounded,
+                                      color: AppTheme.primaryGreen, size: 20),
+                                  onPressed: _loadPrayerTimes,
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 14),
                           
                           // Location status card
                           Card(
@@ -314,20 +323,20 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                           
                           // Next prayer highlight
                           _buildNextPrayerCard(),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 14),
                           
-                          // All prayer times
+                          // Individual prayer cards
                           ..._prayerTimes!.entries.map((entry) {
                             final isNext = entry.key == _getNextPrayer();
-                            return _buildPrayerCard(
-                              entry.key,
-                              entry.value,
-                              isNext,
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: _buildPrayerCard(entry.key, entry.value, isNext),
                             );
                           }),
                         ],
                       ),
                     ),
+      ),
     );
   }
 
@@ -335,95 +344,135 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     final nextPrayer = _getNextPrayer();
     final nextTime = _prayerTimes![nextPrayer]!;
     final timeUntil = _getTimeUntil(nextTime);
+    final idx = ['Fajr','Dhuhr','Asr','Maghrib','Isha'].indexOf(nextPrayer);
+    const prayerColors = [
+      [Color(0xFF7E57C2), Color(0xFF512DA8)],
+      [Color(0xFFFF9800), Color(0xFFE65100)],
+      [Color(0xFFFF5722), Color(0xFFBF360C)],
+      [Color(0xFFE91E63), Color(0xFF880E4F)],
+      [Color(0xFF1E88E5), Color(0xFF0D47A1)],
+    ];
+    final colors = idx >= 0 ? prayerColors[idx] : [AppTheme.primaryGreen, AppTheme.darkGreen];
 
-    return Card(
-      color: Theme.of(context).primaryColor,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const Text(
-              'Next Prayer',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-              ),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: colors, begin: Alignment.topLeft, end: Alignment.bottomRight),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [BoxShadow(color: colors[0].withOpacity(0.4), blurRadius: 20, offset: const Offset(0, 8))],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Next Prayer', style: TextStyle(color: Colors.white70, fontSize: 12, letterSpacing: 0.5)),
+                const SizedBox(height: 4),
+                Text(nextPrayer, style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text('in $timeUntil', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              nextPrayer,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              _formatTime(nextTime),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'in $timeUntil',
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Icon(_getPrayerIcon(nextPrayer), color: Colors.white.withOpacity(0.8), size: 36),
+              const SizedBox(height: 8),
+              Text(_formatTime(nextTime), style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold, letterSpacing: 2)),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildPrayerCard(String name, DateTime time, bool isNext) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: isNext ? 4 : 1,
-      color: isNext ? Theme.of(context).primaryColor.withOpacity(0.1) : null,
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: isNext
-              ? Theme.of(context).primaryColor
-              : Colors.grey[300],
-          child: Icon(
-            _getPrayerIcon(name),
-            color: isNext ? Colors.white : Colors.grey[700],
-          ),
+    final idx = ['Fajr','Dhuhr','Asr','Maghrib','Isha'].indexOf(name);
+    const prayerColors = [
+      Color(0xFF7E57C2),
+      Color(0xFFFF9800),
+      Color(0xFFFF5722),
+      Color(0xFFE91E63),
+      Color(0xFF1E88E5),
+    ];
+    final col = idx >= 0 ? prayerColors[idx] : AppTheme.primaryGreen;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: isNext
+            ? col.withOpacity(0.12)
+            : (isDark ? Colors.white.withOpacity(0.05) : Colors.white.withOpacity(0.8)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isNext ? col : Colors.transparent,
+          width: 1.5,
         ),
-        title: Text(
-          name,
-          style: TextStyle(
-            fontWeight: isNext ? FontWeight.bold : FontWeight.normal,
-            fontSize: isNext ? 18 : 16,
+        boxShadow: [
+          BoxShadow(
+            color: isNext ? col.withOpacity(0.2) : Colors.black.withOpacity(0.04),
+            blurRadius: isNext ? 12 : 4,
+            offset: const Offset(0, 3),
           ),
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              _formatTime(time),
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isNext ? Theme.of(context).primaryColor : null,
-              ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: col.withOpacity(isNext ? 1 : 0.1),
+              shape: BoxShape.circle,
             ),
-            if (isNext)
-              Text(
-                _getTimeUntil(time),
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
+            child: Icon(
+              _getPrayerIcon(name),
+              color: isNext ? Colors.white : col,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: isNext ? 17 : 15,
+                    fontWeight: isNext ? FontWeight.bold : FontWeight.w500,
+                    color: isNext ? col : null,
+                  ),
                 ),
-              ),
-          ],
-        ),
+                if (isNext)
+                  Text(
+                    'Next • ${_getTimeUntil(time)}',
+                    style: TextStyle(fontSize: 11, color: col.withOpacity(0.7)),
+                  ),
+              ],
+            ),
+          ),
+          Text(
+            _formatTime(time),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isNext ? col : null,
+              letterSpacing: 1,
+            ),
+          ),
+        ],
       ),
     );
   }

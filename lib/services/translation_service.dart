@@ -9,6 +9,7 @@ class TranslationService {
   final Dio _dio = Dio();
   final DownloadManagerService _downloadManager = DownloadManagerService();
   static final Map<String, String?> _ayahTranslationCache = {};
+  static final Map<String, List<dynamic>> _chapterTranslationsCache = {};
   
   static const String _baseUrl = 'https://api.quran.com/api/v4';
 
@@ -111,30 +112,133 @@ class TranslationService {
         if (await file.exists()) {
           final content = await file.readAsString();
           final data = json.decode(content);
-          final ayahKey = '${surahNumber}_$ayahNumber';
-          return data[ayahKey] as String?;
+          final local = _extractTranslationFromDownloadedData(
+            data: data,
+            surahNumber: surahNumber,
+            ayahNumber: ayahNumber,
+          );
+          if (local != null && local.trim().isNotEmpty) {
+            return local;
+          }
         }
       }
 
-      // Fetch from API (reliable endpoint)
-      final response = await _dio.get(
-        '$_baseUrl/verses/by_key/$surahNumber:$ayahNumber',
-        queryParameters: {
-          'translations': translationId,
-        },
-      );
+      // Quran.com V4: fetch chapter translation rows and pick ayah index.
+      final chapterKey = '$translationId:$surahNumber';
+      List<dynamic>? chapterRows = _chapterTranslationsCache[chapterKey];
 
-      if (response.statusCode == 200) {
-        final text = response.data['verse']?['translations']?[0]?['text'] as String?;
-        if (text == null || text.trim().isEmpty) return null;
+      if (chapterRows == null) {
+        final response = await _dio.get(
+          '$_baseUrl/quran/translations/$translationId',
+          queryParameters: {
+            'chapter_number': surahNumber,
+          },
+        );
 
-        // Strip HTML tags used for footnotes/superscripts by upstream API.
-        return text.replaceAll(RegExp(r'<[^>]*>'), '').trim();
+        if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
+          final rows = response.data['translations'];
+          if (rows is List) {
+            chapterRows = rows;
+            _chapterTranslationsCache[chapterKey] = rows;
+          }
+        }
+      }
+
+      if (chapterRows != null && chapterRows.isNotEmpty) {
+        final index = ayahNumber - 1;
+        if (index >= 0 && index < chapterRows.length) {
+          final row = chapterRows[index];
+          if (row is Map<String, dynamic>) {
+            final text = row['text'] as String?;
+            final clean = _cleanTranslationText(text);
+            if (clean != null && clean.isNotEmpty) {
+              return clean;
+            }
+          }
+        }
+
+        // Fallback: if API includes verse_key, try lookup by key.
+        final verseKey = '$surahNumber:$ayahNumber';
+        for (final row in chapterRows) {
+          if (row is Map<String, dynamic>) {
+            final rowKey = row['verse_key'] as String?;
+            if (rowKey == verseKey) {
+              final text = row['text'] as String?;
+              final clean = _cleanTranslationText(text);
+              if (clean != null && clean.isNotEmpty) {
+                return clean;
+              }
+            }
+          }
+        }
       }
     } catch (e) {
       // Error
     }
     return null;
+  }
+
+  String? _extractTranslationFromDownloadedData({
+    required dynamic data,
+    required int surahNumber,
+    required int ayahNumber,
+  }) {
+    final mapKey = '${surahNumber}_$ayahNumber';
+
+    if (data is Map<String, dynamic>) {
+      final direct = data[mapKey];
+      if (direct is String) {
+        return _cleanTranslationText(direct);
+      }
+
+      final rows = data['translations'];
+      if (rows is List) {
+        final fromRows = _extractFromRows(rows, surahNumber, ayahNumber);
+        if (fromRows != null) return fromRows;
+      }
+    }
+
+    if (data is List) {
+      final fromRows = _extractFromRows(data, surahNumber, ayahNumber);
+      if (fromRows != null) return fromRows;
+    }
+
+    return null;
+  }
+
+  String? _extractFromRows(List<dynamic> rows, int surahNumber, int ayahNumber) {
+    final index = ayahNumber - 1;
+    if (index >= 0 && index < rows.length) {
+      final row = rows[index];
+      if (row is Map<String, dynamic>) {
+        final text = _cleanTranslationText(row['text'] as String?);
+        if (text != null && text.isNotEmpty) {
+          return text;
+        }
+      }
+    }
+
+    final verseKey = '$surahNumber:$ayahNumber';
+    for (final row in rows) {
+      if (row is Map<String, dynamic>) {
+        final rowKey = row['verse_key'] as String?;
+        if (rowKey == verseKey) {
+          final text = _cleanTranslationText(row['text'] as String?);
+          if (text != null && text.isNotEmpty) {
+            return text;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  String? _cleanTranslationText(String? text) {
+    if (text == null) return null;
+    final clean = text.replaceAll(RegExp(r'<[^>]*>'), '').trim();
+    if (clean.isEmpty) return null;
+    return clean;
   }
 
   /// Cached wrapper for ayah translation lookup to reduce repeated network calls.
@@ -177,11 +281,11 @@ class TranslationService {
       // ENGLISH TRANSLATIONS (Most Popular)
       // ============================================
       TranslationSource(
-        id: '131',
-        name: 'Sahih International',
+        id: '149',
+        name: 'Bridges Translation',
         language: 'en',
-        translator: 'Saheeh International',
-        downloadUrl: 'https://api.quran.com/api/v4/quran/translations/131',
+        translator: 'Fadel Soliman',
+        downloadUrl: 'https://api.quran.com/api/v4/quran/translations/149',
         fileSize: 2 * 1024 * 1024,
       ),
       TranslationSource(
@@ -239,18 +343,6 @@ class TranslationService {
         translator: 'Transliteration',
         downloadUrl: 'https://api.quran.com/api/v4/quran/translations/57',
         fileSize: (1.5 * 1024 * 1024).toInt(),
-      ),
-      
-      // ============================================
-      // ARABIC TAFSIRS (Simplified Arabic)
-      // ============================================
-      TranslationSource(
-        id: '90',
-        name: 'التفسير الميسر',
-        language: 'ar',
-        translator: 'King Fahd Complex - Al-Muyassar',
-        downloadUrl: 'https://api.quran.com/api/v4/quran/translations/90',
-        fileSize: 3 * 1024 * 1024,
       ),
       
       // ============================================

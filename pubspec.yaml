@@ -33,6 +33,8 @@ dependencies:
   
   # Search & Text
   flutter_staggered_animations: ^1.1.1
+  animations: ^2.0.11
+  flutter_animate: ^4.5.0
 
   # Color Picker
   flutter_colorpicker: ^1.1.0

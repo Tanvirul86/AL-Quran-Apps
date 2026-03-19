@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/memorization_provider.dart';
 import '../models/memorization_session.dart';
 import 'package:intl/intl.dart';
+import 'memorization_practice_screen.dart';
 
 /// Memorization Dashboard - Hifz tracking and progress
 class MemorizationDashboardScreen extends StatefulWidget {
@@ -138,10 +139,14 @@ class _MemorizationDashboardScreenState
                   endAyah: end,
                 );
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Session started! Good luck with your memorization!'),
-                    backgroundColor: Colors.green,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MemorizationPracticeScreen(
+                      surahNumber: surah,
+                      startAyah: start,
+                      endAyah: end,
+                    ),
                   ),
                 );
               } else {

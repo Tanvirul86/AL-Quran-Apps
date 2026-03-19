@@ -15,12 +15,19 @@ import '../widgets/skeleton_loading.dart';
 import '../widgets/juz_navigation_widget.dart';
 import '../widgets/reading_progress_widget.dart';
 import '../widgets/full_surah_player.dart';
+import '../widgets/reading_controls_sheet.dart';
 
 class AyahReadingScreen extends StatefulWidget {
   final Surah surah;
   final int? initialAyah;
+  final bool arabicOnlyMode;
 
-  const AyahReadingScreen({super.key, required this.surah, this.initialAyah});
+  const AyahReadingScreen({
+    super.key,
+    required this.surah,
+    this.initialAyah,
+    this.arabicOnlyMode = false,
+  });
 
   @override
   State<AyahReadingScreen> createState() => _AyahReadingScreenState();
@@ -34,6 +41,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   Map<int, bool> _bookmarkedAyahs = {};
   int _currentVisibleAyah = 1;
   AudioProvider? _audioProvider;
+  VoidCallback? _audioListener;
+  int? _lastAutoScrolledAyah;
+  ReadingMode _readingMode = ReadingMode.day;
   
   // Bismillah text
   static const String _bismillahText = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ";
@@ -51,25 +61,58 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _audioProvider = context.read<AudioProvider>();
+    final provider = context.read<AudioProvider>();
+    if (_audioProvider != provider) {
+      if (_audioProvider != null && _audioListener != null) {
+        _audioProvider!.removeListener(_audioListener!);
+      }
+      _audioProvider = provider;
+      _audioListener = _handleAudioProgress;
+      _audioProvider!.addListener(_audioListener!);
+    }
+  }
+
+  void _handleAudioProgress() {
+    if (!mounted || _audioProvider == null || _processedAyahs.isEmpty) {
+      return;
+    }
+
+    final currentSurah = _audioProvider!.currentSurah;
+    final currentAyah = _audioProvider!.currentAyah;
+
+    if (currentSurah != widget.surah.number || currentAyah == null) {
+      return;
+    }
+
+    if (_lastAutoScrolledAyah == currentAyah) {
+      return;
+    }
+
+    _lastAutoScrolledAyah = currentAyah;
+
+    if (_currentVisibleAyah != currentAyah) {
+      setState(() {
+        _currentVisibleAyah = currentAyah;
+      });
+      _saveReadingProgress(currentAyah);
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _scrollToAyah(currentAyah);
+    });
   }
 
   Future<void> _loadAyahs() async {
     final quranProvider = context.read<QuranProvider>();
     final ayahs = await quranProvider.loadAyahs(widget.surah.number);
     
-    // Debug: Print first ayah before processing
-    if (ayahs.isNotEmpty) {
-      print('DEBUG: Original first ayah: ${ayahs.first.arabicText}');
-    }
+
     
     // Process ayahs to separate Bismillah
     final processedAyahs = _processAyahsForBismillah(ayahs);
     
-    // Debug: Print first ayah after processing
-    if (processedAyahs.isNotEmpty) {
-      print('DEBUG: Processed first ayah: ${processedAyahs.first.arabicText}');
-    }
+
     
     setState(() {
       _ayahs = ayahs;
@@ -213,7 +256,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              if (settings.showBangla)
+              if (!widget.arabicOnlyMode && settings.showBangla)
                 Text(
                   _bismillahBangla,
                   textAlign: TextAlign.center,
@@ -224,7 +267,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                     height: 1.6,
                   ),
                 ),
-              if (settings.showEnglish) ...[  
+              if (!widget.arabicOnlyMode && settings.showEnglish) ...[  
                 const SizedBox(height: 4),
                 Text(
                   _bismillahEnglish,
@@ -265,6 +308,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
 
   @override
   void dispose() {
+    if (_audioProvider != null && _audioListener != null) {
+      _audioProvider!.removeListener(_audioListener!);
+    }
     _scrollController.dispose();
     _audioProvider?.stop();
     super.dispose();
@@ -274,10 +320,10 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primary = Theme.of(context).primaryColor;
-    // Muslim Pro-style warm reading background
-    final readingBg = isDark
+    // Reading mode background
+    final readingBg = isDark && _readingMode == ReadingMode.day
         ? const Color(0xFF141414)
-        : const Color(0xFFFAF8F4);
+        : ReadingModeColors.background(_readingMode);
 
     return GestureDetector(
       onHorizontalDragEnd: (details) {
@@ -315,7 +361,69 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
               ),
             ],
           ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(24),
+            child: Column(
+              children: [
+                // Ayah counter label
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Ayah $_currentVisibleAyah of ${widget.surah.totalAyahs}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '${((_currentVisibleAyah / (widget.surah.totalAyahs == 0 ? 1 : widget.surah.totalAyahs)) * 100).round()}%',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                // Animated progress bar
+                TweenAnimationBuilder<double>(
+                  tween: Tween(
+                    begin: 0,
+                    end: _currentVisibleAyah / (widget.surah.totalAyahs == 0 ? 1 : widget.surah.totalAyahs),
+                  ),
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutCubic,
+                  builder: (_, value, __) => LinearProgressIndicator(
+                    value: value,
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
+                    minHeight: 3,
+                  ),
+                ),
+              ],
+            ),
+          ),
           actions: [
+            // Reading controls (mode + font)
+            IconButton(
+              icon: const Icon(Icons.text_fields_rounded, color: Colors.white),
+              tooltip: 'Reading Controls',
+              onPressed: () {
+                showReadingControlsSheet(
+                  context,
+                  currentMode: _readingMode,
+                  onModeChanged: (mode) {
+                    setState(() => _readingMode = mode);
+                  },
+                );
+              },
+            ),
             // Reciter selector
             IconButton(
               icon: const Icon(Icons.headphones_rounded, color: Colors.white),
@@ -352,6 +460,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                           builder: (context) => AyahReadingScreen(
                             surah: targetSurah,
                             initialAyah: ayahNumber,
+                            arabicOnlyMode: widget.arabicOnlyMode,
                           ),
                         ),
                       );
@@ -366,14 +475,20 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             ? const LoadingSkeletons(type: 'ayah', count: 5)
             : Column(
                 children: [
-                  // Surah header banner 
-                  _SurahHeaderBanner(surah: widget.surah, primary: primary, isDark: isDark),
+                  // Surah header banner
+                  if (!widget.arabicOnlyMode)
+                    _SurahHeaderBanner(
+                      surah: widget.surah,
+                      primary: primary,
+                      isDark: isDark,
+                    ),
 
                   // Reading progress
-                  ReadingProgressWidget(
-                    surahNumber: widget.surah.number,
-                    currentAyahNumber: _currentVisibleAyah,
-                  ),
+                  if (!widget.arabicOnlyMode)
+                    ReadingProgressWidget(
+                      surahNumber: widget.surah.number,
+                      currentAyahNumber: _currentVisibleAyah,
+                    ),
 
                   // Ayah list
                   Expanded(
@@ -391,6 +506,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                         final ayah = _processedAyahs[ayahIndex];
                         return AyahWidget(
                           ayah: ayah,
+                          arabicOnlyMode: widget.arabicOnlyMode,
                           isBookmarked:
                               _bookmarkedAyahs[ayah.ayahNumber] ?? false,
                           onBookmarkToggle: () async {
@@ -409,13 +525,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                             context.read<AudioProvider>().playAyah(
                                   ayah.surahNumber,
                                   ayah.ayahNumber,
+                                  totalAyahs: widget.surah.totalAyahs,
                                 );
-                          },
-                          onVisibilityChanged: () {
-                            setState(() {
-                              _currentVisibleAyah = ayah.ayahNumber;
-                            });
-                            _saveReadingProgress(ayah.ayahNumber);
                           },
                         );
                       },
@@ -439,7 +550,10 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => AyahReadingScreen(surah: nextSurah),
+          builder: (_) => AyahReadingScreen(
+            surah: nextSurah,
+            arabicOnlyMode: widget.arabicOnlyMode,
+          ),
         ),
       );
     }
@@ -454,7 +568,10 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => AyahReadingScreen(surah: prevSurah),
+          builder: (_) => AyahReadingScreen(
+            surah: prevSurah,
+            arabicOnlyMode: widget.arabicOnlyMode,
+          ),
         ),
       );
     }
