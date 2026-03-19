@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/bookmark.dart';
+import '../models/bookmark_folder.dart';
 import '../utils/constants.dart';
 
 /// Database service for local storage
@@ -23,6 +24,7 @@ class DatabaseService {
       path,
       version: AppConstants.dbVersion,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -59,6 +61,27 @@ class DatabaseService {
         lastReadAt TEXT NOT NULL
       )
     ''');
+
+    await _createBookmarkFoldersTable(db);
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await _createBookmarkFoldersTable(db);
+    }
+  }
+
+  Future<void> _createBookmarkFoldersTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS bookmark_folders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        description TEXT,
+        colorValue INTEGER NOT NULL,
+        createdAt TEXT NOT NULL,
+        updatedAt TEXT NOT NULL
+      )
+    ''');
   }
 
   // Bookmarks
@@ -89,6 +112,42 @@ class DatabaseService {
       'bookmarks',
       where: 'surahNumber = ? AND ayahNumber = ?',
       whereArgs: [surahNumber, ayahNumber],
+    );
+  }
+
+  // Bookmark folders
+  Future<int> insertBookmarkFolder(BookmarkFolder folder) async {
+    final db = await database;
+    final data = Map<String, dynamic>.from(folder.toJson())
+      ..remove('id');
+    return await db.insert('bookmark_folders', data);
+  }
+
+  Future<List<BookmarkFolder>> getBookmarkFolders() async {
+    final db = await database;
+    final maps = await db.query('bookmark_folders', orderBy: 'updatedAt DESC');
+    return List.generate(maps.length, (i) => BookmarkFolder.fromJson(maps[i]));
+  }
+
+  Future<int> updateBookmarkFolder(BookmarkFolder folder) async {
+    if (folder.id == null) return 0;
+    final db = await database;
+    final data = Map<String, dynamic>.from(folder.toJson())
+      ..remove('id');
+    return await db.update(
+      'bookmark_folders',
+      data,
+      where: 'id = ?',
+      whereArgs: [folder.id],
+    );
+  }
+
+  Future<int> deleteBookmarkFolder(int folderId) async {
+    final db = await database;
+    return await db.delete(
+      'bookmark_folders',
+      where: 'id = ?',
+      whereArgs: [folderId],
     );
   }
 

@@ -6,7 +6,7 @@ class AppConstants {
   
   // Database
   static const String dbName = 'quran_app.db';
-  static const int dbVersion = 1;
+  static const int dbVersion = 2;
   
   // Storage Keys
   static const String keyLastReadSurah = 'last_read_surah';

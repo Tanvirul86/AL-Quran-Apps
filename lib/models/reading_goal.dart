@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +37,13 @@ class ReadingGoal {
     lastReadDate: DateTime.parse(json['lastReadDate'] ?? DateTime.now().toIso8601String()),
     currentStreak: json['currentStreak'] ?? 0,
     longestStreak: json['longestStreak'] ?? 0,
-    weeklyProgress: Map<String, int>.from(json['weeklyProgress'] ?? {}),
+    weeklyProgress: (json['weeklyProgress'] as Map?)?.map(
+          (key, value) => MapEntry(
+            key.toString(),
+            (value is num) ? value.toInt() : int.tryParse('$value') ?? 0,
+          ),
+        ) ??
+        {},
   );
 
   ReadingGoal copyWith({
@@ -69,19 +77,37 @@ class ReadingGoalProvider with ChangeNotifier {
   Future<void> loadGoal() async {
     final prefs = await SharedPreferences.getInstance();
     final String? jsonStr = prefs.getString(_key);
-    if (jsonStr != null) {
-      try {
-        _goal = ReadingGoal.fromJson(
-          Map<String, dynamic>.from(
-            // Parse JSON string
-            {'temp': 'placeholder'} // TODO: Implement proper JSON parsing
-          ),
-        );
-        _checkAndResetDaily();
-        notifyListeners();
-      } catch (e) {
-        debugPrint('Error loading reading goal: $e');
+
+    try {
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        final decoded = jsonDecode(jsonStr);
+        if (decoded is Map<String, dynamic>) {
+          _goal = ReadingGoal.fromJson(decoded);
+        } else if (decoded is Map) {
+          _goal = ReadingGoal.fromJson(Map<String, dynamic>.from(decoded));
+        }
+      } else {
+        // Backward compatibility with legacy split keys.
+        final dailyGoal = prefs.getInt('daily_goal');
+        if (dailyGoal != null) {
+          _goal = ReadingGoal(
+            dailyAyahsGoal: dailyGoal,
+            todayProgress: prefs.getInt('today_progress') ?? 0,
+            lastReadDate: DateTime.tryParse(
+                  prefs.getString('last_read_date') ?? '',
+                ) ??
+                DateTime.now(),
+            currentStreak: prefs.getInt('current_streak') ?? 0,
+            longestStreak: prefs.getInt('longest_streak') ?? 0,
+            weeklyProgress: {},
+          );
+        }
       }
+
+      _checkAndResetDaily();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error loading reading goal: $e');
     }
   }
 
@@ -161,7 +187,9 @@ class ReadingGoalProvider with ChangeNotifier {
 
   Future<void> _saveGoal() async {
     final prefs = await SharedPreferences.getInstance();
-    // Save goal data - implement JSON serialization
+    await prefs.setString(_key, jsonEncode(_goal.toJson()));
+
+    // Keep legacy keys for backward compatibility with old reads.
     await prefs.setInt('daily_goal', _goal.dailyAyahsGoal);
     await prefs.setInt('today_progress', _goal.todayProgress);
     await prefs.setString('last_read_date', _goal.lastReadDate.toIso8601String());

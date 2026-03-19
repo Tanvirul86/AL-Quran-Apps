@@ -16,6 +16,8 @@ import '../widgets/juz_navigation_widget.dart';
 import '../widgets/reading_progress_widget.dart';
 import '../widgets/reading_controls_sheet.dart';
 import 'reciter_selector_screen.dart';
+import 'translations_selector_screen.dart';
+import 'full_surah_tafsir_screen.dart';
 
 class AyahReadingScreen extends StatefulWidget {
   final Surah surah;
@@ -34,6 +36,7 @@ class AyahReadingScreen extends StatefulWidget {
 }
 
 class _AyahReadingScreenState extends State<AyahReadingScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
   final Map<int, GlobalKey> _ayahItemKeys = {};
   List<Ayah> _ayahs = [];
@@ -44,6 +47,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   AudioProvider? _audioProvider;
   VoidCallback? _audioListener;
   int? _lastScrolledToAyah; // Track which ayah we've scrolled to (different from playing)
+  int? _lastPersistedAyah;
+  DateTime? _lastPersistedAt;
   bool _isAutoScrolling = false;
   DateTime? _lastAutoScrollAt;
   ReadingMode _readingMode = ReadingMode.day;
@@ -59,6 +64,38 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     _loadAyahs();
     _loadBookmarks();
     _loadLastReadPosition();
+    _scrollController.addListener(_handleManualReadingProgress);
+  }
+
+  void _handleManualReadingProgress() {
+    if (_isLoading || _processedAyahs.isEmpty || !_scrollController.hasClients) {
+      return;
+    }
+
+    // Estimate visible ayah from list scroll offset for manual reading sessions.
+    const estimatedItemHeight = 140.0;
+    final rawIndex = (_scrollController.offset / estimatedItemHeight).floor();
+    final adjustedIndex = _shouldShowBismillah() ? rawIndex - 1 : rawIndex;
+    final safeIndex = adjustedIndex.clamp(0, _processedAyahs.length - 1);
+    final ayahNumber = _processedAyahs[safeIndex].ayahNumber;
+
+    if (_currentVisibleAyah != ayahNumber) {
+      setState(() {
+        _currentVisibleAyah = ayahNumber;
+      });
+    }
+
+    final now = DateTime.now();
+    final shouldPersist =
+        _lastPersistedAyah != ayahNumber ||
+        _lastPersistedAt == null ||
+        now.difference(_lastPersistedAt!) > const Duration(seconds: 2);
+
+    if (shouldPersist) {
+      _lastPersistedAyah = ayahNumber;
+      _lastPersistedAt = now;
+      _saveReadingProgress(ayahNumber);
+    }
   }
 
   @override
@@ -499,6 +536,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     if (_audioProvider != null && _audioListener != null) {
       _audioProvider!.removeListener(_audioListener!);
     }
+    if (_processedAyahs.isNotEmpty) {
+      _saveReadingProgress(_currentVisibleAyah);
+    }
     _scrollController.dispose();
     _audioProvider?.stop();
     super.dispose();
@@ -523,7 +563,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: readingBg,
+        endDrawer: _buildQuickOptionsDrawer(context),
         appBar: AppBar(
           backgroundColor: primary,
           foregroundColor: Colors.white,
@@ -607,6 +649,13 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             ),
           ),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.tune_rounded, color: Colors.white),
+              tooltip: 'Options',
+              onPressed: () {
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+            ),
             // Reading controls (mode + font)
             IconButton(
               icon: const Icon(Icons.text_fields_rounded, color: Colors.white),
@@ -740,6 +789,92 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   const AudioControlsWidget(),
                 ],
               ),
+      ),
+    );
+  }
+
+  Widget _buildQuickOptionsDrawer(BuildContext context) {
+    final primary = Theme.of(context).primaryColor;
+
+    return Drawer(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                child: Text(
+                  'Reading Options',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: primary,
+                  ),
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                leading: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.translate_rounded, color: Colors.blue),
+                ),
+                title: const Text('Select Translation'),
+                subtitle: const Text('Choose 1-2 translations quickly'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const TranslationsSelectorScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              ListTile(
+                leading: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: Colors.indigo.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.menu_book_rounded, color: Colors.indigo),
+                ),
+                title: const Text('Full Surah Tafsir'),
+                subtitle: const Text('Read tafsir for all ayahs in this surah'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => FullSurahTafsirScreen(
+                        surahName: widget.surah.englishName,
+                        ayahs: _processedAyahs,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Tip: Ayah tap/long-press actions still work as backup.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

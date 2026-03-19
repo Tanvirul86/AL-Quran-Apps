@@ -67,6 +67,14 @@ class IslamicMonth {
   });
 }
 
+enum EvidenceTier {
+  quran,
+  sahihHadith,
+  hasanHadith,
+  historical,
+  scholarly,
+}
+
 class ImportantEvent {
   final int day;
   final String titleEn;
@@ -83,6 +91,9 @@ class ImportantEvent {
   /// High-importance events are rendered with a star highlight
   final bool isHighImportance;
 
+  /// Indicates the reliability/source category of this event note.
+  final EvidenceTier evidenceTier;
+
   ImportantEvent({
     required this.day,
     required this.titleEn,
@@ -92,5 +103,6 @@ class ImportantEvent {
     this.quranRef,
     this.hadithRef,
     this.isHighImportance = false,
+    this.evidenceTier = EvidenceTier.historical,
   });
 }

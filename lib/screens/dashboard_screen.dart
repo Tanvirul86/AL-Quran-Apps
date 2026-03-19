@@ -9,20 +9,20 @@ import '../theme/app_theme.dart';
 import 'ayah_reading_screen.dart';
 import 'prayer_times_screen.dart';
 import 'juz_navigation_screen.dart';
-import 'mushaf_page_screen.dart';
 import 'inspiration_categories_screen.dart';
 import 'dua_categories_screen.dart';
 import 'tasbih_screen.dart';
 import 'forty_hadith_screen.dart';
 import 'biography_categories_screen.dart';
 import 'islamic_months_screen.dart';
-import '../services/mushaf_service.dart';
 import 'asmaul_husna_screen.dart';
 import 'notification_settings_screen.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/spiritual_background.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'surah_list_screen.dart';
+import '../providers/settings_provider.dart';
+import '../services/database_service.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -35,8 +35,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String? _lastReadSurah;
   int? _lastReadSurahNumber;
   int? _lastReadAyah;
-  int _lastReadMushafPage = 1;
-  bool _hasMushafProgress = false;
 
   @override
   void initState() {
@@ -46,11 +44,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadLastRead() async {
     final prefs = await SharedPreferences.getInstance();
-    final mushafService = MushafService();
+    final db = DatabaseService();
+    final dbLastRead = await db.getLastReadAyah();
 
     final rawSurahName = prefs.getString('last_read_surah_name');
-    final rawSurahNumber = prefs.getInt('last_read_surah');
-    final rawAyah = prefs.getInt('last_read_ayah');
+    final rawSurahNumber = dbLastRead?['surahNumber'] ?? prefs.getInt('last_read_surah');
+    final rawAyah = dbLastRead?['ayahNumber'] ?? prefs.getInt('last_read_ayah');
 
     // Guard against legacy values where Mushaf page text was stored in surah keys.
     final hasValidSurah =
@@ -60,15 +59,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         (rawSurahName ?? '').toLowerCase().contains('mushaf') ||
         (rawSurahName ?? '').contains('পেজ');
 
-    final mushafPage = await mushafService.getLastReadPage();
-    final hasMushafProgress = prefs.containsKey('last_read_page');
-
     setState(() {
       _lastReadSurah = (!hasValidSurah || looksLikeMushafText) ? null : rawSurahName;
       _lastReadSurahNumber = hasValidSurah ? rawSurahNumber : null;
       _lastReadAyah = hasValidSurah ? rawAyah : null;
-      _lastReadMushafPage = mushafPage;
-      _hasMushafProgress = hasMushafProgress;
     });
   }
 
@@ -149,7 +143,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               crossAxisCount: 2,
                               mainAxisSpacing: 10,
                               crossAxisSpacing: 10,
-                              childAspectRatio: 1.45,
+                              childAspectRatio: 1.65,
                             ),
                             children: [
                               _buildQuickActionButton(context, 'Prayer Times',
@@ -389,6 +383,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Color color,
     VoidCallback onTap,
   ) {
+    final hasSpace = label.contains(' ');
+
     return GlassCard(
       padding: EdgeInsets.zero,
       child: InkWell(
@@ -418,7 +414,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: hasSpace ? 2 : 1,
+                softWrap: hasSpace,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -435,9 +432,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _showContinueReadingOptions(BuildContext context) async {
-    // Check if they were reading in Arabic-only mode before
-    final prefs = await SharedPreferences.getInstance();
-    final wasArabicOnlyMode = prefs.getBool('last_read_arabic_only_mode') ?? false;
+    final settings = context.read<SettingsProvider>();
+    final progressLabel = _lastReadSurah != null
+      ? '$_lastReadSurah • Ayah ${_lastReadAyah ?? 1}'
+      : 'Continue from where you left off';
+    final selectedLanguages = settings.selectedTranslations
+      .map((t) => (t['language'] ?? '').toUpperCase())
+      .where((lang) => lang.isNotEmpty)
+      .toSet()
+      .toList();
+    final translationLabel = selectedLanguages.isNotEmpty
+      ? '$progressLabel • ${selectedLanguages.join('/')}'
+      : progressLabel;
 
     if (!mounted) return;
 
@@ -468,16 +474,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: Colors.blue.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
-                  wasArabicOnlyMode ? Icons.text_fields_rounded : Icons.list_alt,
-                  color: Colors.blue,
-                ),
+                child: const Icon(Icons.text_fields_rounded, color: Colors.blue),
               ),
-              title: Text(wasArabicOnlyMode ? 'Al Quran' : 'Surah Mode'),
-              subtitle: Text(
-                _lastReadSurah ?? 'Continue from where you left off',
-              ),
-              onTap: () {
+              title: const Text('Al Quran'),
+              subtitle: Text(progressLabel),
+              onTap: () async {
                 Navigator.pop(context);
                 final surahs = context.read<QuranProvider>().surahs;
                 if (surahs.isEmpty) return;
@@ -488,46 +489,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         orElse: () => surahs.first,
                       )
                     : surahs.first;
-                Navigator.push(
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AyahReadingScreen(
                       surah: surah,
-                      arabicOnlyMode: wasArabicOnlyMode,
+                      arabicOnlyMode: true,
                     ),
                   ),
                 );
+                _loadLastRead();
               },
             ),
 
-            if (_hasMushafProgress) ...[
-              const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-              // Mushaf Mode Option (only shown after user has read Mushaf before)
-              ListTile(
-                leading: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.brown.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.auto_stories, color: Colors.brown),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                title: const Text('Mushaf Pages'),
-                subtitle: Text('Continue from page $_lastReadMushafPage'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final mushafService = MushafService();
-                  final lastPage = await mushafService.getLastReadPage();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => MushafPageScreen(initialPage: lastPage),
-                    ),
-                  );
-                },
+                child: const Icon(Icons.translate_rounded, color: Colors.deepPurple),
               ),
-            ],
+              title: const Text('Translation'),
+              subtitle: Text(translationLabel),
+              onTap: () async {
+                Navigator.pop(context);
+                final surahs = context.read<QuranProvider>().surahs;
+                if (surahs.isEmpty) return;
+
+                final surah = _lastReadSurahNumber != null
+                    ? surahs.firstWhere(
+                        (s) => s.number == _lastReadSurahNumber,
+                        orElse: () => surahs.first,
+                      )
+                    : surahs.first;
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AyahReadingScreen(
+                      surah: surah,
+                      arabicOnlyMode: false,
+                    ),
+                  ),
+                );
+                _loadLastRead();
+              },
+            ),
 
             const SizedBox(height: 16),
           ],

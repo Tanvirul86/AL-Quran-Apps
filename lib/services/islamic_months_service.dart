@@ -62,6 +62,18 @@ class IslamicMonthsService {
                 'আশুরার রোজা পূর্ববর্তী এক বছরের গুনাহের কাফফারা হয়। নবী ﷺ নিজে রোজা রেখেছেন এবং উৎসাহ দিয়েছেন।',
             hadithRef: 'Sahih Bukhari 2004; Sahih Muslim 1130, 1162',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.sahihHadith,
+          ),
+          ImportantEvent(
+            day: 10,
+            titleEn: 'Musa (AS) Saved from Pharaoh (commemorated by fasting)',
+            titleBn: 'ফিরআউন থেকে মূসা (আঃ)-এর নাজাত স্মরণ',
+            descriptionEn:
+                'The Prophet ﷺ observed Ashura and explained that Musa (AS) was saved on this day, then he fasted it in gratitude to Allah.',
+            descriptionBn:
+                'নবী ﷺ আশুরার দিন রোজা রেখেছেন এবং বলেছেন এ দিনে মূসা (আঃ)-কে নাজাত দেওয়া হয়েছিল; তাই আল্লাহর শোকরস্বরূপ রোজা রাখা হয়।',
+            hadithRef: 'Sahih Bukhari 3397; Sahih Muslim 1130',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -111,6 +123,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'সফরের জন্য আলাদা নির্ধারিত বিশেষ ইবাদত প্রমাণিত নয়; সুন্নতপ্রসূত আমল অব্যাহত রাখুন।',
             hadithRef: 'General fiqh principle from authentic Sunnah practice',
+            evidenceTier: EvidenceTier.scholarly,
+          ),
+          ImportantEvent(
+            day: 20,
+            titleEn: 'Reliance on Allah During Hardship',
+            titleBn: 'কঠিন সময়ে আল্লাহর উপর পূর্ণ ভরসা',
+            descriptionEn:
+                'A key practical lesson in this month is to reject fear-based superstition and strengthen trust in Allah in daily life.',
+            descriptionBn:
+                'এই মাসের একটি বাস্তব শিক্ষা হলো কুসংস্কারের ভয় বাদ দিয়ে জীবনের প্রতিটি ক্ষেত্রে আল্লাহর উপর ভরসা দৃঢ় করা।',
+            hadithRef: 'Jami\' at-Tirmidhi 2344 (Hasan)',
+            evidenceTier: EvidenceTier.hasanHadith,
           ),
         ],
       ),
@@ -156,6 +180,19 @@ class IslamicMonthsService {
                 'অনেক শাস্ত্রীয় বর্ণনায় রবিউল আউয়ালের সোমবার নবী ﷺ-এর ওফাতের কথা এসেছে; নির্দিষ্ট দিন নিয়ে আলেমদের আলোচনা আছে।',
             hadithRef: 'Sahih al-Bukhari (Book of Maghazi) and Sirah discussions',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.historical,
+          ),
+          ImportantEvent(
+            day: 8,
+            titleEn: 'Quba Masjid Established During Hijrah Arrival Period',
+            titleBn: 'হিজরতের আগমন-পর্বে কুবা মসজিদের প্রতিষ্ঠা',
+            descriptionEn:
+                'The Prophet ﷺ stayed in Quba before entering Madinah and established the first mosque built on piety.',
+            descriptionBn:
+                'মদিনায় প্রবেশের আগে নবী ﷺ কুবায় অবস্থান করেন এবং তাকওয়ার ভিত্তিতে প্রথম মসজিদ প্রতিষ্ঠা করেন।',
+            quranRef: 'At-Tawbah 9:108',
+            hadithRef: 'Sahih Bukhari (Virtues of Quba Masjid)',
+            evidenceTier: EvidenceTier.quran,
           ),
         ],
       ),
@@ -189,6 +226,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'সর্বোত্তম আমল হলো ধারাবাহিক আমল, যদিও তা কম হয়—এ নীতি রবিউস সানিসহ সব মাসে প্রযোজ্য।',
             hadithRef: 'Sahih Bukhari 6464; Sahih Muslim 783',
+            evidenceTier: EvidenceTier.sahihHadith,
+          ),
+          ImportantEvent(
+            day: 18,
+            titleEn: 'Sunnah Fasting on Mondays and Thursdays',
+            titleBn: 'সোম ও বৃহস্পতিবার সুন্নাহ রোজা',
+            descriptionEn:
+                'Regular voluntary fasting on Mondays and Thursdays is an established Sunnah and fits this month\'s theme of consistency.',
+            descriptionBn:
+                'সোম ও বৃহস্পতিবার নফল রোজা প্রমাণিত সুন্নাহ; ধারাবাহিক আমলের এই মাসে এটি বিশেষ উপযোগী।',
+            hadithRef: 'Sahih Muslim 1162; Jami\' at-Tirmidhi 747',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -213,6 +262,18 @@ class IslamicMonthsService {
                 'বাইজেন্টাইন-সমর্থিত বাহিনীর বিরুদ্ধে গুরুত্বপূর্ণ অভিযান; জায়েদ, জাফর ও ইবনু রাওয়াহা (রাঃ)-এর ত্যাগ ও নেতৃত্ব এতে উজ্জ্বল।',
             hadithRef: 'Sahih al-Bukhari, Kitab al-Maghazi',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.historical,
+          ),
+          ImportantEvent(
+            day: 3,
+            titleEn: 'Leadership Lessons from Mu\'tah',
+            titleBn: 'মুতা থেকে নেতৃত্বের শিক্ষা',
+            descriptionEn:
+                'The Prophet ﷺ informed companions about the martyrdom sequence of Zayd, Ja\'far and Ibn Rawahah, highlighting sacrifice and leadership under trial.',
+            descriptionBn:
+                'নবী ﷺ জায়েদ, জাফর ও ইবনু রাওয়াহা (রাঃ)-এর শাহাদাতের ধারাবিবরণী দিয়ে কঠিন পরিস্থিতিতে নেতৃত্ব ও ত্যাগের শিক্ষা দেন।',
+            hadithRef: 'Sahih al-Bukhari 4262',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -236,6 +297,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'বিদআত ছাড়া নামাজ, কুরআন ও আত্মীয়তার হক জোরদার করার মাস হিসেবে কাজে লাগান।',
             hadithRef: 'General Sunnah principle',
+            evidenceTier: EvidenceTier.scholarly,
+          ),
+          ImportantEvent(
+            day: 22,
+            titleEn: 'Passing of Abu Bakr (RA) (widely reported in this month)',
+            titleBn: 'আবু বকর (রাঃ)-এর ওফাত (প্রচলিত ঐতিহাসিক বর্ণনা)',
+            descriptionEn:
+                'Classical historical sources mention the passing of Abu Bakr as-Siddiq (RA) in Jumada al-Akhirah (13 AH).',
+            descriptionBn:
+                'শাস্ত্রীয় ইতিহাসগ্রন্থে জমাদিউস সানি (১৩ হিজরি) মাসে আবু বকর সিদ্দীক (রাঃ)-এর ওফাতের বর্ণনা পাওয়া যায়।',
+            hadithRef: 'Classical historical sources (Tarikh works)',
+            evidenceTier: EvidenceTier.historical,
           ),
         ],
       ),
@@ -262,6 +335,7 @@ class IslamicMonthsService {
                 'রজব পবিত্র মাস হিসেবে শুরু হয়; এ সময়ে গুনাহ থেকে বিশেষভাবে বাঁচতে হবে।',
             quranRef: 'At-Tawbah 9:36',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
           ),
           ImportantEvent(
             day: 15,
@@ -272,6 +346,19 @@ class IslamicMonthsService {
             descriptionBn:
                 'সাহিহ প্রমাণ ছাড়া রজবের সাথে নির্দিষ্ট আমল জুড়ে না দিতে আলেমরা সতর্ক করেছেন; প্রমাণিত সুন্নাহ আমলে থাকুন।',
             hadithRef: 'Hadith criticism works of Ibn Hajar, Ibn Rajab (scholarly guidance)',
+            evidenceTier: EvidenceTier.scholarly,
+          ),
+          ImportantEvent(
+            day: 20,
+            titleEn: 'Isra and Mi\'raj: Event Affirmed, Date Not Fixed by Sahih Text',
+            titleBn: 'ইসরা-মেরাজ: ঘটনা প্রমাণিত, নির্দিষ্ট তারিখ সাহিহভাবে স্থির নয়',
+            descriptionEn:
+                'The event of Isra and Mi\'raj is established in the Qur\'an and authentic narrations, but assigning a fixed annual Rajab ritual date is debated by scholars.',
+            descriptionBn:
+                'ইসরা-মেরাজের ঘটনা কুরআন ও সহিহ বর্ণনায় প্রতিষ্ঠিত; তবে রজবের নির্দিষ্ট তারিখকে বার্ষিক শরঈ রীতি হিসেবে নির্ধারণে আলেমদের মতভেদ আছে।',
+            quranRef: 'Al-Isra 17:1',
+            hadithRef: 'Sahih al-Bukhari (Kitab al-Salah); scholarly date discussions',
+            evidenceTier: EvidenceTier.scholarly,
           ),
         ],
       ),
@@ -298,6 +385,7 @@ class IslamicMonthsService {
             descriptionBn:
                 'ক্যালেন্ডারে তারিখটি পরিচিত, তবে এ রাতে নির্দিষ্ট বিশেষ আমল নির্ধারণে আলেমদের মতভেদ আছে। প্রমাণিত আমলেই সীমাবদ্ধ থাকুন।',
             hadithRef: 'Scholarly discussions on authenticity (tahqiq-based fiqh)',
+            evidenceTier: EvidenceTier.scholarly,
           ),
           ImportantEvent(
             day: 16,
@@ -309,6 +397,18 @@ class IslamicMonthsService {
                 'অনেক বর্ণনা অনুযায়ী মদিনা পর্বে এ সময় কিবলা বাইতুল মুকাদ্দাস থেকে কা\'বার দিকে পরিবর্তিত হয়।',
             quranRef: 'Al-Baqarah 2:144',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
+          ),
+          ImportantEvent(
+            day: 1,
+            titleEn: 'The Prophet ﷺ Frequently Fasted in Sha\'ban',
+            titleBn: 'নবী ﷺ শাবানে অধিক নফল রোজা রাখতেন',
+            descriptionEn:
+                'Authentic narrations describe Sha\'ban as the month in which the Prophet ﷺ fasted more than in most months besides Ramadan.',
+            descriptionBn:
+                'সহিহ বর্ণনায় এসেছে, রমজান ছাড়া শাবান মাসে নবী ﷺ অধিক নফল রোজা রাখতেন।',
+            hadithRef: 'Sahih Bukhari 1969; Sahih Muslim 1156',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -347,6 +447,7 @@ class IslamicMonthsService {
                 'ইসলামের প্রথম সিদ্ধান্তমূলক যুদ্ধ; স্বল্প সংখ্যক মুমিনকে আল্লাহ বিজয় দান করেন।',
             quranRef: 'Al-Anfal 8:9-12',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
           ),
           ImportantEvent(
             day: 20,
@@ -358,6 +459,7 @@ class IslamicMonthsService {
                 'মক্কা ইসলামে প্রবেশ করে এবং কা\'বা থেকে মূর্তি অপসারণ করা হয়—ইসলামী ইতিহাসের বড় মোড়।',
             quranRef: 'An-Nasr 110:1-3',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
           ),
           ImportantEvent(
             day: 21,
@@ -368,6 +470,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'নবী ﷺ শেষ দশ রাতে ইবাদত বাড়াতেন এবং বিজোড় রাতে লাইলাতুল কদর অনুসন্ধানের নির্দেশ দেন।',
             hadithRef: 'Sahih Bukhari 2017; Sahih Muslim 1167',
+            evidenceTier: EvidenceTier.sahihHadith,
+          ),
+          ImportantEvent(
+            day: 1,
+            titleEn: 'Ramadan Begins: Gates of Mercy Open',
+            titleBn: 'রমজান শুরু: রহমতের দরজা উন্মুক্ত',
+            descriptionEn:
+                'When Ramadan begins, gates of Paradise are opened and devils are restrained, encouraging believers to increase obedience.',
+            descriptionBn:
+                'রমজান শুরু হলে জান্নাতের দরজাগুলো খুলে দেওয়া হয় এবং শয়তানদের শৃঙ্খলিত করা হয়; মুমিনদের জন্য এটি ইবাদত বৃদ্ধির আহ্বান।',
+            hadithRef: 'Sahih Bukhari 1899; Sahih Muslim 1079',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -392,6 +506,7 @@ class IslamicMonthsService {
                 'রমজান শেষে কৃতজ্ঞতার দিন: ঈদের নামাজ, সদকাতুল ফিতর, আত্মীয়তা ও হালাল আনন্দ।',
             hadithRef: 'Sahih Bukhari (Eid chapters); Sahih Muslim (Eid chapters)',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
           ImportantEvent(
             day: 2,
@@ -403,6 +518,7 @@ class IslamicMonthsService {
                 'যে ব্যক্তি রমজানের রোজার পর শাওয়ালের ৬টি রোজা রাখে, সে যেন পুরো বছর রোজা রাখল—এমন সওয়াব পায়।',
             hadithRef: 'Sahih Muslim 1164',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
           ImportantEvent(
             day: 7,
@@ -413,6 +529,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'আনুগত্য, ধৈর্য ও শৃঙ্খলার গুরুত্বপূর্ণ শিক্ষা বহনকারী ঐতিহাসিক যুদ্ধ।',
             quranRef: 'Aal-Imran 3:152-153',
+            evidenceTier: EvidenceTier.quran,
+          ),
+          ImportantEvent(
+            day: 5,
+            titleEn: 'Marriage of Aisha (RA) in Shawwal (reported)',
+            titleBn: 'শাওয়ালে আয়িশা (রাঃ)-এর বিবাহ (বর্ণিত)',
+            descriptionEn:
+                'Aisha (RA) reported that her marriage to the Prophet ﷺ was in Shawwal, used by scholars to refute pre-Islamic superstitions about this month.',
+            descriptionBn:
+                'আয়িশা (রাঃ) বর্ণনা করেন যে নবী ﷺ-এর সাথে তার বিবাহ শাওয়ালে হয়েছিল; আলেমরা এ বর্ণনা দিয়ে এ মাসের কুসংস্কার খণ্ডন করেন।',
+            hadithRef: 'Sahih Muslim 1423',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -439,6 +567,7 @@ class IslamicMonthsService {
                 'পবিত্র মাস হিসেবে জুলুম বর্জন ও ইবাদত বৃদ্ধি করা আবশ্যক।',
             quranRef: 'At-Tawbah 9:36',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
           ),
           ImportantEvent(
             day: 25,
@@ -450,6 +579,18 @@ class IslamicMonthsService {
                 'আল্লাহ যাকে ‘স্পষ্ট বিজয়’ বলেছেন, সেই কৌশলগত শান্তিচুক্তি ইসলামের দ্রুত বিস্তারের পথ খুলে দেয়।',
             quranRef: 'Al-Fath 48:1',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
+          ),
+          ImportantEvent(
+            day: 18,
+            titleEn: 'Most Umrahs of the Prophet ﷺ Were in Dhul-Qa\'dah',
+            titleBn: 'নবী ﷺ-এর অধিকাংশ উমরা ছিল জিলকদ মাসে',
+            descriptionEn:
+                'Authentic narrations mention that most of the Prophet\'s ﷺ performed Umrahs occurred in Dhul-Qa\'dah, showing its importance for pilgrimage preparation.',
+            descriptionBn:
+                'সহিহ বর্ণনায় এসেছে, নবী ﷺ-এর অধিকাংশ উমরা জিলকদ মাসে সংঘটিত হয়েছে; এটি হজ্জ-উমরা প্রস্তুতির তাৎপর্য প্রকাশ করে।',
+            hadithRef: 'Sahih Bukhari 1780; Sahih Muslim 1253',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),
@@ -477,6 +618,7 @@ class IslamicMonthsService {
             descriptionBn:
                 'হাজিরা হজ্জের মূল আনুষ্ঠানিকতা শুরু করতে মিনায় গমন করেন।',
             hadithRef: 'Hajj chapters in Sahih Muslim',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
           ImportantEvent(
             day: 9,
@@ -488,6 +630,7 @@ class IslamicMonthsService {
                 'হজ্জের শ্রেষ্ঠ দিন। অ-হাজিদের জন্য এ দিনের রোজা অতীত ও আগত এক বছরের গুনাহের কাফফারা হয়।',
             hadithRef: 'Sahih Muslim 1162',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
           ImportantEvent(
             day: 10,
@@ -499,6 +642,7 @@ class IslamicMonthsService {
                 'ইবরাহিম (আঃ)-এর আনুগত্য স্মরণে মুসলমানরা কুরবানি করে এবং মাংস বণ্টন করে।',
             quranRef: 'Al-Hajj 22:34-37',
             isHighImportance: true,
+            evidenceTier: EvidenceTier.quran,
           ),
           ImportantEvent(
             day: 11,
@@ -509,6 +653,18 @@ class IslamicMonthsService {
             descriptionBn:
                 'ঈদের পর আল্লাহর জিকির, হালাল আহার ও মিনায় হজ্জের বাকি আনুষ্ঠানিকতার দিনসমূহ।',
             hadithRef: 'Sahih Muslim 1141',
+            evidenceTier: EvidenceTier.sahihHadith,
+          ),
+          ImportantEvent(
+            day: 13,
+            titleEn: 'Final Day of Tashriq and Takbir',
+            titleBn: 'তাশরীকের শেষ দিন ও তাকবির',
+            descriptionEn:
+                'Pilgrims complete remaining rites and Muslims continue remembrance of Allah during the days of Tashriq.',
+            descriptionBn:
+                'হাজিরা বাকি আনুষ্ঠানিকতা সম্পন্ন করেন এবং মুসলমানরা তাশরীকের দিনগুলোতে আল্লাহর জিকির অব্যাহত রাখেন।',
+            hadithRef: 'Sahih Muslim 1141; Al-Baqarah 2:203',
+            evidenceTier: EvidenceTier.sahihHadith,
           ),
         ],
       ),

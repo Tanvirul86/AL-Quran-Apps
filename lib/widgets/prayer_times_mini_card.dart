@@ -73,7 +73,7 @@ class _PrayerTimesMiniCardState extends State<PrayerTimesMiniCard>
       if (mounted) {
         setState(() {
           _times = times;
-          _locationName = loc ?? 'Unknown';
+          _locationName = loc;
           _loading = false;
         });
       }

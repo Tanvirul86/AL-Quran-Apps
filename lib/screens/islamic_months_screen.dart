@@ -29,7 +29,7 @@ class IslamicMonthsScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -93,7 +93,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
@@ -128,7 +128,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                         children: [
                           Text(
                             month.nameAr,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.darkGreen,
@@ -138,7 +138,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             '${month.nameEn} • ${month.nameBn}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: AppTheme.primaryGreen,
                               fontWeight: FontWeight.w500,
@@ -175,7 +175,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.event_note,
                           size: 18,
                           color: Color(0xFFD4A843),
@@ -183,7 +183,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           '${month.events.length} Important Event${month.events.length > 1 ? 's' : ''}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 13,
                             color: Color(0xFFC09838),
                             fontWeight: FontWeight.w600,
@@ -241,7 +241,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                           children: [
                             Text(
                               month.nameAr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGreen,
@@ -252,7 +252,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text(
                               month.nameEn,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.primaryGreen,
@@ -271,6 +271,10 @@ class IslamicMonthsScreen extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 24),
+
+                      _buildAuthenticityNote(),
+
+                      const SizedBox(height: 18),
 
                       // Significance
                       _buildSectionTitle('Significance'),
@@ -313,7 +317,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                             const SizedBox(height: 12),
                             Text(
                               month.significanceBn,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 height: 1.6,
                                 color: AppTheme.primaryGreen,
@@ -347,7 +351,7 @@ class IslamicMonthsScreen extends StatelessWidget {
           width: 5,
           height: 24,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
@@ -368,7 +372,7 @@ class IslamicMonthsScreen extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold,
             color: AppTheme.darkGreen,
@@ -422,7 +426,7 @@ class IslamicMonthsScreen extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
@@ -460,12 +464,14 @@ class IslamicMonthsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  _buildEvidenceBadge(_resolveEvidenceTier(event)),
                 ],
               ),
               const SizedBox(height: 12),
               Text(
                 event.titleEn,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.darkGreen,
@@ -474,7 +480,7 @@ class IslamicMonthsScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 event.titleBn,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: AppTheme.primaryGreen,
@@ -570,5 +576,119 @@ class IslamicMonthsScreen extends StatelessWidget {
       default:
         return 'th';
     }
+  }
+
+  Widget _buildAuthenticityNote() {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F5E9),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppTheme.primaryGreen.withOpacity(0.25),
+        ),
+      ),
+      child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.verified_outlined, size: 18, color: AppTheme.primaryGreen),
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Authenticity note: Quran and Sahih Hadith references are strongest. Historical reports and scholarly notes are included with clear labels.',
+              style: TextStyle(
+                fontSize: 12.5,
+                height: 1.45,
+                color: Color(0xFF1B5E20),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEvidenceBadge(EvidenceTier tier) {
+    late final Color bg;
+    late final Color border;
+    late final Color text;
+    late final String label;
+
+    switch (tier) {
+      case EvidenceTier.quran:
+        bg = Colors.green.withOpacity(0.14);
+        border = Colors.green.withOpacity(0.36);
+        text = const Color(0xFF1B5E20);
+        label = 'Quran';
+        break;
+      case EvidenceTier.sahihHadith:
+        bg = Colors.blue.withOpacity(0.12);
+        border = Colors.blue.withOpacity(0.32);
+        text = const Color(0xFF0D47A1);
+        label = 'Sahih Hadith';
+        break;
+      case EvidenceTier.hasanHadith:
+        bg = Colors.teal.withOpacity(0.12);
+        border = Colors.teal.withOpacity(0.32);
+        text = const Color(0xFF00695C);
+        label = 'Hasan Hadith';
+        break;
+      case EvidenceTier.historical:
+        bg = Colors.brown.withOpacity(0.10);
+        border = Colors.brown.withOpacity(0.28);
+        text = const Color(0xFF5D4037);
+        label = 'Historical';
+        break;
+      case EvidenceTier.scholarly:
+        bg = Colors.deepPurple.withOpacity(0.10);
+        border = Colors.deepPurple.withOpacity(0.28);
+        text = const Color(0xFF4527A0);
+        label = 'Scholarly';
+        break;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: border),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          color: text,
+        ),
+      ),
+    );
+  }
+
+  EvidenceTier _resolveEvidenceTier(ImportantEvent event) {
+    if (event.evidenceTier != EvidenceTier.historical) {
+      return event.evidenceTier;
+    }
+
+    if (event.quranRef != null && event.quranRef!.trim().isNotEmpty) {
+      return EvidenceTier.quran;
+    }
+
+    final hadith = (event.hadithRef ?? '').toLowerCase();
+    if (hadith.contains('sahih')) {
+      return EvidenceTier.sahihHadith;
+    }
+    if (hadith.contains('hasan')) {
+      return EvidenceTier.hasanHadith;
+    }
+    if (hadith.contains('scholar') || hadith.contains('tahqiq')) {
+      return EvidenceTier.scholarly;
+    }
+    if (hadith.contains('historical') || hadith.contains('sirah')) {
+      return EvidenceTier.historical;
+    }
+
+    return EvidenceTier.historical;
   }
 }

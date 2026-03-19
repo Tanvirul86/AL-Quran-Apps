@@ -640,10 +640,12 @@ class _AthanSettingsSheetState extends State<AthanSettingsSheet> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
                   await _saveSettings();
-                  Navigator.pop(context);
-                  
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  if (!context.mounted) return;
+                  Navigator.of(context).pop();
+
+                  messenger.showSnackBar(
                     SnackBar(
                       content: const Text('Athan settings saved'),
                       backgroundColor: AppTheme.primaryGreen,

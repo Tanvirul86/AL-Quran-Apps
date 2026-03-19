@@ -77,9 +77,7 @@ class BookmarkProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      // TODO: Implement database method to load folders
-      // For now, using empty list
-      _folders = [];
+      _folders = await _databaseService.getBookmarkFolders();
     } catch (e) {
       debugPrint('Error loading folders: $e');
     } finally {
@@ -95,19 +93,18 @@ class BookmarkProvider with ChangeNotifier {
     required int colorValue,
   }) async {
     try {
+      final now = DateTime.now();
       final folder = BookmarkFolder(
-        id: DateTime.now().millisecondsSinceEpoch, // Temporary ID generation
+        id: null,
         name: name,
         description: description,
         colorValue: colorValue,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+        createdAt: now,
+        updatedAt: now,
       );
-      
-      _folders.add(folder);
-      notifyListeners();
-      
-      // TODO: Save to database
+
+      await _databaseService.insertBookmarkFolder(folder);
+      await loadFolders();
     } catch (e) {
       debugPrint('Error creating folder: $e');
     }
@@ -116,13 +113,10 @@ class BookmarkProvider with ChangeNotifier {
   /// Update an existing folder
   Future<void> updateFolder(BookmarkFolder folder) async {
     try {
-      final index = _folders.indexWhere((f) => f.id == folder.id);
-      if (index != -1) {
-        _folders[index] = folder;
-        notifyListeners();
-        
-        // TODO: Update in database
-      }
+      if (folder.id == null) return;
+      final updated = folder.copyWith(updatedAt: DateTime.now());
+      await _databaseService.updateBookmarkFolder(updated);
+      await loadFolders();
     } catch (e) {
       debugPrint('Error updating folder: $e');
     }
@@ -131,10 +125,8 @@ class BookmarkProvider with ChangeNotifier {
   /// Delete a folder
   Future<void> deleteFolder(int folderId) async {
     try {
-      _folders.removeWhere((f) => f.id == folderId);
-      notifyListeners();
-      
-      // TODO: Delete from database
+      await _databaseService.deleteBookmarkFolder(folderId);
+      await loadFolders();
     } catch (e) {
       debugPrint('Error deleting folder: $e');
     }
