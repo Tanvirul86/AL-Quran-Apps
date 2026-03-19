@@ -8,7 +8,6 @@ import '../widgets/skeleton_loading.dart';
 import '../theme/app_theme.dart';
 import 'ayah_reading_screen.dart';
 import 'prayer_times_screen.dart';
-import 'qibla_compass_screen.dart';
 import 'juz_navigation_screen.dart';
 import 'mushaf_page_screen.dart';
 import 'inspiration_categories_screen.dart';
@@ -18,7 +17,6 @@ import 'forty_hadith_screen.dart';
 import 'biography_categories_screen.dart';
 import 'islamic_months_screen.dart';
 import '../services/mushaf_service.dart';
-import 'zakat_calculator_screen.dart';
 import 'asmaul_husna_screen.dart';
 import 'notification_settings_screen.dart';
 import '../widgets/glass_card.dart';
@@ -160,16 +158,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         builder: (_) =>
                                             const PrayerTimesScreen()));
                               }),
-                              _buildQuickActionButton(
-                                  context, 'Qibla', Icons.explore, Colors.teal,
-                                  () {
-                                HapticFeedback.lightImpact();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            const QiblaCompassScreen()));
-                              }),
+
                               _buildQuickActionButton(context, 'Daily Duas',
                                   Icons.favorite, Colors.pink, () {
                                 HapticFeedback.lightImpact();
@@ -246,15 +235,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         builder: (_) =>
                                             const IslamicMonthsScreen()));
                               }),
-                              _buildQuickActionButton(context, 'Zakat Calc',
-                                  Icons.calculate, const Color(0xFFD4AF37), () {
-                                HapticFeedback.lightImpact();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            const ZakatCalculatorScreen()));
-                              }),
+
                               _buildQuickActionButton(
                                   context,
                                   'Asma ul Husna',
