@@ -37,6 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String? _lastReadSurah;
   int? _lastReadSurahNumber;
   int? _lastReadAyah;
+  int _lastReadMushafPage = 1;
 
   @override
   void initState() {
@@ -46,10 +47,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadLastRead() async {
     final prefs = await SharedPreferences.getInstance();
+    final mushafService = MushafService();
+
+    final rawSurahName = prefs.getString('last_read_surah_name');
+    final rawSurahNumber = prefs.getInt('last_read_surah');
+    final rawAyah = prefs.getInt('last_read_ayah');
+
+    // Guard against legacy values where Mushaf page text was stored in surah keys.
+    final hasValidSurah =
+        rawSurahNumber != null && rawSurahNumber >= 1 && rawSurahNumber <= 114;
+    final looksLikeMushafText =
+        (rawSurahName ?? '').toLowerCase().contains('page') ||
+        (rawSurahName ?? '').toLowerCase().contains('mushaf') ||
+        (rawSurahName ?? '').contains('পেজ');
+
+    final mushafPage = await mushafService.getLastReadPage();
+
     setState(() {
-      _lastReadSurah = prefs.getString('last_read_surah_name');
-      _lastReadSurahNumber = prefs.getInt('last_read_surah');
-      _lastReadAyah = prefs.getInt('last_read_ayah');
+      _lastReadSurah = (!hasValidSurah || looksLikeMushafText) ? null : rawSurahName;
+      _lastReadSurahNumber = hasValidSurah ? rawSurahNumber : null;
+      _lastReadAyah = hasValidSurah ? rawAyah : null;
+      _lastReadMushafPage = mushafPage;
     });
   }
 
@@ -175,7 +193,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 HapticFeedback.lightImpact();
                                 _showDailyInspirationDialog(context);
                               }),
-                              _buildQuickActionButton(context, 'Quran Text',
+                              _buildQuickActionButton(context, 'Al Quran',
                                   Icons.text_fields_rounded, Colors.brown, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
@@ -349,7 +367,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Text(
                       _lastReadSurah != null
                           ? '$_lastReadSurah • Ayah $_lastReadAyah'
-                          : 'Tap to start reading',
+                          : 'Tap to continue Quran text',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,
@@ -430,7 +448,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  void _showContinueReadingOptions(BuildContext context) {
+  void _showContinueReadingOptions(BuildContext context) async {
+    // Check if they were reading in Arabic-only mode before
+    final prefs = await SharedPreferences.getInstance();
+    final wasArabicOnlyMode = prefs.getBool('last_read_arabic_only_mode') ?? false;
+
+    if (!mounted) return;
+
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -450,7 +474,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Surah Mode Option
+            // Surah/Quran Text Mode Option
             ListTile(
               leading: Container(
                 padding: const EdgeInsets.all(8),
@@ -458,11 +482,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: Colors.blue.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(Icons.list_alt, color: Colors.blue),
+                child: Icon(
+                  wasArabicOnlyMode ? Icons.text_fields_rounded : Icons.list_alt,
+                  color: Colors.blue,
+                ),
               ),
-              title: const Text('Surah Mode'),
-              subtitle:
-                  Text(_lastReadSurah ?? 'Continue from where you left off'),
+              title: Text(wasArabicOnlyMode ? 'Al Quran' : 'Surah Mode'),
+              subtitle: Text(
+                _lastReadSurah ?? 'Continue from where you left off',
+              ),
               onTap: () {
                 Navigator.pop(context);
                 final surahs = context.read<QuranProvider>().surahs;
@@ -477,7 +505,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AyahReadingScreen(surah: surah),
+                    builder: (context) => AyahReadingScreen(
+                      surah: surah,
+                      arabicOnlyMode: wasArabicOnlyMode,
+                    ),
                   ),
                 );
               },
@@ -496,7 +527,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: const Icon(Icons.auto_stories, color: Colors.brown),
               ),
               title: const Text('Mushaf Pages'),
-              subtitle: const Text('Read page by page like real Quran'),
+              subtitle: Text('Continue from page $_lastReadMushafPage'),
               onTap: () async {
                 Navigator.pop(context);
                 final mushafService = MushafService();

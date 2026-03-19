@@ -337,20 +337,21 @@ class AyahWidget extends StatelessWidget {
                   _showAIInsight(context);
                 },
               ),
-              _ActionTile(
-                icon: Icons.menu_book_rounded,
-                label: 'View Tafsir',
-                color: Colors.indigo,
-                onTap: () {
-                  Navigator.pop(context);
-                  showTafsirBottomSheet(
-                    context,
-                    surahNumber: ayah.surahNumber,
-                    ayahNumber: ayah.ayahNumber,
-                    arabicText: ayah.arabicText,
-                  );
-                },
-              ),
+              if (!arabicOnlyMode)
+                _ActionTile(
+                  icon: Icons.menu_book_rounded,
+                  label: 'View Tafsir',
+                  color: Colors.indigo,
+                  onTap: () {
+                    Navigator.pop(context);
+                    showTafsirBottomSheet(
+                      context,
+                      surahNumber: ayah.surahNumber,
+                      ayahNumber: ayah.ayahNumber,
+                      arabicText: ayah.arabicText,
+                    );
+                  },
+                ),
               _ActionTile(
                 icon: Icons.text_fields_rounded,
                 label: 'Quran Text Settings',

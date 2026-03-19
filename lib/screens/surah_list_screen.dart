@@ -30,7 +30,6 @@ class _SurahListScreenState extends State<SurahListScreen> {
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
   String _query = '';
-  String _filter = 'All'; // All, Meccan, Medinan
   bool _showScrollTop = false;
 
   @override
@@ -51,9 +50,6 @@ class _SurahListScreenState extends State<SurahListScreen> {
 
   List<Surah> _filtered(List<Surah> surahs) {
     var list = surahs;
-    if (_filter != 'All') {
-      list = list.where((s) => s.revelationType == _filter).toList();
-    }
     if (_query.trim().isNotEmpty) {
       final q = _query.toLowerCase();
       list = list.where((s) =>
@@ -135,16 +131,13 @@ class _SurahListScreenState extends State<SurahListScreen> {
                     ),
                   ),
 
-                // Sticky search + filter header
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SearchDelegate(
+                // Search header
+                SliverToBoxAdapter(
+                  child: _SearchSection(
                     searchController: _searchController,
-                    currentFilter: _filter,
                     isDark: isDark,
                     primary: primary,
                     onQueryChanged: (v) => setState(() => _query = v),
-                    onFilterChanged: (v) => setState(() => _filter = v),
                   ),
                 ),
 
@@ -186,7 +179,7 @@ class _SurahListScreenState extends State<SurahListScreen> {
                                 transitionDuration: const Duration(milliseconds: 350),
                               ),
                             );
-                          }).animate().fadeIn(delay: (30 * (index % 12)).ms).slideX(begin: 0.04);
+                          });
                         },
                         childCount: surahs.length,
                       ),
@@ -201,30 +194,21 @@ class _SurahListScreenState extends State<SurahListScreen> {
   }
 }
 
-class _SearchDelegate extends SliverPersistentHeaderDelegate {
+class _SearchSection extends StatelessWidget {
   final TextEditingController searchController;
-  final String currentFilter;
   final bool isDark;
   final Color primary;
   final ValueChanged<String> onQueryChanged;
-  final ValueChanged<String> onFilterChanged;
 
-  const _SearchDelegate({
+  const _SearchSection({
     required this.searchController,
-    required this.currentFilter,
     required this.isDark,
     required this.primary,
     required this.onQueryChanged,
-    required this.onFilterChanged,
   });
 
   @override
-  double get minExtent => 100;
-  @override
-  double get maxExtent => 100;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context) {
     final bg = isDark ? const Color(0xFF111827) : Colors.white;
     return Container(
       color: bg.withOpacity(0.97),
@@ -258,51 +242,10 @@ class _SearchDelegate extends SliverPersistentHeaderDelegate {
               ),
             ),
           ),
-          const SizedBox(height: 8),
-          // Filter chips
-          Row(
-            children: ['All', 'Meccan', 'Medinan'].map((f) {
-              final sel = currentFilter == f;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.selectionClick();
-                    onFilterChanged(f);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: sel ? primary : Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: sel ? primary : Colors.grey.shade400,
-                      ),
-                    ),
-                    child: Text(
-                      f,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: sel ? FontWeight.bold : FontWeight.normal,
-                        color: sel ? Colors.white : Colors.grey.shade600,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
         ],
       ),
     );
   }
-
-  @override
-  bool shouldRebuild(_SearchDelegate old) =>
-      old.currentFilter != currentFilter ||
-      old.isDark != isDark ||
-      old.primary != primary;
 }
 
 class _SurahListItem extends StatelessWidget {
@@ -313,6 +256,11 @@ class _SurahListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primary = Theme.of(context).primaryColor;
+    final titleColor = isDark ? Colors.white : const Color(0xFF1A1A1A);
+    final subtitleColor = isDark ? Colors.white70 : const Color(0xFF4A4A4A);
+
     return GlassCard(
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.zero,
@@ -329,7 +277,7 @@ class _SurahListItem extends StatelessWidget {
                 height: 50,
                 child: CustomPaint(
                   painter: _IslamicStarBadgePainter(
-                    color: Theme.of(context).primaryColor,
+                    color: primary,
                     number: surah.number,
                   ),
                 ),
@@ -345,10 +293,13 @@ class _SurahListItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             surah.englishName,
+                            maxLines: 2,
+                            overflow: TextOverflow.fade,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0.3,
+                              color: null,
                             ),
                           ),
                         ),
@@ -357,7 +308,7 @@ class _SurahListItem extends StatelessWidget {
                             horizontal: 8, vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor.withOpacity(0.1),
+                            color: primary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
@@ -365,7 +316,7 @@ class _SurahListItem extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
+                              color: primary,
                             ),
                           ),
                         ),
@@ -374,24 +325,29 @@ class _SurahListItem extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Text(
-                          surah.banglaName,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Theme.of(context).textTheme.bodySmall?.color,
-                            fontWeight: FontWeight.w500,
+                        Expanded(
+                          child: Text(
+                            surah.banglaName,
+                            maxLines: 2,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: subtitleColor,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          '• ${surah.totalAyahs} ayahs',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.color
-                                ?.withOpacity(0.6),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 92),
+                          child: Text(
+                            '• ${surah.totalAyahs} ayahs',
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: subtitleColor.withOpacity(0.85),
+                            ),
                           ),
                         ),
                       ],
@@ -401,12 +357,20 @@ class _SurahListItem extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               // Arabic name
-              Text(
-                surah.arabicName,
-                style: AppTheme.arabicTextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 105),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    surah.arabicName,
+                    textAlign: TextAlign.right,
+                    style: AppTheme.arabicTextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: primary,
+                    ),
+                  ),
                 ),
               ),
             ],

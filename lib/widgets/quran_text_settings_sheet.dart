@@ -10,6 +10,7 @@ class QuranTextSettingsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scheme = Theme.of(context).colorScheme;
 
     return GlassCard(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
@@ -35,13 +36,16 @@ class QuranTextSettingsSheet extends StatelessWidget {
               'Quran Text Settings',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: scheme.onSurface,
                   ),
             ),
             const SizedBox(height: 8),
             Text(
               'Customize your reading experience with different scripts and Tajweed rules.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: (isDark ? Colors.white : Colors.black).withOpacity(0.6),
+                    color: scheme.onSurface.withOpacity(0.85),
+                    fontWeight: FontWeight.w500,
+                    height: 1.45,
                   ),
             ),
             const SizedBox(height: 32),
@@ -120,10 +124,10 @@ class QuranTextSettingsSheet extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 decoration: BoxDecoration(
-                  color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+                  color: isDark ? const Color(0xFF1D2431) : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                    color: scheme.outline.withOpacity(0.35),
                   ),
                 ),
                 child: const Text(
@@ -145,16 +149,18 @@ class QuranTextSettingsSheet extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
+                color: isDark ? const Color(0xFF1D2431) : Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                  color: scheme.outline.withOpacity(0.35),
                 ),
               ),
               child: Text(
                 'Arabic script data is sourced from verified providers such as Quran.com and Tanzil.net. Please keep attribution and license terms when packaging or redistributing text datasets.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: (isDark ? Colors.white : Colors.black).withOpacity(0.75),
+                      color: scheme.onSurface.withOpacity(0.9),
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w500,
                       height: 1.4,
                     ),
               ),

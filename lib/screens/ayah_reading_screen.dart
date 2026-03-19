@@ -14,8 +14,8 @@ import '../widgets/audio_controls_widget.dart';
 import '../widgets/skeleton_loading.dart';
 import '../widgets/juz_navigation_widget.dart';
 import '../widgets/reading_progress_widget.dart';
-import '../widgets/full_surah_player.dart';
 import '../widgets/reading_controls_sheet.dart';
+import 'reciter_selector_screen.dart';
 
 class AyahReadingScreen extends StatefulWidget {
   final Surah surah;
@@ -154,25 +154,45 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   }
 
   void _scrollToAyah(int ayahNumber) {
+    if (_scrollController.positions.isEmpty || _processedAyahs.isEmpty) return;
+    
     final index = _processedAyahs.indexWhere((ayah) => ayah.ayahNumber == ayahNumber);
-    if (index != -1) {
-      // Account for Bismillah widget if present
-      final adjustedIndex = _shouldShowBismillah() ? index + 1 : index;
-      _scrollController.animateTo(
-        adjustedIndex * 200.0, // Approximate height per ayah
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
+    if (index == -1) return;
+
+    // Calculate better scroll offset using average item height
+    // This works for variable-length ayahs
+    const baseItemHeight = 160.0;
+    final adjustedIndex = _shouldShowBismillah() ? index + 1 : index;
+    final scrollOffset = adjustedIndex * baseItemHeight;
+    
+    // Clamp to valid range
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final targetOffset = scrollOffset.clamp(0.0, maxScroll);
+    
+    _scrollController.animateTo(
+      targetOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
-  bool _shouldShowBismillah() {
-    // Show Bismillah for all surahs except Al-Fatiha (1) and At-Tawbah (9)
+  bool _isSurahWithStandaloneBismillah() {
+    // Standalone bismillah is shown for all surahs except Al-Fatiha (1) and At-Tawbah (9)
     return widget.surah.number != 1 && widget.surah.number != 9;
   }
 
+  bool _shouldShowBismillah() {
+    if (!_isSurahWithStandaloneBismillah()) return false;
+    if (_processedAyahs.isEmpty) return true;
+
+    // If first ayah still contains leading bismillah in any script variant,
+    // don't render standalone bismillah to avoid duplication.
+    final first = _processedAyahs.first;
+    return !_hasLeadingBismillah(first);
+  }
+
   List<Ayah> _processAyahsForBismillah(List<Ayah> ayahs) {
-    if (!_shouldShowBismillah() || ayahs.isEmpty) {
+    if (!_isSurahWithStandaloneBismillah() || ayahs.isEmpty) {
       return ayahs;
     }
 
@@ -181,15 +201,12 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     for (int i = 0; i < ayahs.length; i++) {
       final ayah = ayahs[i];
       if (i == 0) {
-        // Remove Bismillah from the beginning of the first ayah
-        String cleanArabic = ayah.arabicText.trim();
-        
-        // Find the end of "ٱلرَّحِیمِ" and remove everything up to and including it
-        if (cleanArabic.contains('ٱلرَّحِیمِ')) {
-          final endIndex = cleanArabic.indexOf('ٱلرَّحِیمِ') + 'ٱلرَّحِیمِ'.length;
-          cleanArabic = cleanArabic.substring(endIndex).trim();
-        }
-        
+        // Remove Bismillah from the beginning of the first ayah.
+        String cleanArabic = _stripLeadingBismillah(ayah.arabicText.trim());
+        final cleanUthmani = _stripLeadingBismillahNullable(ayah.uthmaniText);
+        final cleanIndopak = _stripLeadingBismillahNullable(ayah.indopakText);
+        final cleanTajweed = _stripLeadingBismillahNullable(ayah.tajweedText);
+
         // Only add ayah if there's content remaining after removing Bismillah
         if (cleanArabic.isNotEmpty) {
           final cleanAyah = Ayah(
@@ -197,6 +214,9 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             ayahNumber: ayah.ayahNumber,
             globalAyahNumber: ayah.globalAyahNumber,
             arabicText: cleanArabic,
+            uthmaniText: cleanUthmani,
+            indopakText: cleanIndopak,
+            tajweedText: cleanTajweed,
             englishTranslation: ayah.englishTranslation,
             banglaTranslation: ayah.banglaTranslation,
             transliteration: ayah.transliteration,
@@ -211,6 +231,94 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     }
     
     return processedAyahs;
+  }
+
+  String _stripLeadingBismillah(String text) {
+    var clean = text.trim();
+
+    // Robust prefix strip for forms where exact diacritic matching fails.
+    final hasBism = clean.contains('بسم') || clean.contains('بِسْم');
+    final hasRahman = clean.contains('الرحمن') || clean.contains('ٱلرَّحۡمَ') || clean.contains('الرَّحْم');
+    final rahimMatch = RegExp(r'رح[يی]م').firstMatch(clean);
+    if (hasBism && hasRahman && rahimMatch != null) {
+      final bismIndex = clean.indexOf('بسم') >= 0 ? clean.indexOf('بسم') : clean.indexOf('بِسْم');
+      if (bismIndex >= 0 && bismIndex <= 20 && rahimMatch.start <= 90) {
+        final cut = rahimMatch.end;
+        final tail = clean.substring(cut).trim();
+        if (tail.isNotEmpty) {
+          return tail;
+        }
+      }
+    }
+
+    final endings = <String>[
+      'ٱلرَّحِيمِ',
+      'ٱلرَّحِیمِ',
+      'الرَّحِيمِ',
+      'الرَّحِیمِ',
+      'الرَّحِيمِ',
+      'الرَّحِیمِ',
+      'الرحيم',
+      'الرحیم',
+    ];
+
+    for (final endWord in endings) {
+      final idx = clean.indexOf(endWord);
+      if (idx != -1 && idx < 40) {
+        final cut = idx + endWord.length;
+        clean = clean.substring(cut).trim();
+        break;
+      }
+    }
+
+    return clean;
+  }
+
+  String? _stripLeadingBismillahNullable(String? text) {
+    if (text == null) return null;
+    final stripped = _stripLeadingBismillah(text.trim());
+    return stripped.isEmpty ? null : stripped;
+  }
+
+  bool _hasLeadingBismillah(Ayah ayah) {
+    final candidates = <String?>[
+      ayah.arabicText,
+      ayah.uthmaniText,
+      ayah.indopakText,
+      ayah.tajweedText,
+    ];
+
+    for (final raw in candidates) {
+      if (raw == null || raw.trim().isEmpty) continue;
+      final normalized = _normalizeArabicForMatch(raw);
+      if (normalized.length >= 6 && normalized.indexOf('بسم') <= 3) {
+        final hasRahman = normalized.contains('الرحمن') || normalized.contains('ٱلرحمن');
+        final hasRahim = normalized.contains('الرحيم') || normalized.contains('ٱلرحيم');
+        if (hasRahman && hasRahim) {
+          return true;
+        }
+      }
+      if (normalized.startsWith('بسماللهالرحمنالرحيم') ||
+          normalized.startsWith('بسمٱللهٱلرحمنٱلرحيم')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  String _normalizeArabicForMatch(String input) {
+    // Remove common tajweed/html markers for matching only.
+    var out = input
+        .replaceAll(RegExp(r'<[^>]*>'), '')
+        .replaceAll(RegExp(r'\[[^\]]*\]'), '')
+        .replaceAll(RegExp(r'\{[^\}]*\}'), '');
+
+    // Remove Arabic diacritics and tatweel.
+    out = out
+        .replaceAll(RegExp(r'[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]'), '')
+        .replaceAll(RegExp(r'\s+'), '');
+
+    return out;
   }
 
   Widget _buildBismillahWidget() {
@@ -299,6 +407,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     await prefs.setString('last_read_surah_name', widget.surah.englishName);
     await prefs.setInt('last_read_surah', widget.surah.number);
     await prefs.setInt('last_read_ayah', ayahNumber);
+    // Save the reading mode (Arabic-only or normal)
+    await prefs.setBool('last_read_arabic_only_mode', widget.arabicOnlyMode);
     
     // Update reading streak
     if (mounted) {
@@ -344,6 +454,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
             children: [
               Text(
                 widget.surah.englishName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 17,
@@ -353,6 +465,8 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
               ),
               Text(
                 '${widget.surah.revelationType} • ${widget.surah.totalAyahs} Verses',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 11,
                   color: Colors.white.withOpacity(0.8),
@@ -369,16 +483,20 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Ayah $_currentVisibleAyah of ${widget.surah.totalAyahs}',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.85),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
+                      Expanded(
+                        child: Text(
+                          'Ayah $_currentVisibleAyah/${widget.surah.totalAyahs}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.85),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
+                      const SizedBox(width: 8),
                       Text(
                         '${((_currentVisibleAyah / (widget.surah.totalAyahs == 0 ? 1 : widget.surah.totalAyahs)) * 100).round()}%',
                         style: TextStyle(
@@ -424,16 +542,26 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                 );
               },
             ),
-            // Reciter selector
+            // Reciter selector + ayah-wise playback
             IconButton(
               icon: const Icon(Icons.headphones_rounded, color: Colors.white),
-              tooltip: 'Change Reciter / Play Surah',
-              onPressed: () {
-                showFullSurahPlayer(
+              tooltip: 'Select Qari & Play Ayah by Ayah',
+              onPressed: () async {
+                await Navigator.push(
                   context,
-                  surahNumber: widget.surah.number,
-                  surahName: '${widget.surah.englishName} - ${widget.surah.arabicName}',
+                  MaterialPageRoute(
+                    builder: (_) => const ReciterSelectorScreen(),
+                  ),
                 );
+
+                if (!mounted) return;
+
+                final startAyah = _currentVisibleAyah.clamp(1, widget.surah.totalAyahs);
+                await context.read<AudioProvider>().playAyah(
+                      widget.surah.number,
+                      startAyah,
+                      totalAyahs: widget.surah.totalAyahs,
+                    );
               },
             ),
             // Juz navigation
@@ -746,3 +874,4 @@ class _SurahHeaderBanner extends StatelessWidget {
     return juzBoundaries[surahNumber - 1];
   }
 }
+

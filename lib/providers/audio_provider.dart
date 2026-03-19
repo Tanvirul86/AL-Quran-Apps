@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:audio_service/audio_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 
 enum RepeatMode { none, one, all }
@@ -12,7 +13,7 @@ enum SleepTimerPreset { fifteenMin, thirtyMin, oneHour, endOfSurah }
 class AudioProvider with ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
   static bool _audioServiceInitialized = false;
-  
+
   bool _isPlaying = false;
   bool _isLoading = false;
   int? _currentSurah;
@@ -31,6 +32,7 @@ class AudioProvider with ChangeNotifier {
   Timer? _sleepTimer;
   DateTime? _sleepTimerEnd;
   bool _stopAtEndOfSurah = false;
+  String _selectedReciterId = 'mishary_alafasy';
 
   AudioPlayer get audioPlayer => _audioPlayer;
   bool get isPlaying => _isPlaying;
@@ -45,6 +47,8 @@ class AudioProvider with ChangeNotifier {
   int get loopCount => _loopCount;
   bool get waitForRecitation => _waitForRecitation;
   bool get isSleepTimerActive => _sleepTimer?.isActive ?? false;
+  String get selectedReciterId => _selectedReciterId;
+
   String get sleepTimerRemainingFormatted {
     if (_sleepTimerEnd == null) return '--:--';
     final remaining = _sleepTimerEnd!.difference(DateTime.now());
@@ -78,22 +82,50 @@ class AudioProvider with ChangeNotifier {
     _audioPlayer.playerStateStream.listen((state) {
       _isPlaying = state.playing;
       _isLoading = state.processingState == ProcessingState.loading;
-      
-      // Handle playback completion
+
       if (state.processingState == ProcessingState.completed) {
         _handlePlaybackCompleted();
       }
-      
+
       notifyListeners();
     });
 
-    // Keep current ayah in sync with the active playlist index.
+    // Keep current ayah in sync with active index in concatenated playlist.
     _audioPlayer.currentIndexStream.listen((index) {
       if (index != null && _playlistStartAyah != null) {
         _currentAyah = _playlistStartAyah! + index;
         notifyListeners();
       }
     });
+  }
+
+  Future<void> _loadSelectedReciter() async {
+    final prefs = await SharedPreferences.getInstance();
+    final rawId = prefs.getString('selected_reciter_id') ?? 'mishary_alafasy';
+
+    const legacy = {
+      'Abdul_Basit_Murattal': 'abdul_basit_murattal',
+      'Mishary_Rashid': 'mishary_alafasy',
+      'Saad_Al_Ghamdi': 'saad_alghamdi',
+    };
+
+    _selectedReciterId = legacy[rawId] ?? rawId;
+  }
+
+  String _getAudioUrlForCurrentReciter(int surahNumber, int ayahNumber) {
+    final surah = surahNumber.toString().padLeft(3, '0');
+    final ayah = ayahNumber.toString().padLeft(3, '0');
+
+    const reciterBases = <String, String>{
+      'mishary_alafasy': 'https://everyayah.com/data/Alafasy_128kbps/',
+      'abdul_basit_murattal': 'https://everyayah.com/data/Abdul_Basit_Murattal_128kbps/',
+      'mahmoud_hussary': 'https://everyayah.com/data/Husary_128kbps/',
+      'saad_alghamdi': 'https://everyayah.com/data/Ghamadi_40kbps/',
+      'abdurrahman_sudais': 'https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/',
+    };
+
+    final base = reciterBases[_selectedReciterId] ?? AppConstants.audioBaseUrl;
+    return '$base$surah$ayah.mp3';
   }
 
   /// Handle what happens when audio playback completes
@@ -107,20 +139,17 @@ class AudioProvider with ChangeNotifier {
     if (_isPracticeMode) {
       _currentLoopIdx++;
       if (_currentLoopIdx < _loopCount) {
-        // Repeat the same ayah for practice
         await playAyah(_currentSurah!, _currentAyah!, totalAyahs: _totalAyahsInCurrentSurah);
       } else {
         _currentLoopIdx = 0;
         if (_waitForRecitation) {
-          // Wait for a duration proportional to the ayah length
           final waitTime = Duration(milliseconds: (_duration.inMilliseconds * 1.2).toInt());
           _isLoading = true;
           notifyListeners();
           await Future.delayed(waitTime);
           _isLoading = false;
         }
-        
-        // Move to next ayah in practice range
+
         if (_currentAyah! < (_totalAyahsInCurrentSurah ?? _currentAyah!)) {
           await playAyah(_currentSurah!, _currentAyah! + 1, totalAyahs: _totalAyahsInCurrentSurah);
         } else {
@@ -131,12 +160,10 @@ class AudioProvider with ChangeNotifier {
     }
 
     if (_repeatMode == RepeatMode.one && _currentSurah != null && _currentAyah != null) {
-      // Repeat current ayah
       playAyah(_currentSurah!, _currentAyah!);
-    } else if ((_repeatMode == RepeatMode.all || _autoPlayNext) && 
-               _currentSurah != null && 
-               _currentAyah != null) {
-      // Play next ayah
+    } else if ((_repeatMode == RepeatMode.all || _autoPlayNext) &&
+        _currentSurah != null &&
+        _currentAyah != null) {
       playNextAyah();
     }
   }
@@ -153,19 +180,20 @@ class AudioProvider with ChangeNotifier {
   /// Play ayah audio with gapless support
   Future<void> playAyah(int surahNumber, int ayahNumber, {int? totalAyahs}) async {
     try {
+      await _loadSelectedReciter();
+
       _currentSurah = surahNumber;
       _currentAyah = ayahNumber;
       _playlistStartAyah = ayahNumber;
       if (totalAyahs != null) {
         _totalAyahsInCurrentSurah = totalAyahs;
       }
-      
-      // Create a list of audio sources for the rest of the surah for gapless playback
+
       final List<AudioSource> sources = [];
       final int endAyah = _totalAyahsInCurrentSurah ?? ayahNumber;
-      
+
       for (int i = ayahNumber; i <= endAyah; i++) {
-        final String audioUrl = AppConstants.getAudioUrl(surahNumber, i);
+        final String audioUrl = _getAudioUrlForCurrentReciter(surahNumber, i);
         sources.add(
           AudioSource.uri(
             Uri.parse(audioUrl),
@@ -181,14 +209,14 @@ class AudioProvider with ChangeNotifier {
       }
 
       final playlist = ConcatenatingAudioSource(children: sources);
-      
+
       _isLoading = true;
       notifyListeners();
 
       await _audioPlayer.setAudioSource(playlist);
       await _audioPlayer.setSpeed(_playbackSpeed);
       await _audioPlayer.play();
-      
+
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -198,17 +226,14 @@ class AudioProvider with ChangeNotifier {
     }
   }
 
-  /// Pause playback
   Future<void> pause() async {
     await _audioPlayer.pause();
   }
 
-  /// Resume playback
   Future<void> resume() async {
     await _audioPlayer.play();
   }
 
-  /// Stop playback
   Future<void> stop() async {
     await _audioPlayer.stop();
     _currentSurah = null;
@@ -217,12 +242,10 @@ class AudioProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Seek to position
   Future<void> seek(Duration position) async {
     await _audioPlayer.seek(position);
   }
 
-  /// Set playback speed
   Future<void> setPlaybackSpeed(double speed) async {
     _playbackSpeed = speed.clamp(
       AppConstants.minPlaybackSpeed,
@@ -232,33 +255,28 @@ class AudioProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Repeat current ayah
   Future<void> repeatAyah() async {
     if (_currentSurah != null && _currentAyah != null) {
       await playAyah(_currentSurah!, _currentAyah!);
     }
   }
 
-  /// Play next ayah in sequence
   Future<void> playNextAyah() async {
     if (_currentSurah != null && _currentAyah != null && _totalAyahsInCurrentSurah != null) {
       if (_currentAyah! < _totalAyahsInCurrentSurah!) {
         await playAyah(_currentSurah!, _currentAyah! + 1, totalAyahs: _totalAyahsInCurrentSurah);
       } else {
-        // End of surah - stop or move to next surah based on settings
         await stop();
       }
     }
   }
 
-  /// Play previous ayah in sequence
   Future<void> playPreviousAyah() async {
     if (_currentSurah != null && _currentAyah != null && _currentAyah! > 1) {
       await playAyah(_currentSurah!, _currentAyah! - 1, totalAyahs: _totalAyahsInCurrentSurah);
     }
   }
 
-  /// Toggle repeat mode (none -> one -> all)
   void toggleRepeatMode() {
     switch (_repeatMode) {
       case RepeatMode.none:
@@ -274,19 +292,16 @@ class AudioProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Set repeat mode
   void setRepeatMode(RepeatMode mode) {
     _repeatMode = mode;
     notifyListeners();
   }
 
-  /// Toggle auto-play next
   void toggleAutoPlayNext() {
     _autoPlayNext = !_autoPlayNext;
     notifyListeners();
   }
 
-  /// Set sleep timer duration.
   void setSleepTimer(Duration duration) {
     cancelSleepTimer(notify: false);
     _stopAtEndOfSurah = false;
@@ -307,7 +322,6 @@ class AudioProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Configure sleep timer from predefined options.
   void setSleepTimerPreset(SleepTimerPreset preset) {
     switch (preset) {
       case SleepTimerPreset.fifteenMin:
@@ -327,7 +341,6 @@ class AudioProvider with ChangeNotifier {
     }
   }
 
-  /// Cancel any active sleep timer.
   void cancelSleepTimer({bool notify = true}) {
     _sleepTimer?.cancel();
     _sleepTimer = null;
@@ -338,10 +351,8 @@ class AudioProvider with ChangeNotifier {
     }
   }
 
-  /// Get available playback speeds
   List<double> get availableSpeeds => [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
-  /// Initialize audio service for background playback
   Future<void> initializeAudioService() async {
     if (_audioServiceInitialized) return;
     try {

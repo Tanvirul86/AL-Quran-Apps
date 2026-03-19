@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/enhanced_reciter_service.dart';
 import '../models/reciter.dart';
 
-/// Reciter Selector - Choose from 15 world-renowned reciters
+/// Reciter Selector - Choose from 15 world-renowned reciters for streaming
 class ReciterSelectorScreen extends StatefulWidget {
   const ReciterSelectorScreen({super.key});
 
@@ -14,8 +14,6 @@ class ReciterSelectorScreen extends StatefulWidget {
 class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
   late EnhancedReciterService _reciterService;
   String _selectedReciterId = '';
-  Map<String, double> _downloadProgress = {};
-  Set<String> _downloadingReciters = {};
 
   @override
   void initState() {
@@ -28,7 +26,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
     final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
-        _selectedReciterId = prefs.getString('selected_reciter_id') ?? 'Abdul_Basit_Murattal';
+        _selectedReciterId = prefs.getString('selected_reciter_id') ?? 'mishary_alafasy';
       });
     }
   }
@@ -38,13 +36,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Reciter'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () => _showDownloadOptionsDialog(),
-            tooltip: 'Download Options',
-          ),
-        ],
+        elevation: 0,
       ),
       body: FutureBuilder<List<Reciter>>(
         future: _reciterService.getAllReciters(),
@@ -70,8 +62,6 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
 
   Widget _buildReciterCard(Reciter reciter) {
     final isSelected = _selectedReciterId == reciter.id;
-    final isDownloading = _downloadingReciters.contains(reciter.id);
-    final downloadProgress = _downloadProgress[reciter.id] ?? 0.0;
 
     return Card(
       elevation: isSelected ? 8 : 2,
@@ -125,7 +115,9 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
                           children: [
                             const Icon(Icons.flag, size: 16),
                             const SizedBox(width: 4),
-                            Text(reciter.country ?? 'Unknown'),
+                            Expanded(
+                              child: Text(reciter.country ?? 'Unknown'),
+                            ),
                           ],
                         ),
                       ],
@@ -147,6 +139,8 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
                     fontSize: 14,
                     color: Colors.grey.shade700,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
 
@@ -161,51 +155,31 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
                     labelStyle: const TextStyle(fontSize: 12),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              // Download Progress
-              if (isDownloading) ...[
-                LinearProgressIndicator(value: downloadProgress),
-                const SizedBox(height: 8),
-                Text('Downloading... ${(downloadProgress * 100).toInt()}%'),
-              ],
-
-              // Action Buttons
-              Row(
-                children: [
-                  // Preview Button
-                  OutlinedButton.icon(
-                    onPressed: () => _previewReciter(reciter),
-                    icon: const Icon(Icons.play_arrow, size: 18),
-                    label: const Text('Preview'),
-                  ),
-                  const SizedBox(width: 8),
-
-                  // Download Button
-                  if (reciter.isDownloadable)
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: isDownloading
-                            ? null
-                            : () => _showDownloadDialog(reciter),
-                        icon: Icon(
-                          _isReciterDownloaded(reciter.id)
-                              ? Icons.download_done
-                              : Icons.download,
-                          size: 18,
-                        ),
-                        label: Text(
-                          _isReciterDownloaded(reciter.id)
-                              ? 'Downloaded'
-                              : 'Download',
-                        ),
-                      ),
+                  if (isSelected)
+                    const Chip(
+                      label: Text('Selected'),
+                      labelStyle: TextStyle(fontSize: 12, color: Colors.white),
+                      backgroundColor: Colors.green,
+                      padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                 ],
               ),
+
+              const SizedBox(height: 8),
+
+              // Info message
+              if (isSelected)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    '✓ Audio streams online while playing',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.green,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -216,6 +190,7 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
   Future<void> _selectReciter(Reciter reciter) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_reciter_id', reciter.id);
+    
     setState(() {
       _selectedReciterId = reciter.id;
     });
@@ -224,234 +199,17 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${reciter.name} selected'),
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
         ),
       );
-    }
-  }
-
-  Future<void> _previewReciter(Reciter reciter) async {
-    // Play Al-Fatihah (Surah 1) as preview
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Playing preview from ${reciter.name}...'),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-    // TODO: Implement audio preview using just_audio
-  }
-
-  void _showDownloadDialog(Reciter reciter) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Download ${reciter.name}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('What would you like to download?'),
-            const SizedBox(height: 16),
-            ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text('Full Quran'),
-              subtitle: const Text('~1.5 GB'),
-              onTap: () {
-                Navigator.pop(context);
-                _downloadFullQuran(reciter);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.article),
-              title: const Text('Select Surahs'),
-              onTap: () {
-                Navigator.pop(context);
-                _showSurahSelector(reciter);
-              },
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _downloadFullQuran(Reciter reciter) async {
-    setState(() {
-      _downloadingReciters.add(reciter.id);
-      _downloadProgress[reciter.id] = 0.0;
-    });
-
-    try {
-      await _reciterService.downloadFullQuran(reciter.id);
-
+      
+      // Auto-close after selection
+      await Future.delayed(const Duration(milliseconds: 500));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${reciter.name} downloaded successfully'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Download failed: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      setState(() {
-        _downloadingReciters.remove(reciter.id);
-        _downloadProgress.remove(reciter.id);
-      });
-    }
-  }
-
-  void _showSurahSelector(Reciter reciter) {
-    // Show grid of 114 surahs to select and download
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Select Surahs'),
-        content: SizedBox(
-          width: double.maxFinite,
-          child: GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 6,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-            ),
-            itemCount: 114,
-            itemBuilder: (context, index) {
-              final surahNumber = index + 1;
-              return InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  _downloadSurah(reciter, surahNumber);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '$surahNumber',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _downloadSurah(Reciter reciter, int surahNumber) async {
-    setState(() {
-      _downloadingReciters.add('${reciter.id}_$surahNumber');
-    });
-
-    try {
-      await _reciterService.downloadSurahAudio(reciterId: reciter.id, surahNumber: surahNumber);
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Surah $surahNumber downloaded'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Download failed: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      setState(() {
-        _downloadingReciters.remove('${reciter.id}_$surahNumber');
-      });
-    }
-  }
-
-  void _showDownloadOptionsDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Download Manager'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.download_for_offline),
-              title: const Text('Download All Reciters'),
-              subtitle: const Text('~22.5 GB total'),
-              onTap: () {
-                Navigator.pop(context);
-                _downloadAllReciters();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.delete),
-              title: const Text('Clear All Downloads'),
-              onTap: () {
-                Navigator.pop(context);
-                _clearAllDownloads();
-              },
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _downloadAllReciters() async {
-    final reciters = await _reciterService.getAllReciters();
-    
-    for (final reciter in reciters) {
-      if (reciter.isDownloadable) {
-        await _downloadFullQuran(reciter);
+        Navigator.pop(context);
       }
     }
-  }
-
-  Future<void> _clearAllDownloads() async {
-    // TODO: Implement clearing all downloads
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Clearing downloads...')),
-    );
-  }
-
-  bool _isReciterDownloaded(String reciterId) {
-    // TODO: Check if reciter files exist locally
-    return false;
   }
 }
+
