@@ -35,6 +35,7 @@ class AyahReadingScreen extends StatefulWidget {
 
 class _AyahReadingScreenState extends State<AyahReadingScreen> {
   final ScrollController _scrollController = ScrollController();
+  final Map<int, GlobalKey> _ayahItemKeys = {};
   List<Ayah> _ayahs = [];
   List<Ayah> _processedAyahs = [];
   bool _isLoading = true;
@@ -42,7 +43,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
   int _currentVisibleAyah = 1;
   AudioProvider? _audioProvider;
   VoidCallback? _audioListener;
-  int? _lastAutoScrolledAyah;
+  int? _lastScrolledToAyah; // Track which ayah we've scrolled to (different from playing)
   ReadingMode _readingMode = ReadingMode.day;
   
   // Bismillah text
@@ -80,16 +81,12 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     final currentSurah = _audioProvider!.currentSurah;
     final currentAyah = _audioProvider!.currentAyah;
 
+    // Exit early if not in this surah
     if (currentSurah != widget.surah.number || currentAyah == null) {
       return;
     }
 
-    if (_lastAutoScrolledAyah == currentAyah) {
-      return;
-    }
-
-    _lastAutoScrolledAyah = currentAyah;
-
+    // Update visible ayah for UI state
     if (_currentVisibleAyah != currentAyah) {
       setState(() {
         _currentVisibleAyah = currentAyah;
@@ -97,10 +94,16 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
       _saveReadingProgress(currentAyah);
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      _scrollToAyah(currentAyah);
-    });
+    // Scroll only when ayah changes (not on every position update)
+    // The word highlighting updates smoothly via AyahWidget's watch of AudioProvider
+    if (_lastScrolledToAyah != currentAyah) {
+      _lastScrolledToAyah = currentAyah;
+      
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _scrollToAyah(currentAyah);
+      });
+    }
   }
 
   Future<void> _loadAyahs() async {
@@ -117,6 +120,13 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     setState(() {
       _ayahs = ayahs;
       _processedAyahs = processedAyahs;
+      _ayahItemKeys
+        ..clear()
+        ..addEntries(
+          processedAyahs.map(
+            (a) => MapEntry(a.ayahNumber, GlobalKey()),
+          ),
+        );
       _isLoading = false;
     });
     
@@ -155,24 +165,47 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
 
   void _scrollToAyah(int ayahNumber) {
     if (_scrollController.positions.isEmpty || _processedAyahs.isEmpty) return;
-    
+
+    final targetKey = _ayahItemKeys[ayahNumber];
+    final targetContext = targetKey?.currentContext;
+    if (targetContext != null) {
+      // Keep currently reciting ayah around the middle of the screen.
+      Scrollable.ensureVisible(
+        targetContext,
+        alignment: 0.5,
+        duration: const Duration(milliseconds: 420),
+        curve: Curves.easeInOutCubic,
+      );
+      return;
+    }
+
     final index = _processedAyahs.indexWhere((ayah) => ayah.ayahNumber == ayahNumber);
     if (index == -1) return;
 
-    // Calculate better scroll offset using average item height
-    // This works for variable-length ayahs
-    const baseItemHeight = 160.0;
+    // Fallback centered offset calculation if key-based ensureVisible is not ready yet.
+    const baseItemHeight = 140.0; // Refined average for variable content
     final adjustedIndex = _shouldShowBismillah() ? index + 1 : index;
-    final scrollOffset = adjustedIndex * baseItemHeight;
+    
+    // Position target ayah near screen center.
+    final viewportHeight = _scrollController.position.viewportDimension;
+    final targetVisiblePosition = viewportHeight / 2;
+    final scrollOffset = (adjustedIndex * baseItemHeight) - targetVisiblePosition;
     
     // Clamp to valid range
     final maxScroll = _scrollController.position.maxScrollExtent;
     final targetOffset = scrollOffset.clamp(0.0, maxScroll);
     
+    // Use smooth animation with adaptive duration based on distance
+    final currentOffset = _scrollController.offset;
+    final distance = (targetOffset - currentOffset).abs();
+    final duration = Duration(
+      milliseconds: (300 + (distance * 0.5).toInt()).clamp(200, 800),
+    );
+    
     _scrollController.animateTo(
       targetOffset,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
+      duration: duration,
+      curve: Curves.easeInOutCubic,
     );
   }
 
@@ -632,30 +665,33 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                         final ayahIndex =
                             _shouldShowBismillah() ? index - 1 : index;
                         final ayah = _processedAyahs[ayahIndex];
-                        return AyahWidget(
-                          ayah: ayah,
-                          arabicOnlyMode: widget.arabicOnlyMode,
-                          isBookmarked:
-                              _bookmarkedAyahs[ayah.ayahNumber] ?? false,
-                          onBookmarkToggle: () async {
-                            final bookmarkProvider =
-                                context.read<BookmarkProvider>();
-                            await bookmarkProvider.toggleBookmark(
-                              ayah.surahNumber,
-                              ayah.ayahNumber,
-                            );
-                            setState(() {
-                              _bookmarkedAyahs[ayah.ayahNumber] =
-                                  !(_bookmarkedAyahs[ayah.ayahNumber] ?? false);
-                            });
-                          },
-                          onPlay: () {
-                            context.read<AudioProvider>().playAyah(
-                                  ayah.surahNumber,
-                                  ayah.ayahNumber,
-                                  totalAyahs: widget.surah.totalAyahs,
-                                );
-                          },
+                        return KeyedSubtree(
+                          key: _ayahItemKeys[ayah.ayahNumber],
+                          child: AyahWidget(
+                            ayah: ayah,
+                            arabicOnlyMode: widget.arabicOnlyMode,
+                            isBookmarked:
+                                _bookmarkedAyahs[ayah.ayahNumber] ?? false,
+                            onBookmarkToggle: () async {
+                              final bookmarkProvider =
+                                  context.read<BookmarkProvider>();
+                              await bookmarkProvider.toggleBookmark(
+                                ayah.surahNumber,
+                                ayah.ayahNumber,
+                              );
+                              setState(() {
+                                _bookmarkedAyahs[ayah.ayahNumber] =
+                                    !(_bookmarkedAyahs[ayah.ayahNumber] ?? false);
+                              });
+                            },
+                            onPlay: () {
+                              context.read<AudioProvider>().playAyah(
+                                    ayah.surahNumber,
+                                    ayah.ayahNumber,
+                                    totalAyahs: widget.surah.totalAyahs,
+                                  );
+                            },
+                          ),
                         );
                       },
                     ),

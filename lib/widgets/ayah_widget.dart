@@ -13,6 +13,7 @@ import 'quran_text_settings_sheet.dart';
 import '../utils/tajweed_parser.dart';
 import '../screens/translations_selector_screen.dart';
 import '../services/translation_service.dart';
+import '../utils/word_highlighter.dart';
 
 class AyahWidget extends StatelessWidget {
   final Ayah ayah;
@@ -38,6 +39,12 @@ class AyahWidget extends StatelessWidget {
           audio.currentSurah == ayah.surahNumber &&
           audio.currentAyah == ayah.ayahNumber,
     );
+
+    // CRITICAL: Watch position + duration for smooth word highlighting updates
+    // This causes AyahWidget to rebuild whenever audio position changes
+    if (isActive) {
+      context.watch<AudioProvider>();
+    }
 
     return Consumer<SettingsProvider>(
       builder: (context, settings, _) {
@@ -91,11 +98,12 @@ class AyahWidget extends StatelessWidget {
                                       ),
                                     ),
                                   )
-                                : Text(
-                                    _getArabicText(settings),
-                                    textDirection: TextDirection.rtl,
-                                    textAlign: TextAlign.right,
-                                    style: _getArabicStyle(settings, isDark),
+                                : _buildArabicTextWithWordHighlighting(
+                                    context: context,
+                                    arabicText: _getArabicText(settings),
+                                    ayah: ayah,
+                                    settings: settings,
+                                    isDark: isDark,
                                   ),
                           ),
                         ],
@@ -499,6 +507,91 @@ class AyahWidget extends StatelessWidget {
       height: 2.1,
       color: isDark ? Colors.white.withOpacity(0.93) : const Color(0xFF1A1A2E),
       letterSpacing: 0.6,
+    );
+  }
+
+  /// Build Arabic text with word-level highlighting for current playing word
+  Widget _buildArabicTextWithWordHighlighting({
+    required BuildContext context,
+    required String arabicText,
+    required Ayah ayah,
+    required SettingsProvider settings,
+    required bool isDark,
+  }) {
+    // Get audio provider to check if this ayah is playing and get current playback position
+    final audioProvider = context.watch<AudioProvider>();
+    
+    final isPlaying = audioProvider.currentSurah == ayah.surahNumber &&
+        audioProvider.currentAyah == ayah.ayahNumber;
+
+    // If not playing, show plain text
+    if (!isPlaying) {
+      return Text(
+        arabicText,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        style: _getArabicStyle(settings, isDark),
+      );
+    }
+
+    // Split text into words
+    final words = SimpleWordHighlighter.splitIntoWords(arabicText);
+    if (words.isEmpty) {
+      return Text(
+        arabicText,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        style: _getArabicStyle(settings, isDark),
+      );
+    }
+
+    // Get current word index based on playback progress
+    final currentWordIndex = SimpleWordHighlighter.getCurrentWordIndex(
+      audioProvider.position,
+      audioProvider.duration,
+      words.length,
+    );
+
+    final children = <InlineSpan>[];
+    final baseStyle = _getArabicStyle(settings, isDark);
+    final highlightColor = Theme.of(context).primaryColor;
+
+    for (int i = 0; i < words.length; i++) {
+      final word = words[i];
+      final isCurrentWord = isPlaying && i == currentWordIndex;
+
+      if (isCurrentWord) {
+        // Highlight current word with bold, highlight color, and background
+        children.add(
+          TextSpan(
+            text: word,
+            style: baseStyle.copyWith(
+              backgroundColor: highlightColor.withOpacity(0.3),
+              color: highlightColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      } else {
+        // Normal word style
+        children.add(
+          TextSpan(
+            text: word,
+            style: baseStyle,
+          ),
+        );
+      }
+
+      // Add space between words (except after last word)
+      if (i < words.length - 1) {
+        children.add(TextSpan(text: ' ', style: baseStyle));
+      }
+    }
+
+    return RichText(
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.right,
+      text: TextSpan(children: children),
     );
   }
 }
