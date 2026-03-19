@@ -252,6 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                         // Surahs Header
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
                               Icons.book_rounded,
@@ -259,13 +260,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               size: 24,
                             ),
                             const SizedBox(width: 10),
-                            Text(
-                              'Surahs',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Theme.of(context).primaryColor,
-                                letterSpacing: 0.3,
+                            Expanded(
+                              child: Text(
+                                'Surahs with Translation & Tafsir',
+                                maxLines: 2,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor,
+                                  letterSpacing: 0.2,
+                                  height: 1.15,
+                                ),
                               ),
                             ),
                           ],

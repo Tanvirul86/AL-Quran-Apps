@@ -15,6 +15,14 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
   late EnhancedReciterService _reciterService;
   String _selectedReciterId = '';
 
+  static const List<String> _supportedAyahReciters = [
+    'mishary_alafasy',
+    'abdul_basit_murattal',
+    'mahmoud_hussary',
+    'saad_alghamdi',
+    'abdurrahman_sudais',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -24,9 +32,18 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
 
   Future<void> _loadSavedReciter() async {
     final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('selected_reciter_id') ?? 'mishary_alafasy';
+    final normalized = _supportedAyahReciters.contains(saved)
+        ? saved
+        : 'mishary_alafasy';
+
+    if (normalized != saved) {
+      await prefs.setString('selected_reciter_id', normalized);
+    }
+
     if (mounted) {
       setState(() {
-        _selectedReciterId = prefs.getString('selected_reciter_id') ?? 'mishary_alafasy';
+        _selectedReciterId = normalized;
       });
     }
   }
@@ -45,15 +62,37 @@ class _ReciterSelectorScreenState extends State<ReciterSelectorScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final reciters = snapshot.data!;
+          final reciters = snapshot.data!
+              .where((r) => _supportedAyahReciters.contains(r.id))
+              .toList();
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: reciters.length,
-            itemBuilder: (context, index) {
-              final reciter = reciters[index];
-              return _buildReciterCard(reciter);
-            },
+          return Column(
+            children: [
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.blue.withOpacity(0.2)),
+                ),
+                child: const Text(
+                  'These reciters are verified for ayah-by-ayah playback in this screen.',
+                  style: TextStyle(fontSize: 12.5, color: Colors.blueGrey),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: reciters.length,
+                  itemBuilder: (context, index) {
+                    final reciter = reciters[index];
+                    return _buildReciterCard(reciter);
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

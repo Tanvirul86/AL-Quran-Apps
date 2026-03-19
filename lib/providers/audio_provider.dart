@@ -13,6 +13,14 @@ enum SleepTimerPreset { fifteenMin, thirtyMin, oneHour, endOfSurah }
 class AudioProvider with ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
   static bool _audioServiceInitialized = false;
+  static const String _defaultReciterId = 'mishary_alafasy';
+  static const Map<String, String> _reciterBases = <String, String>{
+    'mishary_alafasy': 'https://everyayah.com/data/Alafasy_128kbps/',
+    'abdul_basit_murattal': 'https://everyayah.com/data/Abdul_Basit_Murattal_128kbps/',
+    'mahmoud_hussary': 'https://everyayah.com/data/Husary_128kbps/',
+    'saad_alghamdi': 'https://everyayah.com/data/Ghamadi_40kbps/',
+    'abdurrahman_sudais': 'https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/',
+  };
 
   bool _isPlaying = false;
   bool _isLoading = false;
@@ -32,7 +40,7 @@ class AudioProvider with ChangeNotifier {
   Timer? _sleepTimer;
   DateTime? _sleepTimerEnd;
   bool _stopAtEndOfSurah = false;
-  String _selectedReciterId = 'mishary_alafasy';
+  String _selectedReciterId = _defaultReciterId;
 
   AudioPlayer get audioPlayer => _audioPlayer;
   bool get isPlaying => _isPlaying;
@@ -101,7 +109,7 @@ class AudioProvider with ChangeNotifier {
 
   Future<void> _loadSelectedReciter() async {
     final prefs = await SharedPreferences.getInstance();
-    final rawId = prefs.getString('selected_reciter_id') ?? 'mishary_alafasy';
+    final rawId = prefs.getString('selected_reciter_id') ?? _defaultReciterId;
 
     const legacy = {
       'Abdul_Basit_Murattal': 'abdul_basit_murattal',
@@ -109,22 +117,22 @@ class AudioProvider with ChangeNotifier {
       'Saad_Al_Ghamdi': 'saad_alghamdi',
     };
 
-    _selectedReciterId = legacy[rawId] ?? rawId;
+    final normalized = legacy[rawId] ?? rawId;
+    _selectedReciterId = _reciterBases.containsKey(normalized)
+        ? normalized
+        : _defaultReciterId;
+
+    // Keep persisted value in sync to avoid misleading selection labels.
+    if (_selectedReciterId != rawId) {
+      await prefs.setString('selected_reciter_id', _selectedReciterId);
+    }
   }
 
   String _getAudioUrlForCurrentReciter(int surahNumber, int ayahNumber) {
     final surah = surahNumber.toString().padLeft(3, '0');
     final ayah = ayahNumber.toString().padLeft(3, '0');
 
-    const reciterBases = <String, String>{
-      'mishary_alafasy': 'https://everyayah.com/data/Alafasy_128kbps/',
-      'abdul_basit_murattal': 'https://everyayah.com/data/Abdul_Basit_Murattal_128kbps/',
-      'mahmoud_hussary': 'https://everyayah.com/data/Husary_128kbps/',
-      'saad_alghamdi': 'https://everyayah.com/data/Ghamadi_40kbps/',
-      'abdurrahman_sudais': 'https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/',
-    };
-
-    final base = reciterBases[_selectedReciterId] ?? AppConstants.audioBaseUrl;
+    final base = _reciterBases[_selectedReciterId] ?? AppConstants.audioBaseUrl;
     return '$base$surah$ayah.mp3';
   }
 
