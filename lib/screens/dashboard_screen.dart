@@ -150,7 +150,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             children: [
                               _buildQuickActionButton(context, 'Prayer Times',
-                                  Icons.access_time_filled, Colors.orange, () {
+                                  Icons.schedule, Colors.orange, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                     context,
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               }),
 
                               _buildQuickActionButton(context, 'Daily Duas',
-                                  Icons.favorite, Colors.pink, () {
+                                  Icons.local_florist, Colors.pink, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                     context,
@@ -169,7 +169,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             const DuaCategoriesScreen()));
                               }),
                               _buildQuickActionButton(context, 'Jump to Juz',
-                                  Icons.menu_book, Colors.indigo, () {
+                                  Icons.bookmark_outline, Colors.indigo, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                     context,
@@ -178,12 +178,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             const JuzNavigationScreen()));
                               }),
                               _buildQuickActionButton(context, 'Inspiration',
-                                  Icons.auto_awesome, Colors.amber, () {
+                                  Icons.lightbulb_outline, Colors.amber, () {
                                 HapticFeedback.lightImpact();
                                 _showDailyInspirationDialog(context);
                               }),
                               _buildQuickActionButton(context, 'Al Quran',
-                                  Icons.text_fields_rounded, Colors.brown, () {
+                                  Icons.import_books, Colors.brown, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                   context,
@@ -195,7 +195,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 );
                               }),
                               _buildQuickActionButton(context, 'Tasbih',
-                                  Icons.radio_button_checked, Colors.cyan, () {
+                                  Icons.touch_app, Colors.cyan, () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                     context,
@@ -205,7 +205,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               _buildQuickActionButton(
                                   context,
                                   '40 Hadith',
-                                  Icons.menu_book_rounded,
+                                  Icons.library_books,
                                   const Color(0xFF6A1B9A), () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
@@ -215,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             const FortyHadithScreen()));
                               }),
                               _buildQuickActionButton(context, 'Biographies',
-                                  Icons.people, const Color(0xFF795548), () {
+                                  Icons.history_edu, const Color(0xFF795548), () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
                                     context,
@@ -226,7 +226,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               _buildQuickActionButton(
                                   context,
                                   'Islamic Months',
-                                  Icons.calendar_month,
+                                  Icons.calendar_today,
                                   const Color(0xFF00796B), () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
@@ -239,7 +239,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               _buildQuickActionButton(
                                   context,
                                   'Asma ul Husna',
-                                  Icons.auto_awesome,
+                                  Icons.star_outline,
                                   const Color(0xFF6A1B9A), () {
                                 HapticFeedback.lightImpact();
                                 Navigator.push(
