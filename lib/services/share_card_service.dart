@@ -19,10 +19,10 @@ class ShareCardService {
   }) async {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    final size = const Size(1080, 1920); // Instagram story size
+    const size = Size(1080, 1920); // Instagram story size
 
     // Background gradient
-    final gradient = LinearGradient(
+    const gradient = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
@@ -52,7 +52,7 @@ class ShareCardService {
     );
     canvas.drawParagraph(
       arabicParagraph,
-      Offset(80, 200),
+      const Offset(80, 200),
     );
 
     // Reference

@@ -35,7 +35,7 @@ class _DuaCategoriesScreenState extends State<DuaCategoriesScreen> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -81,7 +81,7 @@ class _DuaCategoriesScreenState extends State<DuaCategoriesScreen> {
         decoration: BoxDecoration(
           gradient: AppTheme.islamicGradient,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [AppTheme.elevatedShadow],
+          boxShadow: const [AppTheme.elevatedShadow],
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),

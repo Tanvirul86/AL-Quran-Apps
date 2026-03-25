@@ -8,7 +8,7 @@ class QuranProvider with ChangeNotifier {
   final QuranService _quranService = QuranService();
 
   List<Surah> _surahs = [];
-  Map<int, List<Ayah>> _ayahsBySurah = {};
+  final Map<int, List<Ayah>> _ayahsBySurah = {};
   bool _isLoading = false;
   String? _error;
 

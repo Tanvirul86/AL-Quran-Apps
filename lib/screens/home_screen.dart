@@ -6,7 +6,7 @@ import 'dashboard_screen.dart';
 import 'translations_selector_screen.dart';
 import 'bookmarks_screen.dart';
 import 'settings_screen.dart';
-import 'search_screen.dart';
+import '../features/ai_assistant/screens/ai_assistant_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // Tabs config
   static const _tabs = [
     _TabConfig(icon: Icons.dashboard_outlined, selectedIcon: Icons.dashboard_rounded, label: 'Home'),
-    _TabConfig(icon: Icons.search_outlined, selectedIcon: Icons.search_rounded, label: 'Search'),
+    _TabConfig(icon: Icons.auto_awesome_outlined, selectedIcon: Icons.auto_awesome, label: 'Ask AI'),
     _TabConfig(icon: Icons.translate_outlined, selectedIcon: Icons.translate_rounded, label: 'Translation'),
     _TabConfig(icon: Icons.bookmark_outline, selectedIcon: Icons.bookmark_rounded, label: 'Bookmarks'),
     _TabConfig(icon: Icons.settings_outlined, selectedIcon: Icons.settings_rounded, label: 'Settings'),
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<Widget> _buildScreens() {
     return [
       const DashboardScreen(),
-      const SearchScreen(),
+      const AIAssistantScreen(),
       TranslationsSelectorScreen(
         onApplyAndGoReading: () => setState(() => _currentIndex = 0),
       ),
@@ -82,14 +82,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           color: navBg,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.4 : 0.08),
+              color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
           ],
           border: Border(
             top: BorderSide(
-              color: primary.withOpacity(0.08),
+              color: primary.withValues(alpha: 0.08),
               width: 0.8,
             ),
           ),
@@ -110,10 +110,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     curve: Curves.easeOutCubic,
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
-                      color: selected ? primary.withOpacity(0.12) : Colors.transparent,
+                      color: selected ? primary.withValues(alpha: 0.12) : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
                       border: selected
-                          ? Border.all(color: primary.withOpacity(0.25), width: 0.8)
+                          ? Border.all(color: primary.withValues(alpha: 0.25), width: 0.8)
                           : null,
                     ),
                     child: Column(

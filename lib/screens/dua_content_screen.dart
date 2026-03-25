@@ -130,9 +130,9 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
           // Progress indicator
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.forestSurface,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ),
@@ -277,7 +277,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                   const Spacer(),
                   IconButton(
                     onPressed: () => _copyDua(dua),
-                    icon: Icon(Icons.copy, color: AppTheme.primaryGreen),
+                    icon: const Icon(Icons.copy, color: AppTheme.primaryGreen),
                     tooltip: 'Copy Dua',
                   ),
                 ],
@@ -289,7 +289,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
               if (_showEnglish) ...[
                 Text(
                   dua.titleEn,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppTheme.darkGreen,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -301,7 +301,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
               if (_showBengali) ...[
                 Text(
                   dua.titleBn,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppTheme.primaryGreen,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -326,7 +326,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                   child: Text(
                     dua.textAr,
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppTheme.darkGreen,
                       fontSize: 22,
                       height: 1.8,
@@ -349,7 +349,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                   ),
                   child: Text(
                     dua.transliteration!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppTheme.primaryGreen,
                       fontSize: 16,
                       fontStyle: FontStyle.italic,
@@ -362,7 +362,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
 
               // English translation
               if (_showEnglish) ...[
-                Text(
+                const Text(
                   'Translation:',
                   style: TextStyle(
                     color: AppTheme.darkGreen,
@@ -373,7 +373,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                 const SizedBox(height: 8),
                 Text(
                   dua.textEn,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppTheme.darkGreen,
                     fontSize: 16,
                     height: 1.6,
@@ -384,7 +384,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
 
               // Bengali translation
               if (_showBengali) ...[
-                Text(
+                const Text(
                   'বাংলা অর্থ:',
                   style: TextStyle(
                     color: AppTheme.darkGreen,
@@ -395,7 +395,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                 const SizedBox(height: 8),
                 Text(
                   dua.textBn,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppTheme.darkGreen,
                     fontSize: 16,
                     height: 1.6,
@@ -427,7 +427,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                         const SizedBox(width: 8),
                         Text(
                           '${dua.source}: ${dua.reference}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.darkGreen,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -448,7 +448,7 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                           Expanded(
                             child: Text(
                               'When: ${dua.occasion}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppTheme.primaryGreen,
                                 fontSize: 13,
                               ),
@@ -497,8 +497,8 @@ Reference: ${dua.source} - ${dua.reference}''';
     Clipboard.setData(ClipboardData(text: copyText));
     
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Dua copied to clipboard'),
+      const SnackBar(
+        content: Text('Dua copied to clipboard'),
         backgroundColor: AppTheme.forestPrimary,
         behavior: SnackBarBehavior.floating,
       ),

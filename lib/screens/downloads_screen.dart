@@ -356,7 +356,7 @@ class _ReciterDownloadCard extends StatelessWidget {
             title: Text(reciter.bio ?? 'Renowned Quranic reciter'),
             subtitle: Text('Country: ${reciter.country ?? "N/A"}'),
           ),
-          ButtonBar(
+          OverflowBar(
             children: [
               ElevatedButton.icon(
                 onPressed: () async {

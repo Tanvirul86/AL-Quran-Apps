@@ -60,9 +60,9 @@ class BiographyDetailScreen extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: AppTheme.islamicGradient,
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
@@ -303,7 +303,7 @@ class BiographyDetailScreen extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -324,15 +324,15 @@ class BiographyDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.menu_book,
                 color: AppTheme.accentGold,
                 size: 20,
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 'Sources & References',
                 style: TextStyle(
                   fontSize: 16,
@@ -371,7 +371,7 @@ class BiographyDetailScreen extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
           const SizedBox(height: 8),
           Text(
             'Note: Biographies compiled from authentic classical and contemporary Islamic sources.',

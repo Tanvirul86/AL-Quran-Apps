@@ -27,7 +27,7 @@ class _QiblaCompassScreenState extends State<QiblaCompassScreen>
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   
   // For smoothing the compass
-  List<double> _headingHistory = [];
+  final List<double> _headingHistory = [];
   static const int _smoothingFactor = 10;
   
   // Accelerometer values for tilt compensation
@@ -323,9 +323,9 @@ class _QiblaCompassScreenState extends State<QiblaCompassScreen>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: Colors.green, width: 2),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.check_circle, color: Colors.green, size: 28),
                               SizedBox(width: 12),
                               Text(

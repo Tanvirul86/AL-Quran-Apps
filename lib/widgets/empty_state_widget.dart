@@ -105,7 +105,7 @@ class EmptyStates {
   }
 
   static Widget noSearchResults(BuildContext context) {
-    return EmptyStateWidget(
+    return const EmptyStateWidget(
       icon: Icons.search_off,
       title: 'No Results Found',
       message: 'Try adjusting your search terms or filters.',
@@ -113,7 +113,7 @@ class EmptyStates {
   }
 
   static Widget noNotes(BuildContext context) {
-    return EmptyStateWidget(
+    return const EmptyStateWidget(
       icon: Icons.note_outlined,
       title: 'No Notes Yet',
       message: 'Add personal notes to ayahs to help with your understanding and memorization.',
@@ -131,7 +131,7 @@ class EmptyStates {
   }
 
   static Widget offline(BuildContext context) {
-    return EmptyStateWidget(
+    return const EmptyStateWidget(
       icon: Icons.wifi_off,
       title: 'No Internet Connection',
       message: 'Some features require an internet connection. Please check your connection and try again.',

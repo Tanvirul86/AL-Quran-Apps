@@ -277,7 +277,7 @@ class _AnalyticsDashboardScreenState extends State<AnalyticsDashboardScreen> {
                   sideTitles: SideTitles(showTitles: false),
                 ),
               ),
-              gridData: FlGridData(
+              gridData: const FlGridData(
                 show: true,
                 drawVerticalLine: false,
               ),

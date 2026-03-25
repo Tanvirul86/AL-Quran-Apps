@@ -136,7 +136,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -208,7 +208,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                       ),
                       child: Text(
                         '${_currentIndex + 1} of ${widget.category.contents.length}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppTheme.darkGreen,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -272,7 +272,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'Arabic (العربية)',
                       style: TextStyle(
                         fontSize: 14,
@@ -284,7 +284,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                     Text(
                       content.textAr,
                       textAlign: TextAlign.right,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontFamily: AppTheme.arabicFont,
                         color: AppTheme.darkGreen,
@@ -296,7 +296,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                       const SizedBox(height: 12),
                       Text(
                         content.transliteration!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
                           color: AppTheme.primaryGreen,
@@ -321,7 +321,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'English',
                       style: TextStyle(
                         fontSize: 14,
@@ -332,7 +332,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                     const SizedBox(height: 12),
                     Text(
                       content.textEn,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: AppTheme.darkGreen,
                         height: 1.6,
@@ -356,7 +356,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'Bengali (বাংলা)',
                       style: TextStyle(
                         fontSize: 14,
@@ -367,7 +367,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                     const SizedBox(height: 12),
                     Text(
                       content.textBn,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontFamily: AppTheme.banglaFont,
                         color: AppTheme.darkGreen,
@@ -395,7 +395,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
               children: [
                 Text(
                   content.reference,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppTheme.darkGreen,
@@ -491,7 +491,7 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
         decoration: BoxDecoration(
           gradient: AppTheme.islamicGradient,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: [AppTheme.softShadow],
+          boxShadow: const [AppTheme.softShadow],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
