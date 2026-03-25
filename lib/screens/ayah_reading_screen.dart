@@ -151,18 +151,13 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     
 
     
-    // Process ayahs to separate Bismillah
-    final processedAyahs = _processAyahsForBismillah(ayahs);
-    
-
-    
     setState(() {
       _ayahs = ayahs;
-      _processedAyahs = processedAyahs;
+      _processedAyahs = ayahs; // No longer need separate processing here
       _ayahItemKeys
         ..clear()
         ..addEntries(
-          processedAyahs.map(
+          ayahs.map(
             (a) => MapEntry(a.ayahNumber, GlobalKey()),
           ),
         );
@@ -284,149 +279,13 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
     });
   }
 
-  bool _isSurahWithStandaloneBismillah() {
-    // Standalone bismillah is shown for all surahs except Al-Fatiha (1) and At-Tawbah (9)
-    return widget.surah.number != 1 && widget.surah.number != 9;
-  }
-
   bool _shouldShowBismillah() {
-    if (!_isSurahWithStandaloneBismillah()) return false;
-    if (_processedAyahs.isEmpty) return true;
-
-    // If first ayah still contains leading bismillah in any script variant,
-    // don't render standalone bismillah to avoid duplication.
-    final first = _processedAyahs.first;
-    return !_hasLeadingBismillah(first);
-  }
-
-  List<Ayah> _processAyahsForBismillah(List<Ayah> ayahs) {
-    if (!_isSurahWithStandaloneBismillah() || ayahs.isEmpty) {
-      return ayahs;
-    }
-
-    // Process first ayah to remove Bismillah if it's merged
-    final processedAyahs = <Ayah>[];
-    for (int i = 0; i < ayahs.length; i++) {
-      final ayah = ayahs[i];
-      if (i == 0) {
-        // Remove Bismillah from the beginning of the first ayah.
-        String cleanArabic = _stripLeadingBismillah(ayah.arabicText.trim());
-        final cleanUthmani = _stripLeadingBismillahNullable(ayah.uthmaniText);
-        final cleanIndopak = _stripLeadingBismillahNullable(ayah.indopakText);
-        final cleanTajweed = _stripLeadingBismillahNullable(ayah.tajweedText);
-
-        // Only add ayah if there's content remaining after removing Bismillah
-        if (cleanArabic.isNotEmpty) {
-          final cleanAyah = Ayah(
-            surahNumber: ayah.surahNumber,
-            ayahNumber: ayah.ayahNumber,
-            globalAyahNumber: ayah.globalAyahNumber,
-            arabicText: cleanArabic,
-            uthmaniText: cleanUthmani,
-            indopakText: cleanIndopak,
-            tajweedText: cleanTajweed,
-            englishTranslation: ayah.englishTranslation,
-            banglaTranslation: ayah.banglaTranslation,
-            transliteration: ayah.transliteration,
-            translations: ayah.translations,
-          );
-          processedAyahs.add(cleanAyah);
-        }
-        // If cleanArabic is empty after removing Bismillah, skip this ayah entirely
-      } else {
-        processedAyahs.add(ayah);
-      }
-    }
+    // Standalone bismillah is shown for all surahs except Al-Fatiha (1) and At-Tawbah (9)
+    if (widget.surah.number == 1 || widget.surah.number == 9) return false;
     
-    return processedAyahs;
-  }
-
-  String _stripLeadingBismillah(String text) {
-    var clean = text.trim();
-
-    // Robust prefix strip for forms where exact diacritic matching fails.
-    final hasBism = clean.contains('بسم') || clean.contains('بِسْم');
-    final hasRahman = clean.contains('الرحمن') || clean.contains('ٱلرَّحۡمَ') || clean.contains('الرَّحْم');
-    final rahimMatch = RegExp(r'رح[يی]م').firstMatch(clean);
-    if (hasBism && hasRahman && rahimMatch != null) {
-      final bismIndex = clean.indexOf('بسم') >= 0 ? clean.indexOf('بسم') : clean.indexOf('بِسْم');
-      if (bismIndex >= 0 && bismIndex <= 20 && rahimMatch.start <= 90) {
-        final cut = rahimMatch.end;
-        final tail = clean.substring(cut).trim();
-        if (tail.isNotEmpty) {
-          return tail;
-        }
-      }
-    }
-
-    final endings = <String>[
-      'ٱلرَّحِيمِ',
-      'ٱلرَّحِیمِ',
-      'الرَّحِيمِ',
-      'الرَّحِیمِ',
-      'الرَّحِيمِ',
-      'الرَّحِیمِ',
-      'الرحيم',
-      'الرحیم',
-    ];
-
-    for (final endWord in endings) {
-      final idx = clean.indexOf(endWord);
-      if (idx != -1 && idx < 40) {
-        final cut = idx + endWord.length;
-        clean = clean.substring(cut).trim();
-        break;
-      }
-    }
-
-    return clean;
-  }
-
-  String? _stripLeadingBismillahNullable(String? text) {
-    if (text == null) return null;
-    final stripped = _stripLeadingBismillah(text.trim());
-    return stripped.isEmpty ? null : stripped;
-  }
-
-  bool _hasLeadingBismillah(Ayah ayah) {
-    final candidates = <String?>[
-      ayah.arabicText,
-      ayah.uthmaniText,
-      ayah.indopakText,
-      ayah.tajweedText,
-    ];
-
-    for (final raw in candidates) {
-      if (raw == null || raw.trim().isEmpty) continue;
-      final normalized = _normalizeArabicForMatch(raw);
-      if (normalized.length >= 6 && normalized.indexOf('بسم') <= 3) {
-        final hasRahman = normalized.contains('الرحمن') || normalized.contains('ٱلرحمن');
-        final hasRahim = normalized.contains('الرحيم') || normalized.contains('ٱلرحيم');
-        if (hasRahman && hasRahim) {
-          return true;
-        }
-      }
-      if (normalized.startsWith('بسماللهالرحمنالرحيم') ||
-          normalized.startsWith('بسمٱللهٱلرحمنٱلرحيم')) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  String _normalizeArabicForMatch(String input) {
-    // Remove common tajweed/html markers for matching only.
-    var out = input
-        .replaceAll(RegExp(r'<[^>]*>'), '')
-        .replaceAll(RegExp(r'\[[^\]]*\]'), '')
-        .replaceAll(RegExp(r'\{[^\}]*\}'), '');
-
-    // Remove Arabic diacritics and tatweel.
-    out = out
-        .replaceAll(RegExp(r'[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]'), '')
-        .replaceAll(RegExp(r'\s+'), '');
-
-    return out;
+    // The data is now pre-sanitized by QuranService.
+    // For all other surahs, we should always show the Bismillah header.
+    return true;
   }
 
   Widget _buildBismillahWidget() {
