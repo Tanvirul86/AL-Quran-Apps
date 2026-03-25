@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
 
 /// Enhanced Search Screen - Fuzzy search, topic search, root word search
 class EnhancedSearchScreen extends StatefulWidget {
@@ -35,35 +37,37 @@ class _EnhancedSearchScreenState extends State<EnhancedSearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Advanced Search'),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: const [
-            Tab(icon: Icon(Icons.text_fields), text: 'Text'),
-            Tab(icon: Icon(Icons.topic), text: 'Topic'),
-            Tab(icon: Icon(Icons.language), text: 'Root Word'),
-            Tab(icon: Icon(Icons.bookmark), text: 'Reference'),
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Advanced Search'),
+          bottom: TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            tabs: const [
+              Tab(icon: Icon(Icons.text_fields), text: 'Text'),
+              Tab(icon: Icon(Icons.topic), text: 'Topic'),
+              Tab(icon: Icon(Icons.language), text: 'Root Word'),
+              Tab(icon: Icon(Icons.bookmark), text: 'Reference'),
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            // Search Bar
+            _buildSearchBar(),
+
+            // Advanced Options
+            _buildAdvancedOptions(),
+
+            // Results
+            Expanded(
+              child: _isSearching
+                  ? const Center(child: CircularProgressIndicator())
+                  : _buildResults(settings),
+            ),
           ],
         ),
-      ),
-      body: Column(
-        children: [
-          // Search Bar
-          _buildSearchBar(),
-
-          // Advanced Options
-          _buildAdvancedOptions(),
-
-          // Results
-          Expanded(
-            child: _isSearching
-                ? const Center(child: CircularProgressIndicator())
-                : _buildResults(),
-          ),
-        ],
       ),
     );
   }
@@ -162,7 +166,7 @@ class _EnhancedSearchScreenState extends State<EnhancedSearchScreen>
     );
   }
 
-  Widget _buildResults() {
+  Widget _buildResults(SettingsProvider settings) {
     if (_searchResults.isEmpty) {
       return Center(
         child: Column(
@@ -193,12 +197,12 @@ class _EnhancedSearchScreenState extends State<EnhancedSearchScreen>
       itemCount: _searchResults.length,
       itemBuilder: (context, index) {
         final result = _searchResults[index];
-        return _buildResultCard(result);
+        return _buildResultCard(result, settings);
       },
     );
   }
 
-  Widget _buildResultCard(Map<String, dynamic> result) {
+  Widget _buildResultCard(Map<String, dynamic> result, SettingsProvider settings) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
@@ -242,9 +246,9 @@ class _EnhancedSearchScreenState extends State<EnhancedSearchScreen>
               if (result['arabicText'] != null)
                 Text(
                   result['arabicText'],
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
-                    fontFamily: 'Amiri',
+                    fontFamily: settings.arabicFontFamily,
                     height: 2,
                   ),
                   textAlign: TextAlign.right,

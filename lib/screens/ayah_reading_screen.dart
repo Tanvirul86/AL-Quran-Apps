@@ -324,7 +324,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: AppTheme.arabicFont,
+                  fontFamily: settings.arabicFontFamily,
                   fontSize: settings.arabicFontSize + 3,
                   height: 2.0,
                   color: hasDarkBackground
@@ -339,7 +339,7 @@ class _AyahReadingScreenState extends State<AyahReadingScreen> {
                   _bismillahBangla,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: AppTheme.banglaFont,
+                    fontFamily: settings.banglaFontFamily,
                     fontSize: settings.banglaFontSize - 1,
                     color: hasDarkBackground
                         ? Colors.white.withOpacity(0.74)
@@ -870,8 +870,8 @@ class _SurahHeaderBanner extends StatelessWidget {
               Text(
                 surah.arabicName,
                 textDirection: TextDirection.rtl,
-                style: const TextStyle(
-                  fontFamily: 'Scheherazade',
+                style: TextStyle(
+                  fontFamily: context.read<SettingsProvider>().arabicFontFamily,
                   fontSize: 28,
                   color: Colors.white,
                   height: 1.3,

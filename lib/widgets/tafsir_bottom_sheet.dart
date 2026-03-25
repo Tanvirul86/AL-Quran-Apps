@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/tafsir_source.dart';
 import '../services/tafsir_service.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 /// Bottom sheet widget for displaying Tafsir (commentary) for an ayah
 class TafsirBottomSheet extends StatefulWidget {
@@ -86,157 +88,162 @@ class _TafsirBottomSheetState extends State<TafsirBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.85,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      child: Column(
-        children: [
-          // Handle bar
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 12),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(2),
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Container(
+        height: MediaQuery.of(context).size.height * 0.85,
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          children: [
+            // Handle bar
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-          ),
-          
-          // Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.menu_book,
-                      color: Theme.of(context).primaryColor,
-                      size: 28,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Tafsir',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                
-                // Verse reference
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
+            
+            // Header
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Text(
-                          '${widget.surahNumber}:${widget.ayahNumber}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
+                      Icon(
+                        Icons.menu_book,
+                        color: Theme.of(context).primaryColor,
+                        size: 28,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          widget.arabicText.length > 50 
-                              ? '${widget.arabicText.substring(0, 50)}...' 
-                              : widget.arabicText,
-                          style: AppTheme.arabicTextStyle(fontSize: 14),
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          'Tafsir',
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-          
-          const SizedBox(height: 12),
-          
-          // Language selector
-          SizedBox(
-            height: 40,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: _languages.length,
-              itemBuilder: (context, index) {
-                final lang = _languages[index];
-                final isSelected = _selectedLanguage == lang['code'];
-                final hasContent = _tafsirsByLanguage[lang['code']]?.isNotEmpty == true;
-                
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(
-                      lang['native']!,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : (hasContent ? null : Colors.grey),
-                        fontSize: 13,
-                      ),
+                  const SizedBox(height: 8),
+                  
+                  // Verse reference
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    selected: isSelected,
-                    onSelected: hasContent ? (selected) {
-                      if (selected) {
-                        setState(() {
-                          _selectedLanguage = lang['code']!;
-                          _selectedSource = _tafsirsByLanguage[_selectedLanguage]?.first;
-                        });
-                        _loadTafsir();
-                      }
-                    } : null,
-                    backgroundColor: hasContent ? null : Colors.grey[200],
-                    selectedColor: Theme.of(context).primaryColor,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            '${widget.surahNumber}:${widget.ayahNumber}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            widget.arabicText.length > 50 
+                                ? '${widget.arabicText.substring(0, 50)}...' 
+                                : widget.arabicText,
+                            style: AppTheme.arabicTextStyle(
+                              fontSize: 14,
+                              fontFamily: settings.arabicFontFamily,
+                            ),
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
-          ),
-          
-          const SizedBox(height: 8),
-          
-          // Tafsir source selector
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _buildSourceSelector(),
-          ),
-          
-          const Divider(height: 24),
-          
-          // Content
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _buildTafsirContent(),
-          ),
-        ],
+            
+            const SizedBox(height: 12),
+            
+            // Language selector
+            SizedBox(
+              height: 40,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: _languages.length,
+                itemBuilder: (context, index) {
+                  final lang = _languages[index];
+                  final isSelected = _selectedLanguage == lang['code'];
+                  final hasContent = _tafsirsByLanguage[lang['code']]?.isNotEmpty == true;
+                  
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FilterChip(
+                      label: Text(
+                        lang['native']!,
+                        style: TextStyle(
+                          color: isSelected ? Colors.white : (hasContent ? null : Colors.grey),
+                          fontSize: 13,
+                        ),
+                      ),
+                      selected: isSelected,
+                      onSelected: hasContent ? (selected) {
+                        if (selected) {
+                          setState(() {
+                            _selectedLanguage = lang['code']!;
+                            _selectedSource = _tafsirsByLanguage[_selectedLanguage]?.first;
+                          });
+                          _loadTafsir();
+                        }
+                      } : null,
+                      backgroundColor: hasContent ? null : Colors.grey[200],
+                      selectedColor: Theme.of(context).primaryColor,
+                    ),
+                  );
+                },
+              ),
+            ),
+            
+            const SizedBox(height: 8),
+            
+            // Tafsir source selector
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _buildSourceSelector(),
+            ),
+            
+            const Divider(height: 24),
+            
+            // Content
+            Expanded(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _buildTafsirContent(settings),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -307,7 +314,7 @@ class _TafsirBottomSheetState extends State<TafsirBottomSheet> {
     );
   }
 
-  Widget _buildTafsirContent() {
+  Widget _buildTafsirContent(SettingsProvider settings) {
     if (_tafsirText == null || _tafsirText!.isEmpty) {
       return Center(
         child: Column(
@@ -396,30 +403,38 @@ class _TafsirBottomSheetState extends State<TafsirBottomSheet> {
             _tafsirText!,
             textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
             textAlign: isRtl ? TextAlign.right : TextAlign.left,
-            style: _getTextStyle(),
+            style: _getTextStyle(settings),
           ),
         ],
       ),
     );
   }
   
-  TextStyle _getTextStyle() {
+  TextStyle _getTextStyle(SettingsProvider settings) {
     switch (_selectedLanguage) {
       case 'ar':
-        return AppTheme.arabicTextStyle(fontSize: 18, height: 2.0);
+        return AppTheme.arabicTextStyle(
+          fontSize: 18, 
+          height: 2.0,
+          fontFamily: settings.arabicFontFamily,
+        );
       case 'bn':
-        return AppTheme.banglaTextStyle(fontSize: 16, height: 1.8);
+        return AppTheme.banglaTextStyle(
+          fontSize: 16, 
+          height: 1.8,
+          fontFamily: settings.banglaFontFamily,
+        );
       case 'ur':
-        return const TextStyle(
-          fontFamily: 'NotoNaskhArabic',
+        return TextStyle(
+          fontFamily: settings.arabicFontFamily,
           fontSize: 17,
           height: 2.0,
         );
       case 'ru':
         return const TextStyle(fontSize: 15, height: 1.7);
       case 'ku':
-        return const TextStyle(
-          fontFamily: 'NotoNaskhArabic',
+        return TextStyle(
+          fontFamily: settings.arabicFontFamily,
           fontSize: 17,
           height: 2.0,
         );

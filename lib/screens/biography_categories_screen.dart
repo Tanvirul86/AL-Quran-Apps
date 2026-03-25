@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/biography.dart';
 import '../data/biography_data.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 import 'biography_detail_screen.dart';
 
 class BiographyCategoriesScreen extends StatelessWidget {
@@ -186,9 +188,9 @@ class BiographyListScreen extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           person.arabicName,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
-                            fontFamily: AppTheme.arabicFont,
+                            fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                             color: AppTheme.accentGold,
                           ),
                           textDirection: TextDirection.rtl,

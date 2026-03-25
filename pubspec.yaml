@@ -116,13 +116,23 @@ flutter:
   
   # Fonts for Quranic text rendering
   fonts:
-    # Premium Quranic font (BEST for Quran - optimized diacritics)
+    # Premium Indo-Pak font (Hafizi style)
+    - family: PDMSSaleem
+      fonts:
+        - asset: assets/fonts/PDMS-Saleem-QuranFont.ttf
+
+    # Premium Uthmani Hafs font (standard Madani Mushaf)
+    - family: UthmanicHafs
+      fonts:
+        - asset: assets/fonts/UthmanicHafs-Regular.ttf
+
+    # Premium Quranic font (Best diacritics)
     - family: Scheherazade
       fonts:
         - asset: assets/fonts/ScheherazadeNew-Regular.ttf
         - asset: assets/fonts/ScheherazadeNew-Bold.ttf
           weight: 700
-    
+
     # Primary Arabic font (fallback)
     - family: Amiri
       fonts:

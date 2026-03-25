@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:provider/provider.dart';
 import '../models/biography.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 class BiographyDetailScreen extends StatelessWidget {
   final Biography biography;
@@ -25,7 +27,7 @@ class BiographyDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Header Section
-            _buildHeader(),
+            _buildHeader(context),
             
             // Content Sections
             _buildSection(
@@ -57,7 +59,8 @@ class BiographyDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
@@ -96,9 +99,9 @@ class BiographyDetailScreen extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             biography.arabicName,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
-              fontFamily: AppTheme.arabicFont,
+              fontFamily: settings.arabicFontFamily,
               color: AppTheme.accentGold,
               height: 1.8,
             ),

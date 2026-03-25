@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'muslim_pro_style_logo.dart';
 import '../screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -144,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen>
                       opacity: _logoFade.value,
                       child: Transform.scale(
                         scale: _logoScale.value,
-                        child: _buildLogo(context),
+                        child: const MuslimProStyleLogo(size: 140),
                       ),
                     ),
                   ),
@@ -176,45 +177,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Widget _buildLogo(BuildContext context) {
-    return Container(
-      width: 140,
-      height: 140,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: const RadialGradient(
-          colors: [Color(0xFF2ECC71), Color(0xFF1ABC9C), Color(0xFF16A085)],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF2ECC71).withOpacity(0.5),
-            blurRadius: 40,
-            spreadRadius: 5,
-          )
-        ],
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Outer ring
-          Container(
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white.withOpacity(0.3),
-                width: 1.5,
-              ),
-            ),
-          ),
-          // Custom 8-point star icon
-          CustomPaint(
-            size: const Size(70, 70),
-            painter: _StarPainter(Colors.white),
-          ),
-        ],
-      ),
-    );
+    return const MuslimProStyleLogo(size: 140);
   }
 
   Widget _buildTextSection() {

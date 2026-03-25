@@ -65,11 +65,11 @@ class _FortyHadithScreenState extends State<FortyHadithScreen> {
                   ),
                   child: Text(
                     'حديث ${_arabicNumber(hadith.number)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      fontFamily: AppTheme.arabicFont,
+                      fontFamily: settings.arabicFontFamily,
                     ),
                   ),
                 ),
@@ -85,10 +85,10 @@ class _FortyHadithScreenState extends State<FortyHadithScreen> {
             // Title in Arabic
             Text(
               hadith.titleArabic,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppTheme.arabicFont,
+                fontFamily: settings.arabicFontFamily,
                 height: 1.8,
               ),
               textAlign: TextAlign.right,
@@ -116,7 +116,7 @@ class _FortyHadithScreenState extends State<FortyHadithScreen> {
                 style: TextStyle(
                   fontSize: settings.banglaFontSize,
                   fontWeight: FontWeight.w600,
-                  fontFamily: AppTheme.banglaFont,
+                  fontFamily: settings.banglaFontFamily,
                   color: AppTheme.primaryGreen,
                 ),
               ),
@@ -140,7 +140,7 @@ class _FortyHadithScreenState extends State<FortyHadithScreen> {
                 hadith.textArabic,
                 style: TextStyle(
                   fontSize: settings.arabicFontSize,
-                  fontFamily: AppTheme.arabicFont,
+                  fontFamily: settings.arabicFontFamily,
                   height: 2.0,
                   letterSpacing: 0.5,
                 ),
@@ -181,7 +181,7 @@ class _FortyHadithScreenState extends State<FortyHadithScreen> {
                   hadith.textBangla,
                   style: TextStyle(
                     fontSize: settings.banglaFontSize,
-                    fontFamily: AppTheme.banglaFont,
+                    fontFamily: settings.banglaFontFamily,
                     height: 1.6,
                   ),
                 ),

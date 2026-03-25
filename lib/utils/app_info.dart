@@ -7,9 +7,9 @@ class AppInfo {
       'Uthmani Arabic text, English and Bangla translations, audio recitation, '
       'and offline support.';
   
-  static const String developerName = 'Your Name';
-  static const String supportEmail = 'support@example.com';
-  static const String website = 'https://example.com';
+  static const String developerName = 'Lt Tanvirul Islam';
+  static const String supportEmail = 'mdtanvirulislam45@gmail.com';
+  static const String website = '';
   
   // App features for about screen
   static const List<String> features = [

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/islamic_month_models.dart';
 import '../services/islamic_months_service.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 class IslamicMonthsScreen extends StatelessWidget {
   const IslamicMonthsScreen({super.key});
@@ -128,11 +130,11 @@ class IslamicMonthsScreen extends StatelessWidget {
                         children: [
                           Text(
                             month.nameAr,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.darkGreen,
-                              fontFamily: AppTheme.arabicFont,
+                              fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -241,11 +243,11 @@ class IslamicMonthsScreen extends StatelessWidget {
                           children: [
                             Text(
                               month.nameAr,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGreen,
-                                fontFamily: AppTheme.arabicFont,
+                                fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                                 height: 1.5,
                               ),
                             ),

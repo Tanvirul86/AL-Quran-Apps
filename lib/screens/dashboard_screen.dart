@@ -281,26 +281,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
 
-                // Surah List
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final surah = surahs[index];
-                      return _SurahListItem(
-                        surah: surah,
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AyahReadingScreen(surah: surah),
-                            ),
-                          );
-                          _loadLastRead(); // Refresh last read when returning
-                        },
-                      );
-                    },
-                    childCount: surahs.length,
+                Consumer<SettingsProvider>(
+                  builder: (context, settings, _) => SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final surah = surahs[index];
+                        return _SurahListItem(
+                          surah: surah,
+                          fontFamily: settings.arabicFontFamily,
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AyahReadingScreen(surah: surah),
+                              ),
+                            );
+                            _loadLastRead(); // Refresh last read when returning
+                          },
+                        );
+                      },
+                      childCount: surahs.length,
+                    ),
                   ),
                 ),
                 const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
@@ -417,17 +419,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Icon(icon, color: Colors.white, size: 20),
               ),
               const SizedBox(height: 7),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: hasSpace ? 2 : 1,
-                softWrap: hasSpace,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 10.5,
-                  height: 1.2,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  maxLines: hasSpace ? 2 : 1,
+                  softWrap: hasSpace,
+                  overflow: TextOverflow.visible,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 10.5,
+                    height: 1.2,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
                 ),
               ),
             ],
@@ -564,10 +569,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
 class _SurahListItem extends StatelessWidget {
   final Surah surah;
+  final String fontFamily;
   final VoidCallback onTap;
 
   const _SurahListItem({
     required this.surah,
+    required this.fontFamily,
     required this.onTap,
   });
 
@@ -686,6 +693,7 @@ class _SurahListItem extends StatelessWidget {
                     fontSize: 22,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
+                    fontFamily: fontFamily,
                   ),
                 ),
               ],

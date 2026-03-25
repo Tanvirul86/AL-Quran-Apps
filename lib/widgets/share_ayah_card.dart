@@ -7,6 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../models/ayah.dart';
 import '../theme/app_theme.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
 
 /// Shows the share ayah bottom sheet and triggers image share
 Future<void> shareAyahAsCard(BuildContext context, Ayah ayah) async {
@@ -192,96 +194,100 @@ class _AyahShareCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg1 = theme['bg1'] as Color;
-    final bg2 = theme['bg2'] as Color;
-    final textColor = theme['text'] as Color;
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) {
+        final bg1 = theme['bg1'] as Color;
+        final bg2 = theme['bg2'] as Color;
+        final textColor = theme['text'] as Color;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [bg1, bg2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Arabic calligraphy style header
-          Text(
-            'القرآن الكريم',
-            style: TextStyle(
-              color: textColor.withOpacity(0.5),
-              fontSize: 13,
-              letterSpacing: 2,
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [bg1, bg2],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
+            borderRadius: BorderRadius.circular(20),
           ),
-          const SizedBox(height: 16),
-          // Arabic ayah
-          Text(
-            ayah.arabicText,
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: AppTheme.arabicFont,
-              fontSize: 26,
-              color: textColor,
-              height: 2.2,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 16),
-          // Divider
-          Container(
-            height: 1,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            color: textColor.withOpacity(0.2),
-          ),
-          const SizedBox(height: 14),
-          // Translation
-          if (ayah.banglaTranslation.isNotEmpty)
-            Text(
-              ayah.banglaTranslation,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                color: textColor.withOpacity(0.85),
-                height: 1.7,
-                fontFamily: AppTheme.banglaFont,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Arabic calligraphy style header
+              Text(
+                'القرآن الكريم',
+                style: TextStyle(
+                  color: textColor.withOpacity(0.5),
+                  fontSize: 13,
+                  letterSpacing: 2,
+                ),
               ),
-            ),
-          const SizedBox(height: 14),
-          // Surah reference
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-            decoration: BoxDecoration(
-              color: textColor.withOpacity(0.12),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              'Surah ${ayah.surahNumber} : Ayah ${ayah.ayahNumber}',
-              style: TextStyle(
-                fontSize: 11,
-                color: textColor.withOpacity(0.7),
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
+              const SizedBox(height: 16),
+              // Arabic ayah
+              Text(
+                ayah.arabicText,
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: settings.arabicFontFamily,
+                  fontSize: 26,
+                  color: textColor,
+                  height: 2.2,
+                  letterSpacing: 0.5,
+                ),
               ),
-            ),
+              const SizedBox(height: 16),
+              // Divider
+              Container(
+                height: 1,
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                color: textColor.withOpacity(0.2),
+              ),
+              const SizedBox(height: 14),
+              // Translation
+              if (ayah.banglaTranslation.isNotEmpty)
+                Text(
+                  ayah.banglaTranslation,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: textColor.withOpacity(0.85),
+                    height: 1.7,
+                    fontFamily: settings.banglaFontFamily,
+                  ),
+                ),
+              const SizedBox(height: 14),
+              // Surah reference
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                decoration: BoxDecoration(
+                  color: textColor.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  'Surah ${ayah.surahNumber} : Ayah ${ayah.ayahNumber}',
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: textColor.withOpacity(0.7),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Al-Quran Pro',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: textColor.withOpacity(0.4),
+                  letterSpacing: 2,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Al-Quran Pro',
-            style: TextStyle(
-              fontSize: 10,
-              color: textColor.withOpacity(0.4),
-              letterSpacing: 2,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

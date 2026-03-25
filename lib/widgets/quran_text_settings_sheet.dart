@@ -145,9 +145,7 @@ class QuranTextSettingsSheet extends StatelessWidget {
                 child: Text(
                   'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
                   style: TextStyle(
-                    fontFamily: settings.scriptType == QuranScriptType.indopak
-                        ? AppTheme.arabicFontAlt
-                        : AppTheme.arabicFont,
+                    fontFamily: settings.arabicFontFamily,
                     fontSize: 24,
                     color: Color(0xFF111111),
                   ),

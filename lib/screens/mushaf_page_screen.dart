@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/mushaf_page.dart';
 import '../services/mushaf_service.dart';
+import '../providers/settings_provider.dart';
 
 /// Mushaf Mode — 604-page Madani Mushaf view (Muslim Pro style)
 class MushafPageScreen extends StatefulWidget {
@@ -52,23 +54,25 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _pageBg,
-      appBar: _buildAppBar(),
-      body: PageView.builder(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _currentPage = index + 1);
-          _loadPage(index + 1);
-        },
-        itemCount: 604,
-        itemBuilder: (_, __) => _buildMushafPage(),
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Scaffold(
+        backgroundColor: _pageBg,
+        appBar: _buildAppBar(settings),
+        body: PageView.builder(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _currentPage = index + 1);
+            _loadPage(index + 1);
+          },
+          itemCount: 604,
+          itemBuilder: (_, __) => _buildMushafPage(settings),
+        ),
+        bottomNavigationBar: _buildBottomBar(settings),
       ),
-      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(SettingsProvider settings) {
     return AppBar(
       backgroundColor: _pageBg,
       foregroundColor: _brownAccent,
@@ -84,8 +88,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
           ? null
           : Text(
               _getSurahArabicName(_currentPageData!.startSurahNumber),
-              style: const TextStyle(
-                fontFamily: 'Scheherazade',
+              style: TextStyle(
+                fontFamily: settings.arabicFontFamily,
                 fontSize: 20,
                 color: _brownAccent,
                 fontWeight: FontWeight.bold,
@@ -112,7 +116,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
 
   // ── Page layout (Muslim Pro style) ────────────────────────────────────────
 
-  Widget _buildMushafPage() {
+  Widget _buildMushafPage(SettingsProvider settings) {
     if (_loading || _currentPageData == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -122,7 +126,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
       padding: const EdgeInsets.fromLTRB(10, 6, 10, 2),
       child: Column(
         children: [
-          _buildPageTopBar(),
+          _buildPageTopBar(settings),
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 6),
@@ -141,11 +145,11 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (_isStartOfSurah()) _buildSurahBanner(),
+                    if (_isStartOfSurah()) _buildSurahBanner(settings),
                     if (_isStartOfSurah() && _mushafService.pageHasBismillah(_currentPage))
-                      _buildBismillah(),
-                    Expanded(child: _buildTextLines()),
-                    _buildPageNumber(),
+                      _buildBismillah(settings),
+                    Expanded(child: _buildTextLines(settings)),
+                    _buildPageNumber(settings),
                   ],
                 ),
               ),
@@ -157,7 +161,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
   }
 
   /// Top bar:  الجزء N (left)  ──gold line──  سورة Name (right)
-  Widget _buildPageTopBar() {
+  Widget _buildPageTopBar(SettingsProvider settings) {
     final juz = _mushafService.getJuzForPage(_currentPage);
     final surahName = _getSurahArabicName(_currentPageData!.startSurahNumber);
     return Column(
@@ -168,8 +172,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
             children: [
               Text(
                 'الجزء $juz',
-                style: const TextStyle(
-                  fontFamily: 'Scheherazade',
+                style: TextStyle(
+                  fontFamily: settings.arabicFontFamily,
                   fontSize: 14,
                   color: _brownAccent,
                   fontWeight: FontWeight.w600,
@@ -178,8 +182,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
               const Spacer(),
               Text(
                 'سورة $surahName',
-                style: const TextStyle(
-                  fontFamily: 'Scheherazade',
+                style: TextStyle(
+                  fontFamily: settings.arabicFontFamily,
                   fontSize: 14,
                   color: _brownAccent,
                   fontWeight: FontWeight.w600,
@@ -214,7 +218,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
   bool _isStartOfSurah() => _currentPageData!.startAyahNumber == 1;
 
   /// Ornamental surah name banner (Muslim Pro style: gold-bordered strip)
-  Widget _buildSurahBanner() {
+  Widget _buildSurahBanner(SettingsProvider settings) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 6, 0, 4),
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
@@ -231,8 +235,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
               'سُورَةُ ${_getSurahArabicName(_currentPageData!.startSurahNumber)}',
               textAlign: TextAlign.center,
               textDirection: TextDirection.rtl,
-              style: const TextStyle(
-                fontFamily: 'Scheherazade',
+              style: TextStyle(
+                fontFamily: settings.arabicFontFamily,
                 fontSize: 20,
                 color: _brownAccent,
                 fontWeight: FontWeight.bold,
@@ -245,15 +249,15 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
     );
   }
 
-  Widget _buildBismillah() {
+  Widget _buildBismillah(SettingsProvider settings) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Text(
         'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ',
         textAlign: TextAlign.center,
         textDirection: TextDirection.rtl,
-        style: const TextStyle(
-          fontFamily: 'Scheherazade',
+        style: TextStyle(
+          fontFamily: settings.arabicFontFamily,
           fontSize: 24,
           height: 1.6,
           color: _textColor,
@@ -263,7 +267,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
   }
 
   /// Lines spread evenly to fill the page — like a real Mushaf
-  Widget _buildTextLines() {
+  Widget _buildTextLines(SettingsProvider settings) {
     final lines = _currentPageData!.lines;
     if (lines.isEmpty) {
       return const Center(
@@ -291,8 +295,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
               line.arabicText,
               textAlign: TextAlign.justify,
               textDirection: TextDirection.rtl,
-              style: const TextStyle(
-                fontFamily: 'Scheherazade',
+              style: TextStyle(
+                fontFamily: settings.arabicFontFamily,
                 fontSize: 21,
                 height: 1.45,
                 color: _textColor,
@@ -306,7 +310,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
   }
 
   /// ─────── 123 ─────── (page number between gold lines)
-  Widget _buildPageNumber() {
+  Widget _buildPageNumber(SettingsProvider settings) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -325,8 +329,8 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Text(
               '$_currentPage',
-              style: const TextStyle(
-                fontFamily: 'Scheherazade',
+              style: TextStyle(
+                fontFamily: settings.arabicFontFamily,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: _brownAccent,
@@ -349,7 +353,7 @@ class _MushafPageScreenState extends State<MushafPageScreen> {
   }
 
   /// Minimal bottom bar: ›  page / 604  ‹  (tap page counter to jump)
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(SettingsProvider settings) {
     return Container(
       decoration: const BoxDecoration(
         color: _pageBg,

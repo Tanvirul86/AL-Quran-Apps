@@ -158,7 +158,7 @@ class AyahWidget extends StatelessWidget {
               label: _languageLabel(lang),
               text: localText,
               fontSize: lang == 'bn' ? settings.banglaFontSize : settings.englishFontSize,
-              fontFamily: lang == 'bn' ? AppTheme.banglaFont : AppTheme.englishFont,
+              fontFamily: lang == 'bn' ? settings.banglaFontFamily : AppTheme.englishFont,
               accentColor: primary,
               isDark: isDark,
               italic: lang == 'en',
@@ -192,7 +192,7 @@ class AyahWidget extends StatelessWidget {
           label: 'বাংলা',
           text: ayah.banglaTranslation,
           fontSize: settings.banglaFontSize,
-          fontFamily: AppTheme.banglaFont,
+          fontFamily: settings.banglaFontFamily,
           accentColor: primary,
           isDark: isDark,
         ),
@@ -294,7 +294,7 @@ class AyahWidget extends StatelessWidget {
                             : ayah.arabicText,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
-                          fontFamily: AppTheme.arabicFont,
+                          fontFamily: context.read<SettingsProvider>().arabicFontFamily,
                           fontSize: 16,
                           color: primary,
                         ),
@@ -504,9 +504,7 @@ class AyahWidget extends StatelessWidget {
   }
 
   TextStyle _getArabicStyle(SettingsProvider settings, bool isDark) {
-    final scriptFont = settings.scriptType == QuranScriptType.indopak
-        ? AppTheme.arabicFontAlt
-        : AppTheme.arabicFont;
+    final scriptFont = settings.arabicFontFamily;
 
     return TextStyle(
       fontFamily: scriptFont,

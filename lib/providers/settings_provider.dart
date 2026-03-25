@@ -25,6 +25,9 @@ class SettingsProvider with ChangeNotifier {
   Color _customSeedColor = const Color(0xFF009688);
   double _glassmorphismIntensity = 1.0; // 0.0 (Off) to 1.0 (Full)
   
+  String _arabicFontFamily = AppConstants.defaultArabicFont;
+  String _banglaFontFamily = AppConstants.defaultBanglaFont;
+  
   QuranScriptType _scriptType = QuranScriptType.uthmani;
   bool _isTajweedEnabled = false;
   
@@ -45,6 +48,8 @@ class SettingsProvider with ChangeNotifier {
   bool get hapticFeedbackEnabled => _hapticFeedbackEnabled;
   Color get customSeedColor => _customSeedColor;
   double get glassmorphismIntensity => _glassmorphismIntensity;
+  String get arabicFontFamily => _arabicFontFamily;
+  String get banglaFontFamily => _banglaFontFamily;
   QuranScriptType get scriptType => _scriptType;
   bool get isTajweedEnabled => _isTajweedEnabled;
   List<Map<String, String>> get selectedTranslations => List.unmodifiable(_selectedTranslations);
@@ -108,6 +113,9 @@ class SettingsProvider with ChangeNotifier {
     
     _scriptType = QuranScriptType.values[prefs.getInt('quran_script_type') ?? 0];
     _isTajweedEnabled = prefs.getBool('is_tajweed_enabled') ?? false;
+
+    _arabicFontFamily = prefs.getString(AppConstants.keyArabicFontFamily) ?? AppConstants.defaultArabicFont;
+    _banglaFontFamily = prefs.getString(AppConstants.keyBanglaFontFamily) ?? AppConstants.defaultBanglaFont;
 
     notifyListeners();
   }
@@ -215,6 +223,29 @@ class SettingsProvider with ChangeNotifier {
     _scriptType = type;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('quran_script_type', type.index);
+    notifyListeners();
+  }
+
+  Future<void> setArabicFontFamily(String family) async {
+    _arabicFontFamily = family;
+    
+    // Automatically switch script type based on font selection for premium experience
+    if (family.toLowerCase().contains('saleem') || family.toLowerCase().contains('indopak')) {
+      _scriptType = QuranScriptType.indopak;
+    } else if (family.toLowerCase().contains('taha') || family.toLowerCase().contains('uthman') || family.toLowerCase().contains('scheherazade')) {
+      _scriptType = QuranScriptType.uthmani;
+    }
+    
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppConstants.keyArabicFontFamily, family);
+    await prefs.setInt('quran_script_type', _scriptType.index);
+    notifyListeners();
+  }
+
+  Future<void> setBanglaFontFamily(String family) async {
+    _banglaFontFamily = family;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppConstants.keyBanglaFontFamily, family);
     notifyListeners();
   }
 

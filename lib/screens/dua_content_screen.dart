@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:provider/provider.dart';
 import '../models/dua_models.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 class DuaContentScreen extends StatefulWidget {
   final DuaCategory category;
@@ -326,12 +328,12 @@ class _DuaContentScreenState extends State<DuaContentScreen> {
                   child: Text(
                     dua.textAr,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.darkGreen,
                       fontSize: 22,
                       height: 1.8,
                       letterSpacing: 0.5,
-                      fontFamily: AppTheme.arabicFont,
+                      fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                     ),
                   ),
                 ),

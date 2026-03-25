@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/word_meaning.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 /// Bottom sheet widget for displaying word-by-word meanings
 class WordMeaningBottomSheet extends StatelessWidget {
@@ -39,129 +41,137 @@ class WordMeaningBottomSheet extends StatelessWidget {
             position: position,
           );
 
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Handle bar
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          
-          // Arabic word - large and centered
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).primaryColor.withOpacity(0.1),
-                  Theme.of(context).primaryColor.withOpacity(0.05),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Theme.of(context).primaryColor.withOpacity(0.3),
-                width: 2,
-              ),
-            ),
-            child: Center(
-              child: Text(
-                wordMeaning.arabicWord,
-                style: AppTheme.arabicTextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Handle bar
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
               ),
             ),
-          ),
-          
-          const SizedBox(height: 20),
-          
-          // Transliteration
-          if (wordMeaning.transliteration.isNotEmpty) ...[
-            _buildInfoCard(
-              context,
-              icon: Icons.record_voice_over,
-              title: 'Pronunciation',
-              content: wordMeaning.transliteration,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: 12),
-          ],
-          
-          // English meaning
-          _buildInfoCard(
-            context,
-            icon: Icons.translate,
-            title: 'English',
-            content: wordMeaning.englishMeaning,
-            color: Colors.green,
-          ),
-          
-          const SizedBox(height: 12),
-          
-          // Bangla meaning
-          _buildInfoCard(
-            context,
-            icon: Icons.translate,
-            title: 'বাংলা',
-            content: wordMeaning.banglaMeaning,
-            color: Colors.orange,
-            isBangla: true,
-          ),
-          
-          // Root word
-          if (wordMeaning.rootWord.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            _buildInfoCard(
-              context,
-              icon: Icons.category,
-              title: 'Root Word',
-              content: wordMeaning.rootWord,
-              color: Colors.purple,
-              isArabic: true,
-            ),
-          ],
-          
-          const SizedBox(height: 20),
-          
-          // Close button
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+            
+            // Arabic word - large and centered
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).primaryColor.withOpacity(0.1),
+                    Theme.of(context).primaryColor.withOpacity(0.05),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  width: 2,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  wordMeaning.arabicWord,
+                  style: AppTheme.arabicTextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: settings.arabicFontFamily,
+                  ),
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                ),
               ),
             ),
-            child: const Text('Close'),
-          ),
-        ],
+            
+            const SizedBox(height: 20),
+            
+            // Transliteration
+            if (wordMeaning.transliteration.isNotEmpty) ...[
+              _buildInfoCard(
+                context,
+                settings,
+                icon: Icons.record_voice_over,
+                title: 'Pronunciation',
+                content: wordMeaning.transliteration,
+                color: Colors.blue,
+              ),
+              const SizedBox(height: 12),
+            ],
+            
+            // English meaning
+            _buildInfoCard(
+              context,
+              settings,
+              icon: Icons.translate,
+              title: 'English',
+              content: wordMeaning.englishMeaning,
+              color: Colors.green,
+            ),
+            
+            const SizedBox(height: 12),
+            
+            // Bangla meaning
+            _buildInfoCard(
+              context,
+              settings,
+              icon: Icons.translate,
+              title: 'বাংলা',
+              content: wordMeaning.banglaMeaning,
+              color: Colors.orange,
+              isBangla: true,
+            ),
+            
+            // Root word
+            if (wordMeaning.rootWord.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              _buildInfoCard(
+                context,
+                settings,
+                icon: Icons.category,
+                title: 'Root Word',
+                content: wordMeaning.rootWord,
+                color: Colors.purple,
+                isArabic: true,
+              ),
+            ],
+            
+            const SizedBox(height: 20),
+            
+            // Close button
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildInfoCard(
-    BuildContext context, {
+    BuildContext context,
+    SettingsProvider settings, {
     required IconData icon,
     required String title,
     required String content,
@@ -202,11 +212,13 @@ class WordMeaningBottomSheet extends StatelessWidget {
                       ? AppTheme.arabicTextStyle(
                           fontSize: 18,
                           color: Theme.of(context).textTheme.bodyLarge?.color,
+                          fontFamily: settings.arabicFontFamily,
                         )
                       : isBangla
                           ? AppTheme.banglaTextStyle(
                               fontSize: 16,
                               color: Theme.of(context).textTheme.bodyMedium?.color,
+                              fontFamily: settings.banglaFontFamily,
                             )
                           : AppTheme.englishTextStyle(
                               fontSize: 16,

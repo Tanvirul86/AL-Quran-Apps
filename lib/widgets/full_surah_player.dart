@@ -3,6 +3,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/reciter.dart';
 import '../services/enhanced_reciter_service.dart';
+import '../providers/settings_provider.dart';
+import 'package:provider/provider.dart';
 
 /// Full Surah Player with World-Known Qaris
 class FullSurahPlayer extends StatefulWidget {
@@ -192,380 +194,382 @@ class _FullSurahPlayerState extends State<FullSurahPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Handle bar
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 12),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(2),
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
             ),
-          ),
-          
-          // Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.headphones,
-                  color: Theme.of(context).primaryColor,
-                  size: 28,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Listen Full Surah',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        widget.surahName,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    _audioPlayer.stop();
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Handle bar
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-          ),
-          
-          const Divider(height: 24),
-          
-          // Reciter selection
-          if (_isLoading)
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: CircularProgressIndicator(),
-            )
-          else ...[
+            
+            // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    'Select Qari',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
+                  Icon(
+                    Icons.headphones,
+                    color: Theme.of(context).primaryColor,
+                    size: 28,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Listen Full Surah',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          widget.surahName,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<Reciter>(
-                        value: _selectedReciter,
-                        isExpanded: true,
-                        hint: const Text('Choose a reciter'),
-                        items: _reciters.map((reciter) {
-                          return DropdownMenuItem<Reciter>(
-                            value: reciter,
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 16,
-                                  backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                                  child: Text(
-                                    reciter.name[0],
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        reciter.name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        '${reciter.style} • ${reciter.country ?? ""}',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (reciter) async {
-                          final wasPlaying = _isPlaying;
-                          
-                          // Stop current audio
-                          await _audioPlayer.stop();
-                          
-                          if (mounted) {
-                            setState(() {
-                              _selectedReciter = reciter;
-                              _position = Duration.zero;
-                              _duration = Duration.zero;
-                              _error = null;
-                            });
-                          }
-                          
-                          // If was playing, start playing with new reciter
-                          if (wasPlaying && mounted) {
-                            await _playFullSurah();
-                          }
-                        },
-                      ),
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      _audioPlayer.stop();
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),
             ),
             
-            const SizedBox(height: 16),
+            const Divider(height: 24),
             
-            // Selected reciter info
-            if (_selectedReciter != null)
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor.withOpacity(0.2),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                      child: Text(
-                        _selectedReciter!.nameArabic.isNotEmpty 
-                            ? _selectedReciter!.nameArabic[0] 
-                            : _selectedReciter!.name[0],
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _selectedReciter!.nameArabic,
-                            style: const TextStyle(
-                              fontFamily: 'Amiri',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textDirection: TextDirection.rtl,
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            _selectedReciter!.bio ?? '',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            
-            const SizedBox(height: 20),
-            
-            // Progress bar
-            if (_duration != Duration.zero)
+            // Reciter selection
+            if (_isLoading)
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: CircularProgressIndicator(),
+              )
+            else ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        trackHeight: 4,
-                        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
-                      ),
-                      child: Slider(
-                        value: _position.inSeconds.toDouble().clamp(
-                          0.0,
-                          _duration.inSeconds > 0 ? _duration.inSeconds.toDouble() : 1.0,
-                        ),
-                        min: 0,
-                        max: _duration.inSeconds > 0 ? _duration.inSeconds.toDouble() : 1.0,
-                        activeColor: Theme.of(context).primaryColor,
-                        inactiveColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                        onChanged: (value) {
-                          _seekTo(Duration(seconds: value.toInt()));
-                        },
+                    Text(
+                      'Select Qari',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            _formatDuration(_position),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          Text(
-                            _formatDuration(_duration),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Reciter>(
+                          value: _selectedReciter,
+                          isExpanded: true,
+                          hint: const Text('Choose a reciter'),
+                          items: _reciters.map((reciter) {
+                            return DropdownMenuItem<Reciter>(
+                              value: reciter,
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                                    child: Text(
+                                      reciter.name[0],
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          reciter.name,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          '${reciter.style} • ${reciter.country ?? ""}',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (reciter) async {
+                            final wasPlaying = _isPlaying;
+                            
+                            // Stop current audio
+                            await _audioPlayer.stop();
+                            
+                            if (mounted) {
+                              setState(() {
+                                _selectedReciter = reciter;
+                                _position = Duration.zero;
+                                _duration = Duration.zero;
+                                _error = null;
+                              });
+                            }
+                            
+                            // If was playing, start playing with new reciter
+                            if (wasPlaying && mounted) {
+                              await _playFullSurah();
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            
-            // Error message
-            if (_error != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
+              
+              const SizedBox(height: 16),
+              
+              // Selected reciter info
+              if (_selectedReciter != null)
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).primaryColor.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.error_outline, color: Colors.red, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
                         child: Text(
-                          _error!,
-                          style: const TextStyle(color: Colors.red, fontSize: 13),
+                          _selectedReciter!.nameArabic.isNotEmpty 
+                              ? _selectedReciter!.nameArabic[0] 
+                              : _selectedReciter!.name[0],
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _selectedReciter!.nameArabic,
+                              style: TextStyle(
+                                fontFamily: settings.arabicFontFamily,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              _selectedReciter!.bio ?? '',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            
-            const SizedBox(height: 16),
-            
-            // Playback controls
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Rewind 10s
-                IconButton(
-                  icon: const Icon(Icons.replay_10),
-                  iconSize: 32,
-                  onPressed: () {
-                    final newPosition = _position - const Duration(seconds: 10);
-                    _seekTo(newPosition < Duration.zero ? Duration.zero : newPosition);
-                  },
-                ),
-                
-                const SizedBox(width: 16),
-                
-                // Play/Pause button
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).primaryColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor.withOpacity(0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
+              
+              const SizedBox(height: 20),
+              
+              // Progress bar
+              if (_duration != Duration.zero)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackHeight: 4,
+                          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+                        ),
+                        child: Slider(
+                          value: _position.inSeconds.toDouble().clamp(
+                            0.0,
+                            _duration.inSeconds > 0 ? _duration.inSeconds.toDouble() : 1.0,
+                          ),
+                          min: 0,
+                          max: _duration.inSeconds > 0 ? _duration.inSeconds.toDouble() : 1.0,
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                          onChanged: (value) {
+                            _seekTo(Duration(seconds: value.toInt()));
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _formatDuration(_position),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            Text(
+                              _formatDuration(_duration),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  child: IconButton(
-                    icon: _isBuffering
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          )
-                        : Icon(
-                            _isPlaying ? Icons.pause : Icons.play_arrow,
-                            color: Colors.white,
+                ),
+              
+              // Error message
+              if (_error != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline, color: Colors.red, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: const TextStyle(color: Colors.red, fontSize: 13),
                           ),
-                    iconSize: 36,
-                    onPressed: _isBuffering ? null : _togglePlayPause,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                
-                const SizedBox(width: 16),
-                
-                // Forward 10s
-                IconButton(
-                  icon: const Icon(Icons.forward_10),
-                  iconSize: 32,
-                  onPressed: () {
-                    final newPosition = _position + const Duration(seconds: 10);
-                    _seekTo(newPosition > _duration ? _duration : newPosition);
-                  },
-                ),
-              ],
-            ),
-            
-            const SizedBox(height: 24),
+              
+              const SizedBox(height: 16),
+              
+              // Playback controls
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Rewind 10s
+                  IconButton(
+                    icon: const Icon(Icons.replay_10),
+                    iconSize: 32,
+                    onPressed: () {
+                      final newPosition = _position - const Duration(seconds: 10);
+                      _seekTo(newPosition < Duration.zero ? Duration.zero : newPosition);
+                    },
+                  ),
+                  
+                  const SizedBox(width: 16),
+                  
+                  // Play/Pause button
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).primaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).primaryColor.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: _isBuffering
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            )
+                          : Icon(
+                              _isPlaying ? Icons.pause : Icons.play_arrow,
+                              color: Colors.white,
+                            ),
+                      iconSize: 36,
+                      onPressed: _isBuffering ? null : _togglePlayPause,
+                    ),
+                  ),
+                  
+                  const SizedBox(width: 16),
+                  
+                  // Forward 10s
+                  IconButton(
+                    icon: const Icon(Icons.forward_10),
+                    iconSize: 32,
+                    onPressed: () {
+                      final newPosition = _position + const Duration(seconds: 10);
+                      _seekTo(newPosition > _duration ? _duration : newPosition);
+                    },
+                  ),
+                ],
+              ),
+              
+              const SizedBox(height: 24),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

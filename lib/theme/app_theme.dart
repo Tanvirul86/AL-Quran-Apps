@@ -22,6 +22,18 @@ class AppTheme {
   static const String banglaFont = 'NotoSansBengali'; // Bangla translations
   static const String englishFont = 'Roboto'; // System default for English
   
+  static const List<Map<String, String>> availableArabicFonts = [
+    {'name': 'Uthmani Hafs', 'family': 'UthmanicHafs', 'desc': 'Standard Madani Mushaf script (Recommended)'},
+    {'name': 'Indo-Pak Saleem', 'family': 'PDMSSaleem', 'desc': 'Hafizi style Indo-Pak script'},
+    {'name': 'Scheherazade New', 'family': 'Scheherazade', 'desc': 'Best diacritics & ligatures'},
+    {'name': 'Amiri', 'family': 'Amiri', 'desc': 'Classic Bulaq style'},
+    {'name': 'Noto Naskh', 'family': 'NotoNaskhArabic', 'desc': 'Modern and clean'},
+  ];
+
+  static const List<Map<String, String>> availableBanglaFonts = [
+    {'name': 'Noto Sans Bengali', 'family': 'NotoSansBengali', 'desc': 'Google\'s standard'},
+  ];
+  
   // Color Palette - Islamic & Modern
   static const Color primaryGreen = Color(0xFF2E7D32);
   static const Color darkGreen = Color(0xFF1B5E20);
@@ -822,9 +834,10 @@ class AppTheme {
     FontWeight fontWeight = FontWeight.normal,
     Color? color,
     double height = 2.0, // Enhanced line height for better Arabic readability
+    String? fontFamily,
   }) {
     return TextStyle(
-      fontFamily: arabicFont,
+      fontFamily: fontFamily ?? arabicFont,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,
@@ -838,9 +851,10 @@ class AppTheme {
     FontWeight fontWeight = FontWeight.normal,
     Color? color,
     double height = 1.8,
+    String? fontFamily,
   }) {
     return TextStyle(
-      fontFamily: banglaFont,
+      fontFamily: fontFamily ?? banglaFont,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,

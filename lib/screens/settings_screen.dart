@@ -409,6 +409,56 @@ LinearGradient _getThemeGradient(AppThemeType theme) {
   }
 }
 
+void _showFontPicker(
+  BuildContext context,
+  String title,
+  List<Map<String, String>> fonts,
+  String currentFamily,
+  Function(String) onSelected,
+) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+    builder: (context) => Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          ...fonts.map((f) {
+            final isSelected = f['family'] == currentFamily;
+            return ListTile(
+              leading: Icon(
+                isSelected ? Icons.check_circle : Icons.circle_outlined,
+                color: isSelected ? Theme.of(context).primaryColor : null,
+              ),
+              title: Text(
+                f['name']!,
+                style: TextStyle(
+                  fontFamily: f['family'],
+                  fontSize: 16,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              subtitle: Text(f['desc']!),
+              onTap: () {
+                onSelected(f['family']!);
+                Navigator.pop(context);
+              },
+            );
+          }),
+        ],
+      ),
+    ),
+  );
+}
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -518,6 +568,52 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       );
                     },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Font Styles Section
+              _SectionHeader(
+                title: 'Font Styles',
+                icon: Icons.font_download_outlined,
+              ),
+              _SettingsCard(
+                children: [
+                  ListTile(
+                    title: const Text('Arabic Font'),
+                    subtitle: Text(
+                      AppTheme.availableArabicFonts.firstWhere(
+                        (f) => f['family'] == settings.arabicFontFamily,
+                        orElse: () => AppTheme.availableArabicFonts.first,
+                      )['name']!,
+                    ),
+                    trailing: const Icon(Icons.title),
+                    onTap: () => _showFontPicker(
+                      context,
+                      'Select Arabic Font',
+                      AppTheme.availableArabicFonts,
+                      settings.arabicFontFamily,
+                      (family) => settings.setArabicFontFamily(family),
+                    ),
+                  ),
+                  Divider(height: 1, indent: 16),
+                  ListTile(
+                    title: const Text('Bangla Font'),
+                    subtitle: Text(
+                      AppTheme.availableBanglaFonts.firstWhere(
+                        (f) => f['family'] == settings.banglaFontFamily,
+                        orElse: () => AppTheme.availableBanglaFonts.first,
+                      )['name']!,
+                    ),
+                    trailing: const Icon(Icons.translate),
+                    onTap: () => _showFontPicker(
+                      context,
+                      'Select Bangla Font',
+                      AppTheme.availableBanglaFonts,
+                      settings.banglaFontFamily,
+                      (family) => settings.setBanglaFontFamily(family),
+                    ),
                   ),
                 ],
               ),

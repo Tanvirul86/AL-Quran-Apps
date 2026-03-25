@@ -13,6 +13,7 @@ import '../widgets/spiritual_background.dart';
 import '../widgets/quran_text_settings_sheet.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math' as math;
+import '../providers/settings_provider.dart';
 
 class SurahListScreen extends StatefulWidget {
   final bool arabicOnlyMode;
@@ -116,76 +117,82 @@ class _SurahListScreenState extends State<SurahListScreen> {
             }
             final surahs = _filtered(quranProvider.surahs);
 
-            return CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                // Daily Ayah widget
-                if (!widget.arabicOnlyMode)
+            return Consumer<SettingsProvider>(
+              builder: (context, settings, _) => CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  // Daily Ayah widget
+                  if (!widget.arabicOnlyMode)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                        child: const DailyAyahWidget()
+                            .animate()
+                            .fadeIn(duration: 400.ms)
+                            .slideY(begin: -0.1),
+                      ),
+                    ),
+
+                  // Search header
                   SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-                      child: const DailyAyahWidget()
-                          .animate()
-                          .fadeIn(duration: 400.ms)
-                          .slideY(begin: -0.1),
+                    child: _SearchSection(
+                      searchController: _searchController,
+                      isDark: isDark,
+                      primary: primary,
+                      onQueryChanged: (v) => setState(() => _query = v),
                     ),
                   ),
 
-                // Search header
-                SliverToBoxAdapter(
-                  child: _SearchSection(
-                    searchController: _searchController,
-                    isDark: isDark,
-                    primary: primary,
-                    onQueryChanged: (v) => setState(() => _query = v),
-                  ),
-                ),
-
-                if (surahs.isEmpty)
-                  SliverFillRemaining(
-                    child: Center(
-                      child: Text(
-                        'No surahs match "$_query"',
-                        style: TextStyle(color: Colors.grey.shade500),
+                  if (surahs.isEmpty)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Text(
+                          'No surahs match "$_query"',
+                          style: TextStyle(color: Colors.grey.shade500),
+                        ),
                       ),
-                    ),
-                  )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final surah = surahs[index];
-                          return _SurahListItem(surah: surah, onTap: () {
-                            HapticFeedback.lightImpact();
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (_, anim, __) => AyahReadingScreen(
-                                  surah: surah,
-                                  arabicOnlyMode: widget.arabicOnlyMode,
-                                ),
-                                transitionsBuilder: (_, anim, __, child) => FadeTransition(
-                                  opacity: CurvedAnimation(parent: anim, curve: Curves.easeOut),
-                                  child: SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(0, 0.04),
-                                      end: Offset.zero,
-                                    ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOutCubic)),
-                                    child: child,
+                    )
+                  else
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final surah = surahs[index];
+                            return _SurahListItem(
+                              surah: surah,
+                              fontFamily: settings.arabicFontFamily,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, anim, __) => AyahReadingScreen(
+                                      surah: surah,
+                                      arabicOnlyMode: widget.arabicOnlyMode,
+                                    ),
+                                    transitionsBuilder: (_, anim, __, child) => FadeTransition(
+                                      opacity: CurvedAnimation(parent: anim, curve: Curves.easeOut),
+                                      child: SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(0, 0.04),
+                                          end: Offset.zero,
+                                        ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOutCubic)),
+                                        child: child,
+                                      ),
+                                    ),
+                                    transitionDuration: const Duration(milliseconds: 350),
                                   ),
-                                ),
-                                transitionDuration: const Duration(milliseconds: 350),
-                              ),
+                                );
+                              },
                             );
-                          });
-                        },
-                        childCount: surahs.length,
+                          },
+                          childCount: surahs.length,
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             );
           },
         ),
@@ -250,9 +257,14 @@ class _SearchSection extends StatelessWidget {
 
 class _SurahListItem extends StatelessWidget {
   final Surah surah;
+  final String fontFamily;
   final VoidCallback onTap;
 
-  const _SurahListItem({required this.surah, required this.onTap});
+  const _SurahListItem({
+    required this.surah, 
+    required this.fontFamily,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -369,6 +381,7 @@ class _SurahListItem extends StatelessWidget {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: primary,
+                      fontFamily: fontFamily,
                     ),
                   ),
                 ),

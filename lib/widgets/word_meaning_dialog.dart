@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/word_meaning.dart';
 import '../services/word_by_word_service.dart';
 import '../theme/app_theme.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
 
 /// Dialog to show word-by-word meaning when tapping Arabic words
 class WordMeaningDialog extends StatefulWidget {
@@ -46,21 +48,23 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 400),
-        padding: const EdgeInsets.all(20),
-        child: _loading
-            ? const SizedBox(
-                height: 200,
-                child: Center(child: CircularProgressIndicator()),
-              )
-            : _wordMeaning == null
-                ? _buildNoData()
-                : _buildContent(),
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 400),
+          padding: const EdgeInsets.all(20),
+          child: _loading
+              ? const SizedBox(
+                  height: 200,
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              : _wordMeaning == null
+                  ? _buildNoData()
+                  : _buildContent(settings),
+        ),
       ),
     );
   }
@@ -84,7 +88,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(SettingsProvider settings) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -98,8 +102,8 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
           ),
           child: Text(
             _wordMeaning!.arabicWord,
-            style: const TextStyle(
-              fontFamily: 'Scheherazade',
+            style: TextStyle(
+              fontFamily: settings.arabicFontFamily,
               fontSize: 36,
               color: Colors.white,
               height: 1.5,
@@ -137,6 +141,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
           label: 'বাংলা',
           value: _wordMeaning!.banglaMeaning,
           color: Colors.teal,
+          settings: settings,
         ),
 
         if (_wordMeaning!.rootWord.isNotEmpty) ...[
@@ -148,6 +153,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
             value: _wordMeaning!.rootWord,
             color: Colors.purple,
             isArabic: true,
+            settings: settings,
           ),
         ],
 
@@ -170,6 +176,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
     required String label,
     required String value,
     required Color color,
+    required SettingsProvider settings,
     bool isArabic = false,
   }) {
     return Container(
@@ -201,7 +208,9 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
             value,
             style: TextStyle(
               fontSize: 16,
-              fontFamily: isArabic ? 'Scheherazade' : null,
+              fontFamily: isArabic 
+                  ? settings.arabicFontFamily 
+                  : (label == 'বাংলা' ? settings.banglaFontFamily : null),
               height: 1.4,
             ),
             textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,

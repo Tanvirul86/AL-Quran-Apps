@@ -126,6 +126,7 @@ Surah ${widget.ayah.surahNumber}, Ayah ${widget.ayah.ayahNumber}
                   style: AppTheme.arabicTextStyle(
                     fontSize: settings.arabicFontSize,
                     color: Theme.of(context).textTheme.bodyLarge?.color,
+                    fontFamily: settings.arabicFontFamily,
                   ),
                   onSelectionChanged: (selection, cause) {
                     if (selection.isValid) {

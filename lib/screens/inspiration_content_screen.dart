@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:provider/provider.dart';
 import '../models/inspiration_models.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 class InspirationContentScreen extends StatefulWidget {
   final InspirationCategory category;
@@ -284,9 +286,9 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                     Text(
                       content.textAr,
                       textAlign: TextAlign.right,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
-                        fontFamily: AppTheme.arabicFont,
+                        fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                         color: AppTheme.darkGreen,
                         height: 1.8,
                         letterSpacing: 0.5,
@@ -367,9 +369,9 @@ class _InspirationContentScreenState extends State<InspirationContentScreen> {
                     const SizedBox(height: 12),
                     Text(
                       content.textBn,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
-                        fontFamily: AppTheme.banglaFont,
+                        fontFamily: Provider.of<SettingsProvider>(context, listen: false).banglaFontFamily,
                         color: AppTheme.darkGreen,
                         height: 1.6,
                       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
 
 class AsmaulHusnaScreen extends StatefulWidget {
   const AsmaulHusnaScreen({super.key});
@@ -780,7 +782,7 @@ class _AsmaulHusnaScreenState extends State<AsmaulHusnaScreen> {
                 Text(
                   name['arabic']!,
                   style: TextStyle(
-                    fontFamily: AppTheme.arabicFont,
+                    fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                     fontSize: 48,
                     color: primaryColor,
                     height: 1.4,
@@ -1023,7 +1025,7 @@ class _AsmaulHusnaScreenState extends State<AsmaulHusnaScreen> {
               Text(
                 name['arabic']!,
                 style: TextStyle(
-                  fontFamily: AppTheme.arabicFont,
+                  fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                   fontSize: 22,
                   color: primaryColor,
                   height: 1.5,

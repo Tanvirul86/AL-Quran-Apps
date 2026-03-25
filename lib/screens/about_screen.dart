@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import '../utils/app_info.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/spiritual_background.dart';
+import '../widgets/muslim_pro_style_logo.dart';
 import '../theme/app_theme.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -52,30 +53,7 @@ class AboutScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             // Animated logo
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.15),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.4),
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 20,
-                                  ),
-                                ],
-                              ),
-                              child: CustomPaint(
-                                painter: _StarPainter(Colors.white),
-                                child: const Center(
-                                  child: Text('☪', style: TextStyle(fontSize: 36)),
-                                ),
-                              ),
-                            ),
+                            const MuslimProStyleLogo(size: 80, showShadow: false),
                             const SizedBox(height: 16),
                             const Text(
                               'Al-Quran Pro',
@@ -360,32 +338,4 @@ class _InfoRow extends StatelessWidget {
       ),
     );
   }
-}
-
-class _StarPainter extends CustomPainter {
-  final Color color;
-  _StarPainter(this.color);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color.withOpacity(0.18)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-    final cx = size.width / 2;
-    final cy = size.height / 2;
-    final r = size.width / 2 - 6;
-    const n = 8;
-    for (int i = 0; i < n; i++) {
-      final a = i * 2 * math.pi / n;
-      canvas.drawLine(
-        Offset(cx, cy),
-        Offset(cx + r * math.cos(a), cy + r * math.sin(a)),
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(_StarPainter old) => old.color != color;
 }

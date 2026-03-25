@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/ayah.dart';
+import '../providers/settings_provider.dart';
 import '../models/tafsir_source.dart';
 import '../services/tafsir_service.dart';
 import '../theme/app_theme.dart';
@@ -179,8 +181,8 @@ class _FullSurahTafsirScreenState extends State<FullSurahTafsirScreen> {
                           ayah.uthmaniText ?? ayah.arabicText,
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            fontFamily: AppTheme.arabicFont,
+                          style: TextStyle(
+                            fontFamily: Provider.of<SettingsProvider>(context, listen: false).arabicFontFamily,
                             fontSize: 24,
                             height: 1.8,
                           ),

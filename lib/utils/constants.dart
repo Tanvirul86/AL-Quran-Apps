@@ -17,12 +17,16 @@ class AppConstants {
   static const String keyArabicFontSize = 'arabic_font_size';
   static const String keyBanglaFontSize = 'bangla_font_size';
   static const String keyEnglishFontSize = 'english_font_size';
+  static const String keyArabicFontFamily = 'arabic_font_family';
+  static const String keyBanglaFontFamily = 'bangla_font_family';
   static const String keyPlaybackSpeed = 'playback_speed';
   
   // Default Values
   static const double defaultArabicFontSize = 24.0;
   static const double defaultBanglaFontSize = 16.0;
   static const double defaultEnglishFontSize = 16.0;
+  static const String defaultArabicFont = 'Scheherazade';
+  static const String defaultBanglaFont = 'NotoSansBengali';
   static const double defaultPlaybackSpeed = 1.0;
   
   // Font Sizes Range

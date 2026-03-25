@@ -271,7 +271,7 @@ class _ReadingControlsSheetState extends State<_ReadingControlsSheet> {
                           textAlign: TextAlign.center,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            fontFamily: 'Uthmanic',
+                            fontFamily: settings.arabicFontFamily,
                             fontSize: settings.arabicFontSize,
                             color: ReadingModeColors.arabic(_mode),
                             height: 2.2,
