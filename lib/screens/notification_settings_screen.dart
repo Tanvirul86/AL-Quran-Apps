@@ -392,7 +392,7 @@ class _NotificationSettingsScreenState
                       _schedulePrayerReminders();
                     } else {
                       for (final prayer in _prayerTimes.keys) {
-                        _notificationService.cancelNotification('prayer_$prayer');
+                        _notificationService.cancelNotification('prayer_alert_$prayer');
                       }
                     }
                     _saveSettings();

@@ -75,7 +75,7 @@ class NotificationService {
   }) async {
     Future<void> doSchedule(AndroidScheduleMode mode) {
       return _notifications.zonedSchedule(
-        notification.hashCode,
+        notification.uniqueIntId,
         notification.title,
         notification.body,
         tz.TZDateTime.from(notification.scheduledTime, tz.local),
@@ -160,7 +160,7 @@ class NotificationService {
     bool useAdhanSound = false,
   }) async {
     final notification = QuranNotification(
-      id: 'prayer_$prayerName',
+      id: 'prayer_alert_$prayerName',
       title: '🕌 $prayerName Prayer Time',
       body: 'It\'s time for $prayerName prayer',
       type: NotificationType.prayerReminder,

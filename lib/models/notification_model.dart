@@ -53,6 +53,22 @@ class QuranNotification {
     };
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is QuranNotification &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  /// Returns a unique integer ID derived from the string ID for local notifications.
+  int get uniqueIntId {
+    // Generate a consistent 32-bit integer from the string ID
+    return id.split('').fold<int>(0, (prev, char) => (prev * 31 + char.codeUnitAt(0)) & 0x7FFFFFFF);
+  }
+
   QuranNotification copyWith({
     String? id,
     String? title,

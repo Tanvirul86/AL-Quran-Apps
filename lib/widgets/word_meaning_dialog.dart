@@ -121,6 +121,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
           label: 'Transliteration',
           value: _wordMeaning!.transliteration,
           color: Colors.blue,
+          settings: settings,
         ),
 
         const SizedBox(height: 12),
@@ -131,6 +132,7 @@ class _WordMeaningDialogState extends State<WordMeaningDialog> {
           label: 'English',
           value: _wordMeaning!.englishMeaning,
           color: Colors.green,
+          settings: settings,
         ),
 
         const SizedBox(height: 12),

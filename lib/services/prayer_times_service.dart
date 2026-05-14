@@ -184,14 +184,23 @@ class PrayerTimesService {
 
   /// Schedule athan alerts for all prayers
   Future<void> scheduleAthanAlerts() async {
-    if (!_athanAlertsEnabled) return;
-    
-    try {
-      // Check notification permission
-      final notificationService = NotificationService();
-      final hasPermission = await notificationService.requestPermissions();
+      // Load settings
+      final prefs = await SharedPreferences.getInstance();
+      _athanAlertsEnabled = prefs.getBool('athan_alerts_enabled') ?? true;
+      final settingsStr = prefs.getString('prayer_athan_settings');
+      if (settingsStr != null) {
+        final Map<String, dynamic> decoded = json.decode(settingsStr);
+        _prayerAthanEnabled = decoded.map((k, v) => MapEntry(k, v as bool));
+      }
+
+      if (!_athanAlertsEnabled) return;
       
-      if (!hasPermission) {
+      try {
+        // Check notification permission
+        final notificationService = NotificationService();
+        final hasPermission = await notificationService.requestPermissions();
+        
+        if (!hasPermission) {
         print('Notification permission not granted');
         return;
       }
@@ -203,6 +212,10 @@ class PrayerTimesService {
         longitude: position.longitude,
       );
       
+      // Load adhan sound preference
+      final prefs = await SharedPreferences.getInstance();
+      final useAdhanSound = prefs.getBool('notif_use_adhan_sound') ?? false;
+      
       // Cancel existing athan notifications first
       await _cancelAllAthanAlerts();
       
@@ -210,7 +223,7 @@ class PrayerTimesService {
         if (_prayerAthanEnabled[entry.key] == true && entry.value.isAfter(DateTime.now())) {
           await notificationService.scheduleNotification(
             QuranNotification(
-              id: 'athan_${entry.key}',
+              id: 'prayer_alert_${entry.key}',
               title: '🕌 ${entry.key} Prayer Time',
               body: 'It\'s time for ${entry.key} prayer. Allahu Akbar!',
               type: NotificationType.prayerReminder,
@@ -218,6 +231,7 @@ class PrayerTimesService {
               payload: {'prayer': entry.key, 'type': 'athan'},
               isRepeating: false, // Schedule daily manually
             ),
+            useAdhanSound: useAdhanSound,
           );
         }
       }
@@ -232,7 +246,7 @@ class PrayerTimesService {
   Future<void> _cancelAllAthanAlerts() async {
     final notificationService = NotificationService();
     for (final prayer in _prayerAthanEnabled.keys) {
-      await notificationService.cancelNotification('athan_$prayer');
+      await notificationService.cancelNotification('prayer_alert_$prayer');
     }
   }
 
